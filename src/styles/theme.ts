@@ -7,7 +7,7 @@ export const theme = {
     magenta: "#fc0076",
     magentaOpacity: "rgba(252,0,118, 0.1)",
     textDark: "#333",
-    textMedium: "#999",
+    textMedium: "#bbb",
     textLight: "#eee",
   },
 };
