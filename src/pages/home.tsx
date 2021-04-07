@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useAppSelector } from "../hooks/useAppSelector";
 import { useAppDispatch } from "../hooks/useAppDispatch";
@@ -9,14 +9,18 @@ import RecipieCard from "../components/RecipieCard";
 
 const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const recipies = useAppSelector((state) => state.recipies);
+  const { recipies } = useAppSelector((state) => state.recipies);
 
-  dispatch(fetchRecipies(1));
+  console.log(recipies);
+
+  useEffect(() => {
+    dispatch(fetchRecipies());
+  }, []);
 
   const recipiesCards = recipies.map((recipie) => (
     <RecipieCard
       key={Math.random()}
-      photo=""
+      photo={recipie.photoUrl}
       name={recipie.name}
       stars={recipie.stars}
     />

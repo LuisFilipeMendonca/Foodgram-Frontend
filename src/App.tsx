@@ -7,6 +7,7 @@ import GlobalStyle from "./styles/index";
 import { store } from "./store";
 
 import HomePage from "./pages/home";
+import Navbar from "./layout/Navbar";
 
 const App: React.FunctionComponent = () => {
   // const recipies = recipie.map((rec) => (
@@ -25,6 +26,7 @@ const App: React.FunctionComponent = () => {
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
+        <Navbar />
         <HomePage />
       </Provider>
       <GlobalStyle />

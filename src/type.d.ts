@@ -1,5 +1,6 @@
 export interface IRecipieFullCard {
-  photo?: string;
+  photoUrl: string;
+  photo: string;
   duration: number;
   servings: number;
   description: string;
