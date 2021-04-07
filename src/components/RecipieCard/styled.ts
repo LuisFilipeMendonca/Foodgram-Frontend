@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+type StarType = {
+  isFilled: boolean;
+};
+
 export const CardContainer = styled.li`
   border: 2px solid ${({ theme }) => theme.colors.magenta};
   background: #f5f5f5;
@@ -10,22 +14,34 @@ export const CardContainer = styled.li`
 
 export const CardImg = styled.img`
   width: 100%;
-  height: 275px;
+  height: 225px;
   object-fit: cover;
   display: block;
 `;
 
 export const CardTitle = styled.h3`
   color: ${({ theme }) => theme.colors.textDark};
-  margin-bottom: 8px;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const CardInformation = styled.div`
   padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  & > *:not(:last-child) {
+    margin-bottom: 8px;
+  }
 `;
 
-export const CardStarPolygon = styled.polygon`
-  fill: ${({ theme }) => theme.colors.textMedium};
+export const CardStarPolygon = styled.polygon<StarType>`
+  fill: ${({ theme, isFilled }) =>
+    isFilled ? "#ffd055" : theme.colors.textMedium};
 `;
 
 export const CardStar = styled.svg`
