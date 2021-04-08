@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import {
   CardContainer,
@@ -14,13 +15,15 @@ interface IRecipieCard {
   photo: string;
   stars: number;
   name: string;
+  id: string;
 }
 
-const RecipieCard: React.FC<IRecipieCard> = ({ photo, stars, name }) => {
+const RecipieCard: React.FC<IRecipieCard> = ({ photo, stars, name, id }) => {
   const addRatingHandler = (e: React.MouseEvent | React.KeyboardEvent) => {
     console.log(e.currentTarget.getAttribute("data-rating"));
   };
 
+  const recipieLink = `/recipie/${id}`;
   const starsArray = [1, 2, 3, 4, 5];
 
   return (
@@ -44,7 +47,7 @@ const RecipieCard: React.FC<IRecipieCard> = ({ photo, stars, name }) => {
             </CardStar>
           ))}
         </CardStarsContainer>
-        <button>View Recipie</button>
+        <Link to={recipieLink}>View Recipie</Link>
       </CardInformation>
     </CardContainer>
   );

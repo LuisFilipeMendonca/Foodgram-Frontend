@@ -23,6 +23,7 @@ const HomePage: React.FC = () => {
       photo={recipie.photoUrl}
       name={recipie.name}
       stars={recipie.stars}
+      id={recipie._id}
     />
   ));
 

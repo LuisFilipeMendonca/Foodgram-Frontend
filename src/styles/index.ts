@@ -22,6 +22,10 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     li {
         list-style: none;
     }
+
+    a {
+        text-decoration: none;
+    }
 `;
 
 export default GlobalStyle;

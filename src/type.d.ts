@@ -9,4 +9,5 @@ export interface IRecipieFullCard {
   steps: string[];
   level: string;
   stars: number;
+  _id: string;
 }
