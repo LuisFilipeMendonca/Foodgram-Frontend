@@ -33,7 +33,7 @@ export const PaginationItem = styled.button<PaginationItemType>`
       : null};
 
   &:disabled {
-    background-color: #ddd;
+    background-color: #e0e0e0;
   }
 `;
 

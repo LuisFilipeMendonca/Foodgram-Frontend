@@ -5,9 +5,11 @@ import { recipiesInitialState } from "./initialState";
 
 export const fetchRecipies = createAsyncThunk(
   "recipies/fetchRecipies",
-  async () => {
+  async ({ page, limit }: { page: number; limit: number }) => {
     try {
-      const response = await axios("http://localhost:3001/recipies/1/10");
+      const response = await axios(
+        `http://localhost:3001/recipies/${page}/${limit}`
+      );
 
       return response.data;
     } catch (e) {
