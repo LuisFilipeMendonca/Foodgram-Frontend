@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, Redirect } from "react-router-dom";
 
 import { useAppSelector } from "../hooks/useAppSelector";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+
+import { setPath } from "../store/location/slice";
 
 import RecipieFullCard from "../components/RecipieFullCard";
 
 const MyRecipiesPage: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
   const recipie = useAppSelector((state) =>
     state.recipies.recipies.find((recipie) => recipie._id === id)
   );
+
+  useEffect(() => {
+    if (!recipie) return;
+    dispatch(setPath("/recipies"));
+  }, [dispatch, recipie]);
 
   if (!recipie) {
     return <Redirect to="/" />;

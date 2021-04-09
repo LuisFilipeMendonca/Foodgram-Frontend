@@ -1,6 +1,6 @@
 import axios from "axios";
-
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+
 import { recipiesInitialState } from "./initialState";
 
 export const fetchRecipies = createAsyncThunk(
@@ -22,8 +22,8 @@ export const recipiesSlice = createSlice({
   name: "recipies",
   initialState: recipiesInitialState,
   reducers: {
-    setRecipies: (state, action: PayloadAction<number>) => {
-      console.log(action.payload);
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
     },
   },
   extraReducers: {
@@ -32,6 +32,7 @@ export const recipiesSlice = createSlice({
     },
     [fetchRecipies.fulfilled.type]: (state, action) => {
       const { recipies, count } = action.payload;
+      console.log(recipies);
       state.recipies = recipies;
       state.count = count;
       state.isLoading = false;
@@ -42,6 +43,6 @@ export const recipiesSlice = createSlice({
   },
 });
 
-export const { setRecipies } = recipiesSlice.actions;
+export const { setCurrentPage } = recipiesSlice.actions;
 
 export default recipiesSlice.reducer;
