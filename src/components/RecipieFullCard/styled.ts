@@ -113,7 +113,7 @@ export const CardStepDescription = styled.p`
 `;
 
 export const CardToggler = styled.span<CardDetailsType>`
-  @keyframes pulse {
+  @keyframes pulseFade {
     0% {
       opacity: 1;
       transform: scale(1);
@@ -127,7 +127,6 @@ export const CardToggler = styled.span<CardDetailsType>`
   position: absolute;
   top: 50%;
   right: 0;
-  transform: translate(50%, -50%);
   font-size: 16px;
   width: 25px;
   height: 25px;
@@ -151,11 +150,12 @@ export const CardToggler = styled.span<CardDetailsType>`
     background: ${(props) => props.theme.colors.magenta};
     border-radius: 50%;
     z-index: -1;
-    animation: pulse 1s infinite;
+    animation: pulseFade 1s infinite;
   }
 `;
 
 export const CardInformation = styled.div<CardDetailsType>`
+  position: relative;
   transition: opacity 1s ease;
   padding: 16px;
   display: flex;
@@ -165,7 +165,7 @@ export const CardInformation = styled.div<CardDetailsType>`
   overflow: hidden;
   background: ${({ isOpen }) =>
     isOpen
-      ? "linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.7))"
+      ? "linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 10%, transparent 40%, rgba(0, 0, 0, 0.7))"
       : "transparent"};
 `;
 

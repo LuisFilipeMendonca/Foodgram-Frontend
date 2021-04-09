@@ -26,6 +26,7 @@ const MyRecipiesPage: React.FC = () => {
         servings={recipie!.servings}
         steps={recipie!.steps}
         key={id}
+        level={recipie!.level}
       />
     </div>
   );

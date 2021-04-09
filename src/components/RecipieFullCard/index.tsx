@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowRight, FaCircle } from "react-icons/fa";
+
+import HeartSvg from "../HeartSvg";
 
 import {
   CardContainer,
@@ -36,6 +38,7 @@ interface IRecipieFullCard {
   name: string;
   ingredients: string[];
   steps: string[];
+  level: string;
 }
 
 const RecipieFullCard: React.FC<IRecipieFullCard> = ({
@@ -46,6 +49,7 @@ const RecipieFullCard: React.FC<IRecipieFullCard> = ({
   name,
   ingredients,
   steps,
+  level,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedNav, setSelectedNav] = useState("ingredients");
@@ -58,11 +62,18 @@ const RecipieFullCard: React.FC<IRecipieFullCard> = ({
     setSelectedNav(value);
   };
 
+  useEffect(() => {
+    const openRecipie = setTimeout(() => setIsOpen(true), 1000);
+
+    return () => clearTimeout(openRecipie);
+  }, []);
+
   return (
     <CardContainer>
       <CardImage url={photo} isOpen={isOpen}>
         <CardInformation isOpen={isOpen}>
           <CardInformationTop isOpen={isOpen}>
+            <HeartSvg />
             <CardInformationBullet>
               <CardInformationValue>{duration}</CardInformationValue>
               <CardInformationDescription>mins</CardInformationDescription>
@@ -74,7 +85,6 @@ const RecipieFullCard: React.FC<IRecipieFullCard> = ({
           </CardInformationTop>
           <CardInformationBottom isOpen={isOpen}>
             <CardInformationTitle>{name}</CardInformationTitle>
-            <CardInformationText>{description}</CardInformationText>
           </CardInformationBottom>
         </CardInformation>
       </CardImage>

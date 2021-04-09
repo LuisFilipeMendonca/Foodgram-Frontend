@@ -40,8 +40,7 @@ export const CardInformation = styled.div`
 `;
 
 export const CardStarPolygon = styled.polygon<StarType>`
-  fill: ${({ theme, isFilled }) =>
-    isFilled ? "#ffd055" : theme.colors.textMedium};
+  fill: ${({ isFilled }) => (isFilled ? "#ffd055" : "#ddd")};
 `;
 
 export const CardStar = styled.svg`
@@ -62,6 +61,6 @@ export const CardStarsContainer = styled.div`
   }
 
   & ${CardStar}:hover ~ ${CardStar} ${CardStarPolygon} {
-    fill: ${({ theme }) => theme.colors.textMedium};
+    fill: #ddd;
   }
 `;
