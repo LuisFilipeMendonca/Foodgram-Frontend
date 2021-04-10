@@ -42,8 +42,20 @@ const Pagination: React.FC<IPaginationProps> = ({
     }
   }
 
-  if (visiblePages + currentPage >= pagesAmount) {
+  if (
+    visiblePages + currentPage >= pagesAmount &&
+    pagesAmount - visiblePages > 0
+  ) {
     for (let i = pagesAmount - visiblePages; i <= pagesAmount; i++) {
+      pagesArr.push({ value: i, id: i.toString() });
+    }
+  }
+
+  if (
+    visiblePages + currentPage >= pagesAmount &&
+    pagesAmount - visiblePages === 0
+  ) {
+    for (let i = 1; i <= pagesAmount; i++) {
       pagesArr.push({ value: i, id: i.toString() });
     }
   }

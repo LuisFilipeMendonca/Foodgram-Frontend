@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { useAppSelector } from "../hooks/useAppSelector";
 import { useAppDispatch } from "../hooks/useAppDispatch";
@@ -8,15 +8,18 @@ import { setPath } from "../store/location/slice";
 
 import RecipieCard from "../components/RecipieCard";
 import Pagination from "../components/Pagination";
+import Filters from "../layout/Filters";
 
 const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const [itemsPerPage, setItemsPerPage] = useState(4);
-
-  const { recipies, count, isLoading, currentPage } = useAppSelector(
-    (state) => state.recipies
-  );
+  const {
+    recipies,
+    count,
+    isLoading,
+    currentPage,
+    itemsPerPage,
+  } = useAppSelector((state) => state.recipies);
   const { prevPath } = useAppSelector((state) => state.location);
 
   const setPageHandler = (pageValue: number): void => {
@@ -29,8 +32,8 @@ const HomePage: React.FC = () => {
       return;
     }
 
-    dispatch(fetchRecipies({ page: currentPage, limit: itemsPerPage }));
-  }, [currentPage, itemsPerPage, dispatch]);
+    dispatch(fetchRecipies(currentPage));
+  }, [currentPage, dispatch, itemsPerPage]);
 
   const recipiesCards = recipies.map((recipie) => (
     <RecipieCard
@@ -48,6 +51,7 @@ const HomePage: React.FC = () => {
 
   return (
     <>
+      <Filters />
       <Pagination
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}

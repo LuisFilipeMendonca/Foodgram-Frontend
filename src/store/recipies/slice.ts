@@ -5,10 +5,15 @@ import { recipiesInitialState } from "./initialState";
 
 export const fetchRecipies = createAsyncThunk(
   "recipies/fetchRecipies",
-  async ({ page, limit }: { page: number; limit: number }) => {
+  async (page: number, { getState }) => {
     try {
+      const { recipies } = getState() as {
+        recipies: typeof recipiesInitialState;
+      };
+      const { itemsPerPage } = recipies;
+
       const response = await axios(
-        `http://localhost:3001/recipies/${page}/${limit}`
+        `http://localhost:3001/recipies/${page}/${itemsPerPage}`
       );
 
       return response.data;
@@ -24,6 +29,10 @@ export const recipiesSlice = createSlice({
   reducers: {
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
+    },
+    setItemsPerPage: (state, action: PayloadAction<number>) => {
+      state.itemsPerPage = action.payload;
+      state.currentPage = 1;
     },
   },
   extraReducers: {
@@ -43,6 +52,6 @@ export const recipiesSlice = createSlice({
   },
 });
 
-export const { setCurrentPage } = recipiesSlice.actions;
+export const { setCurrentPage, setItemsPerPage } = recipiesSlice.actions;
 
 export default recipiesSlice.reducer;
