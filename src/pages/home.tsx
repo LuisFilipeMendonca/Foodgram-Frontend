@@ -19,6 +19,7 @@ const HomePage: React.FC = () => {
     isLoading,
     currentPage,
     itemsPerPage,
+    itemsOrderQuery,
   } = useAppSelector((state) => state.recipies);
   const { prevPath } = useAppSelector((state) => state.location);
 
@@ -33,7 +34,7 @@ const HomePage: React.FC = () => {
     }
 
     dispatch(fetchRecipies(currentPage));
-  }, [currentPage, dispatch, itemsPerPage]);
+  }, [currentPage, dispatch, itemsPerPage, itemsOrderQuery]);
 
   const recipiesCards = recipies.map((recipie) => (
     <RecipieCard

@@ -4,7 +4,10 @@ import { FiltersContainer } from "./styled";
 
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
-import { setItemsPerPage, setCurrentPage } from "../../store/recipies/slice";
+import {
+  setItemsPerPage,
+  setItemsOrderQuery,
+} from "../../store/recipies/slice";
 
 const Filters: React.FC = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
@@ -13,8 +16,14 @@ const Filters: React.FC = () => {
   const toggleFilters = () => setIsFiltersOpen(!isFiltersOpen);
 
   const itemsPerPageHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value);
     dispatch(setItemsPerPage(+e.currentTarget.value));
+  };
+
+  const itemsOrderHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    const field = e.currentTarget.getAttribute("data-field");
+    const value = e.currentTarget.value;
+    const orderQuery = `?order=${field}&value=${value}`;
+    dispatch(setItemsOrderQuery(orderQuery));
   };
 
   return (
@@ -35,8 +44,9 @@ const Filters: React.FC = () => {
                 type="radio"
                 id="recents"
                 name="sort"
-                value="1"
+                value="-1"
                 data-field="createdAt"
+                onClick={(e) => itemsOrderHandler(e)}
               />
               <label htmlFor="recents">Recents</label>
             </div>
@@ -45,8 +55,9 @@ const Filters: React.FC = () => {
                 type="radio"
                 id="olds"
                 name="sort"
-                value="-1"
+                value="1"
                 data-field="createdAt"
+                onClick={(e) => itemsOrderHandler(e)}
               />
               <label htmlFor="olds">Old</label>
             </div>
@@ -86,7 +97,13 @@ const Filters: React.FC = () => {
               <label htmlFor="six">Six</label>
             </div>
             <div className="input__group">
-              <input type="radio" id="twelve" name="itemsPerPage" value="12" />
+              <input
+                type="radio"
+                id="twelve"
+                name="itemsPerPage"
+                value="12"
+                onChange={(e) => itemsPerPageHandler(e)}
+              />
               <label htmlFor="twelve">Twelve</label>
             </div>
             <div className="input__group">
@@ -95,6 +112,7 @@ const Filters: React.FC = () => {
                 id="eighteen"
                 name="itemsPerPage"
                 value="18"
+                onChange={(e) => itemsPerPageHandler(e)}
               />
               <label htmlFor="eighteen">Eighteen</label>
             </div>
