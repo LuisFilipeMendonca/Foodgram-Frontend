@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
 import { theme } from "./styles/theme";
-import GlobalStyle from "./styles/index";
+import GlobalStyle, { MainContainer } from "./styles/index";
 import { store } from "./store";
 
 import Navbar from "./layout/Navbar";
@@ -16,7 +16,9 @@ const App: React.FunctionComponent = () => {
       <Provider store={store}>
         <BrowserRouter>
           <Navbar />
-          <Routes />
+          <MainContainer>
+            <Routes />
+          </MainContainer>
         </BrowserRouter>
       </Provider>
       <GlobalStyle />

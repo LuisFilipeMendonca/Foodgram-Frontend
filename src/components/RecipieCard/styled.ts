@@ -9,12 +9,12 @@ export const CardContainer = styled.li`
   background: #f5f5f5;
   border-radius: 3px;
   overflow: hidden;
-  box-shadow: 0 0 20px #aaa;
+  box-shadow: 0 0 5px #aaa;
 `;
 
 export const CardImg = styled.img`
   width: 100%;
-  height: 225px;
+  height: 175px;
   object-fit: cover;
   display: block;
 `;

@@ -16,6 +16,7 @@ export const Nav = styled.nav`
   z-index: 50;
   width: 100%;
   background-color: #deddce;
+  height: ${({ theme }) => theme.dimensions.navbarHeightSmall};
 `;
 
 export const NavBrand = styled(Link)`
@@ -33,12 +34,14 @@ export const NavMenu = styled.ul<NavTogglerType>`
   display: flex;
   flex-direction: column;
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+  pointer-events: ${({ isOpen }) => (isOpen ? "auto" : "none")};
 
   @media screen and (min-width: 768px) {
     position: static;
     width: unset;
     flex-direction: row;
     opacity: 1;
+    pointer-events: auto;
   }
 `;
 
@@ -46,7 +49,7 @@ export const NavItem = styled.li<NavTogglerType>`
   text-align: center;
   transform: ${({ isOpen }) =>
     isOpen ? "translateX(0)" : "translateX(-100%)"};
-  transition: transform 0.3s ease;
+  transition: ${({ isOpen }) => isOpen && "transform 0.3s ease"};
   border-top: 1px solid ${({ theme }) => theme.colors.magenta};
 
   &:last-of-type {

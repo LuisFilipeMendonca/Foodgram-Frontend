@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { ThemeType } from "./theme";
 
 const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
@@ -29,3 +29,23 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
 `;
 
 export default GlobalStyle;
+
+export const MainContainer = styled.main`
+  padding-top: ${({ theme }) => theme.dimensions.navbarHeightSmall};
+`;
+
+export const SectionRecipies = styled.section`
+  padding: ${({ theme }) => `calc(${theme.dimensions.filtersHeight} + 16px)`}
+    8px 8px;
+
+  @media screen and (min-width: 850px) {
+    padding: 16px;
+    margin-left: 250px;
+  }
+`;
+
+export const RecipiesContainer = styled.ul`
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+`;

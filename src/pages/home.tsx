@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 
+import { SectionRecipies, RecipiesContainer } from "../styles";
+
 import { useAppSelector } from "../hooks/useAppSelector";
 import { useAppDispatch } from "../hooks/useAppDispatch";
 
@@ -53,25 +55,26 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Filters />
-      <Pagination
-        currentPage={currentPage}
-        itemsPerPage={itemsPerPage}
-        count={count}
-        visiblePages={4}
-        setPageHandler={setPageHandler}
-      />
-      <ul
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(0, 300px))",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "32px",
-          padding: "16px",
-        }}
-      >
-        {recipiesCards}
-      </ul>
+      <SectionRecipies>
+        <RecipiesContainer
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(0, 250px))",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "16px",
+          }}
+        >
+          {recipiesCards}
+        </RecipiesContainer>
+        <Pagination
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          count={count}
+          visiblePages={4}
+          setPageHandler={setPageHandler}
+        />
+      </SectionRecipies>
     </>
   );
 };

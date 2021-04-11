@@ -10,6 +10,10 @@ export const theme = {
     textMedium: "#999",
     textLight: "#eee",
   },
+  dimensions: {
+    navbarHeightSmall: "60px",
+    filtersHeight: "70px",
+  },
 };
 
 export type ThemeType = typeof theme;
