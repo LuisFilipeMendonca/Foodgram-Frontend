@@ -6,7 +6,7 @@ type FiltersType = {
 
 export const FiltersContainer = styled.section<FiltersType>`
   position: ${({ isOpen }) => (isOpen ? "fixed" : "absolute")};
-  height: 100%;
+  height: ${({ isOpen }) => (isOpen ? "100%" : "0")};
   width: 100%;
   pointer-events: none;
 
@@ -53,6 +53,7 @@ export const FiltersContainer = styled.section<FiltersType>`
   @media screen and (min-width: 850px) {
     position: fixed;
     width: 250px;
+    height: 100%;
     border-right: 1px solid ${({ theme }) => theme.colors.magentaOpacity};
     background-color: ${({ theme }) => theme.colors.magentaOpacity};
 
