@@ -1,5 +1,15 @@
 import React from "react";
 
+import {
+  RadioGroupContainer,
+  RadioGroupLabel,
+  RadioGroupOptions,
+  RadioInputGroup,
+  InputRadioLabel,
+  InputRadio,
+  InputRadioBullet,
+} from "./styled";
+
 interface IInputRadio {
   type: string;
   label: string;
@@ -22,12 +32,12 @@ const RadioGroup: React.FC<IRadioGroup> = ({
   changeHandler,
 }) => {
   return (
-    <>
-      <h3>{title}</h3>
-      <div className="filters__options">
+    <RadioGroupContainer>
+      <RadioGroupLabel>{title}</RadioGroupLabel>
+      <RadioGroupOptions>
         {inputs.map((input) => (
-          <div className="input__group">
-            <input
+          <RadioInputGroup>
+            <InputRadio
               type={input.type}
               name={name}
               id={input.id}
@@ -35,11 +45,12 @@ const RadioGroup: React.FC<IRadioGroup> = ({
               onChange={(e) => changeHandler(e)}
               checked={selectedValue === input.id}
             />
-            <label htmlFor={input.id}>{input.label}</label>
-          </div>
+            <InputRadioBullet />
+            <InputRadioLabel htmlFor={input.id}>{input.label}</InputRadioLabel>
+          </RadioInputGroup>
         ))}
-      </div>
-    </>
+      </RadioGroupOptions>
+    </RadioGroupContainer>
   );
 };
 

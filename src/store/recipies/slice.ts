@@ -13,7 +13,7 @@ export const fetchRecipies = createAsyncThunk(
       const { itemsPerPage, itemsOrderValue } = recipies;
 
       const response = await axios(
-        `http://localhost:3001/recipies/${page}/${itemsPerPage}`
+        `http://localhost:3001/recipies/${page}/${itemsPerPage}?order=${itemsOrderValue}`
       );
 
       return response.data;

@@ -49,24 +49,20 @@ const Filters: React.FC = () => {
         </div>
       </div>
       <ul className="filters__menu">
-        <li className="filters__item">
-          <RadioGroup
-            inputs={sortInputs}
-            changeHandler={itemsOrderHandler}
-            title="Sort By"
-            selectedValue={itemsOrderValue}
-            name="sort"
-          />
-        </li>
-        <li>
-          <RadioGroup
-            title="Items Per Page"
-            changeHandler={itemsPerPageHandler}
-            inputs={recipiesQttyInputs}
-            selectedValue={itemsPerPage}
-            name="itemsPerPage"
-          />
-        </li>
+        <RadioGroup
+          inputs={sortInputs}
+          changeHandler={itemsOrderHandler}
+          title="Sort By"
+          selectedValue={itemsOrderValue}
+          name="sort"
+        />
+        <RadioGroup
+          title="Items Per Page"
+          changeHandler={itemsPerPageHandler}
+          inputs={recipiesQttyInputs}
+          selectedValue={itemsPerPage}
+          name="itemsPerPage"
+        />
       </ul>
     </FiltersContainer>
   );
