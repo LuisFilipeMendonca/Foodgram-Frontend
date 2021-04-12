@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
     isLoading,
     currentPage,
     itemsPerPage,
-    itemsOrderQuery,
+    itemsOrderValue,
   } = useAppSelector((state) => state.recipies);
   const { prevPath } = useAppSelector((state) => state.location);
 
@@ -36,7 +36,7 @@ const HomePage: React.FC = () => {
     }
 
     dispatch(fetchRecipies(currentPage));
-  }, [currentPage, dispatch, itemsPerPage, itemsOrderQuery]);
+  }, [currentPage, dispatch, itemsPerPage, itemsOrderValue]);
 
   const recipiesCards = recipies.map((recipie) => (
     <RecipieCard
@@ -69,7 +69,7 @@ const HomePage: React.FC = () => {
         </RecipiesContainer>
         <Pagination
           currentPage={currentPage}
-          itemsPerPage={itemsPerPage}
+          itemsPerPage={+itemsPerPage}
           count={count}
           visiblePages={4}
           setPageHandler={setPageHandler}

@@ -5,8 +5,8 @@ interface IRecipieState {
   count: number;
   isLoading: boolean;
   currentPage: number;
-  itemsPerPage: number;
-  itemsOrderQuery: string;
+  itemsPerPage: string;
+  itemsOrderValue: string;
 }
 
 export const recipiesInitialState: IRecipieState = {
@@ -14,6 +14,6 @@ export const recipiesInitialState: IRecipieState = {
   count: 0,
   isLoading: false,
   currentPage: 1,
-  itemsPerPage: 3,
-  itemsOrderQuery: "",
+  itemsPerPage: "6",
+  itemsOrderValue: "recent",
 };
