@@ -13,6 +13,12 @@ export const theme = {
   dimensions: {
     navbarHeightSmall: "60px",
     filtersHeight: "70px",
+    recipies: {
+      heightSmall: "125px",
+      imgWidthSmall: "160px",
+      imgHeightSmall: "120px",
+      imgHeightBig: "150px",
+    },
   },
 };
 

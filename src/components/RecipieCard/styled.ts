@@ -7,11 +7,11 @@ export const CardContainer = styled.li`
   overflow: hidden;
   box-shadow: 0 0 5px #aaa;
   display: flex;
-  height: 150px;
+  height: ${({ theme }) => theme.dimensions.recipies.heightSmall};
 
   @media screen and (min-width: 400px) {
     flex-direction: column;
-    height: 220px;
+    height: unset;
   }
 
   @media screen and (min-width: 500px) {
@@ -20,18 +20,18 @@ export const CardContainer = styled.li`
 `;
 
 export const CardImg = styled.img`
-  width: 160px;
+  width: ${({ theme }) => theme.dimensions.recipies.imgWidthSmall};
   height: 100%;
   object-fit: cover;
   display: block;
 
   @media screen and (min-width: 400px) {
     width: 100%;
-    height: 120px;
+    height: ${({ theme }) => theme.dimensions.recipies.imgHeightSmall};
   }
 
   @media screen and (min-width: 500px) {
-    height: 150px;
+    height: ${({ theme }) => theme.dimensions.recipies.imgHeightBig};
   }
 `;
 
@@ -40,11 +40,14 @@ export const CardTitle = styled.h3`
   font-size: 0.9rem;
   font-weight: 800;
 
-  @media screen and (min-width: 500px) {
-    white-space: nowrap;
+  @media screen and (min-width: 400px) {
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @media screen and (min-width: 500px) {
     font-size: 1rem;
   }
 `;
@@ -54,17 +57,13 @@ export const CardInformation = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  justify-content: space-around;
 
   & > *:not(:last-child) {
     margin-bottom: 8px;
   }
 
-  @media screen and (min-width: 400px) {
-    justify-content: space-around;
-  }
-
   @media screen and (min-width: 500px) {
-    justify-content: center;
     padding: 8px;
   }
 `;

@@ -58,7 +58,6 @@ export const RecipiesContainer = styled.ul`
   }
 
   @media screen and (min-width: 1200px) {
-    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
     gap: 24px;
   }
 `;
