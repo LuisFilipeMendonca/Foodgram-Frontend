@@ -36,7 +36,7 @@ const RadioGroup: React.FC<IRadioGroup> = ({
       <RadioGroupLabel>{title}</RadioGroupLabel>
       <RadioGroupOptions>
         {inputs.map((input) => (
-          <RadioInputGroup>
+          <RadioInputGroup key={input.id}>
             <InputRadio
               type={input.type}
               name={name}

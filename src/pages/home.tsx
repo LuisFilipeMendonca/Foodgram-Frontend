@@ -10,6 +10,7 @@ import { setPath } from "../store/location/slice";
 
 import RecipieCard from "../components/RecipieCard";
 import Pagination from "../components/Pagination";
+import RecipieSkeleton from "../components/RecipieSkeleton";
 import Filters from "../layout/Filters";
 
 const HomePage: React.FC = () => {
@@ -35,6 +36,8 @@ const HomePage: React.FC = () => {
       return;
     }
 
+    window.scroll({ top: 0 });
+
     dispatch(fetchRecipies(currentPage));
   }, [currentPage, dispatch, itemsPerPage, itemsOrderValue]);
 
@@ -48,9 +51,7 @@ const HomePage: React.FC = () => {
     />
   ));
 
-  if (isLoading) {
-    return <div>IsLoading</div>;
-  }
+  console.log(recipies);
 
   return (
     <>
@@ -65,7 +66,12 @@ const HomePage: React.FC = () => {
             gap: "16px",
           }}
         >
-          {recipiesCards}
+          {!isLoading && recipies.length && recipiesCards}
+          {isLoading &&
+            Array.from(
+              { length: +itemsPerPage },
+              (_, idx) => idx + 1
+            ).map((value) => <RecipieSkeleton key={value} />)}
         </RecipiesContainer>
         <Pagination
           currentPage={currentPage}
