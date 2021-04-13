@@ -57,15 +57,7 @@ const HomePage: React.FC = () => {
     <>
       <Filters />
       <SectionRecipies>
-        <RecipiesContainer
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(0, 250px))",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "16px",
-          }}
-        >
+        <RecipiesContainer>
           {!isLoading && recipies.length && recipiesCards}
           {isLoading &&
             Array.from(

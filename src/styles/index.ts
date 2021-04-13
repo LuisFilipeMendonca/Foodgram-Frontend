@@ -45,7 +45,20 @@ export const SectionRecipies = styled.section`
 `;
 
 export const RecipiesContainer = styled.ul`
-  /* display: flex;
-  flex-direction: column;
-  align-items: center; */
+  display: grid;
+  gap: 8px;
+
+  @media screen and (min-width: 400px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (min-width: 500px) {
+    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+    gap: 16px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+    gap: 24px;
+  }
 `;

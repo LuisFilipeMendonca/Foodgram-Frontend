@@ -10,11 +10,16 @@ export const CardStarPolygon = styled.polygon<StarType>`
 `;
 
 export const CardStar = styled.svg`
-  height: 25px;
-  width: 23px;
+  height: 21px;
+  width: 19px;
 
   &:focus ${CardStarPolygon} {
     filter: ${({ theme }) => `drop-shadow(0 0 2px ${theme.colors.magenta})`};
+  }
+
+  @media screen and (min-width: 500px) {
+    height: 23px;
+    width: 21px;
   }
 `;
 

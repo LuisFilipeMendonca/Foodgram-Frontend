@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { CardContainer, CardImg, CardTitle, CardInformation } from "./styled";
+import {
+  CardContainer,
+  CardImg,
+  CardTitle,
+  CardInformation,
+  CardActions,
+} from "./styled";
 
 import RecipieRating from "../RecipieRating";
 
@@ -20,8 +26,10 @@ const RecipieCard: React.FC<IRecipieCard> = ({ photo, stars, name, id }) => {
       <CardImg src={photo} />
       <CardInformation>
         <CardTitle>{name}</CardTitle>
-        <RecipieRating votes={2} votesCount={8} isLoading={false} />
-        <Link to={recipieLink}>View Recipie</Link>
+        <CardActions>
+          <RecipieRating votes={2} votesCount={8} isLoading={false} />
+          <Link to={recipieLink}>View Recipie</Link>
+        </CardActions>
       </CardInformation>
     </CardContainer>
   );
