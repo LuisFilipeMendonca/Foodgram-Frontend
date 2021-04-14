@@ -34,6 +34,14 @@ export const MainContainer = styled.main`
   padding-top: ${({ theme }) => theme.dimensions.navbarHeightSmall};
 `;
 
+export const MainContainerAuth = styled(MainContainer)`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+`;
+
 export const SectionRecipies = styled.section`
   padding: ${({ theme }) => `calc(${theme.dimensions.filtersHeight} + 16px)`}
     8px 8px;
@@ -53,7 +61,7 @@ export const RecipiesContainer = styled.ul`
   }
 
   @media screen and (min-width: 500px) {
-    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
     gap: 16px;
   }
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 import { SectionRecipies, RecipiesContainer } from "../styles";
+import { MainContainer } from "../styles";
 
 import { useAppSelector } from "../hooks/useAppSelector";
 import { useAppDispatch } from "../hooks/useAppDispatch";
@@ -51,10 +52,8 @@ const HomePage: React.FC = () => {
     />
   ));
 
-  console.log(recipies);
-
   return (
-    <>
+    <MainContainer>
       <Filters />
       <SectionRecipies>
         <RecipiesContainer>
@@ -73,7 +72,7 @@ const HomePage: React.FC = () => {
           setPageHandler={setPageHandler}
         />
       </SectionRecipies>
-    </>
+    </MainContainer>
   );
 };
 

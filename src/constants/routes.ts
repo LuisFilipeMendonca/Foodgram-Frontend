@@ -4,6 +4,7 @@ import HomePage from "../pages/home";
 import FavoritesPage from "../pages/favorites";
 import MyRecipiesPage from "../pages/recipies";
 import RecipiePage from "../pages/recipie";
+import AuthPage from "../pages/auth";
 
 type RouteType = {
   id: number;
@@ -39,10 +40,12 @@ const routes: RouteType[] = [
   //   id: 4,
   //   path: "/add_recipie",
   // },
-  // {
-  //   id: 5,
-  //   path: "/login",
-  // },
+  {
+    id: 5,
+    path: "/login",
+    component: AuthPage,
+    isExact: true,
+  },
   // {
   //   id: 6,
   //   path: "/register",

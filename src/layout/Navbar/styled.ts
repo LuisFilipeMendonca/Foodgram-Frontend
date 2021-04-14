@@ -2,7 +2,11 @@ import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 
 type NavTogglerType = {
-  isOpen: boolean;
+  isOpen?: boolean;
+};
+
+type NavLinkType = {
+  isAuth?: boolean;
 };
 
 export const Nav = styled.nav`
@@ -77,13 +81,17 @@ export const NavItem = styled.li<NavTogglerType>`
   }
 `;
 
-export const NavLinkItem = styled(NavLink)`
+export const NavLinkItem = styled(NavLink)<NavLinkType>`
   display: block;
-  padding: 20px 0;
+  padding: ${({ isAuth }) => (isAuth ? "6px 24px" : "20px 0")};
+  border-radius: ${({ isAuth }) => isAuth && "3px"};
   background-color: #deddce;
   color: ${({ theme }) => theme.colors.magentaOpacity};
   font-family: "Dancing Script", cursive;
   font-size: 1.4rem;
+  background-color: ${({ theme, isAuth }) =>
+    isAuth && theme.colors.magentaOpacity};
+  color: ${({ theme, isAuth }) => isAuth && theme.colors.textLight};
 
   &:hover,
   &.active {
@@ -97,7 +105,8 @@ export const NavLinkItem = styled(NavLink)`
 
     &:hover,
     &.active {
-      background-color: ${({ theme }) => theme.colors.magentaOpacity};
+      background-color: ${({ theme, isAuth }) =>
+        isAuth ? theme.colors.magenta : theme.colors.magentaOpacity};
     }
   }
 `;

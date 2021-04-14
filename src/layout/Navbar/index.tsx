@@ -14,6 +14,7 @@ import {
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const isLoggedIn = false;
 
   const toggleHandler = () => setIsOpen(!isOpen);
 
@@ -35,12 +36,20 @@ const Navbar: React.FC = () => {
   return (
     <Nav>
       <NavBrand to="/">FoodGram</NavBrand>
-      <NavToggler onClick={toggleHandler}>
-        <NavTogglerItem isOpen={isOpen} />
-        <NavTogglerItem isOpen={isOpen} />
-        <NavTogglerItem isOpen={isOpen} />
-      </NavToggler>
-      <NavMenu isOpen={isOpen}>{navLinks}</NavMenu>
+      {isLoggedIn ? (
+        <>
+          <NavToggler onClick={toggleHandler}>
+            <NavTogglerItem isOpen={isOpen} />
+            <NavTogglerItem isOpen={isOpen} />
+            <NavTogglerItem isOpen={isOpen} />
+          </NavToggler>
+          <NavMenu isOpen={isOpen}>{navLinks}</NavMenu>
+        </>
+      ) : (
+        <NavLinkItem exact to="/login" isAuth={true}>
+          Login
+        </NavLinkItem>
+      )}
     </Nav>
   );
 };
