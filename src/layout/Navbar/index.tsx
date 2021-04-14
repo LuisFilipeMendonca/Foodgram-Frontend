@@ -10,6 +10,7 @@ import {
   NavLinkItem,
   NavToggler,
   NavTogglerItem,
+  AuthLink,
 } from "./styled";
 
 const Navbar: React.FC = () => {
@@ -46,9 +47,7 @@ const Navbar: React.FC = () => {
           <NavMenu isOpen={isOpen}>{navLinks}</NavMenu>
         </>
       ) : (
-        <NavLinkItem exact to="/login" isAuth={true}>
-          Login
-        </NavLinkItem>
+        <AuthLink to="/login">Sign In</AuthLink>
       )}
     </Nav>
   );

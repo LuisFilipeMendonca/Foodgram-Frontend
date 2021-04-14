@@ -46,10 +46,12 @@ const routes: RouteType[] = [
     component: AuthPage,
     isExact: true,
   },
-  // {
-  //   id: 6,
-  //   path: "/register",
-  // },
+  {
+    id: 6,
+    path: "/register",
+    component: AuthPage,
+    isExact: true,
+  },
   {
     id: 7,
     path: "/recipie/:id",

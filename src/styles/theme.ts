@@ -15,6 +15,7 @@ export const theme = {
     filtersHeight: "70px",
     recipies: {
       heightSmall: "125px",
+      heightBig: "245px",
       imgWidthSmall: "160px",
       imgHeightSmall: "120px",
       imgHeightBig: "150px",

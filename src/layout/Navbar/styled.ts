@@ -5,10 +5,6 @@ type NavTogglerType = {
   isOpen?: boolean;
 };
 
-type NavLinkType = {
-  isAuth?: boolean;
-};
-
 export const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
@@ -28,6 +24,20 @@ export const NavBrand = styled(Link)`
   font-weight: bold;
   color: ${({ theme }) => theme.colors.magenta};
   font-family: "Dancing Script", cursive;
+`;
+
+export const AuthLink = styled(Link)`
+  padding: 6px 24px;
+  font-family: "Dancing Script", cursive;
+  font-size: 1.4rem;
+  background-color: ${({ theme }) => theme.colors.magentaOpacity};
+  color: ${({ theme }) => theme.colors.textLight};
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.magenta};
+  }
 `;
 
 export const NavMenu = styled.ul<NavTogglerType>`
@@ -81,17 +91,13 @@ export const NavItem = styled.li<NavTogglerType>`
   }
 `;
 
-export const NavLinkItem = styled(NavLink)<NavLinkType>`
+export const NavLinkItem = styled(NavLink)`
   display: block;
-  padding: ${({ isAuth }) => (isAuth ? "6px 24px" : "20px 0")};
-  border-radius: ${({ isAuth }) => isAuth && "3px"};
+  padding: 20px 0;
   background-color: #deddce;
   color: ${({ theme }) => theme.colors.magentaOpacity};
   font-family: "Dancing Script", cursive;
   font-size: 1.4rem;
-  background-color: ${({ theme, isAuth }) =>
-    isAuth && theme.colors.magentaOpacity};
-  color: ${({ theme, isAuth }) => isAuth && theme.colors.textLight};
 
   &:hover,
   &.active {
@@ -105,8 +111,7 @@ export const NavLinkItem = styled(NavLink)<NavLinkType>`
 
     &:hover,
     &.active {
-      background-color: ${({ theme, isAuth }) =>
-        isAuth ? theme.colors.magenta : theme.colors.magentaOpacity};
+      background-color: ${({ theme }) => theme.colors.magentaOpacity};
     }
   }
 `;

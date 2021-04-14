@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { MainContainerAuth } from "../styles";
 import {
@@ -17,7 +17,60 @@ import {
   FormActions,
 } from "./styled";
 
+import { loginInputs, registerInputs } from "../constants/inputs";
+
+import useInputs from "../hooks/useInputs";
+
 const AuthPage: React.FC = () => {
+  const [isLogging, setIsLogging] = useState(true);
+
+  const { inputs, changeHandler } = useInputs(loginInputs);
+  const { inputs: registerInpu, changeHandler: registerChange } = useInputs(
+    registerInputs
+  );
+
+  const loginInputsElem = inputs.map((input) => (
+    <InputContainer key={input.id}>
+      <InputLabel htmlFor={input.id}>{input.label}</InputLabel>
+      <InputWrapper>
+        <Input
+          type="text"
+          id={input.id}
+          placeholder={input.placeholder}
+          value={input.value}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            changeHandler(e)
+          }
+        />
+        <InputBorder />
+      </InputWrapper>
+      <InputInfo>Info about the input</InputInfo>
+      <InputError>Info about the error message</InputError>
+    </InputContainer>
+  ));
+
+  const registerInputsElem = registerInpu.map((input) => (
+    <InputContainer key={input.id}>
+      <InputLabel htmlFor={input.id}>{input.label}</InputLabel>
+      <InputWrapper>
+        <Input
+          type="text"
+          id={input.id}
+          placeholder={input.placeholder}
+          value={input.value}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            registerChange(e)
+          }
+        />
+        <InputBorder />
+      </InputWrapper>
+      <InputInfo>Info about the input</InputInfo>
+      <InputError>Info about the error message</InputError>
+    </InputContainer>
+  ));
+
+  const changeAuthHandler = () => setIsLogging(!isLogging);
+
   return (
     <MainContainerAuth>
       <SectionForm>
@@ -26,27 +79,13 @@ const AuthPage: React.FC = () => {
             <FormTitle>Login</FormTitle>
           </FormHeader>
           <InputsContainer>
-            <InputContainer>
-              <InputLabel htmlFor="email">Email</InputLabel>
-              <InputWrapper>
-                <Input type="text" />
-                <InputBorder />
-              </InputWrapper>
-              <InputInfo>Info about the input</InputInfo>
-              <InputError>Info about the error message</InputError>
-            </InputContainer>
-            <InputContainer>
-              <InputLabel htmlFor="email">Email</InputLabel>
-              <InputWrapper>
-                <Input type="text" />
-                <InputBorder />
-              </InputWrapper>
-              <InputInfo>Info about the input</InputInfo>
-              <InputError>Info about the error message</InputError>
-            </InputContainer>
+            {isLogging ? loginInputsElem : registerInputsElem}
           </InputsContainer>
           <FormActions>
             <button>Login</button>
+            <button type="button" onClick={changeAuthHandler}>
+              Change to Register
+            </button>
           </FormActions>
         </Form>
       </SectionForm>

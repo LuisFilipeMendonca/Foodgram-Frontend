@@ -34,6 +34,10 @@ export const RecipieSkeletonContainer = styled.div`
     flex-direction: column;
     height: unset;
   }
+
+  @media screen and (min-width: 500px) {
+    height: ${({ theme }) => theme.dimensions.recipies.heightBig};
+  }
 `;
 
 export const SkeletonImg = styled.div`

@@ -35,11 +35,12 @@ export const MainContainer = styled.main`
 `;
 
 export const MainContainerAuth = styled(MainContainer)`
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
+  padding: ${({ theme }) => `calc(${theme.dimensions.navbarHeightSmall} + 8px)`}
+    8px 8px;
 `;
 
 export const SectionRecipies = styled.section`

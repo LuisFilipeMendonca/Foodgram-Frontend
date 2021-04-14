@@ -15,7 +15,7 @@ export const CardContainer = styled.li`
   }
 
   @media screen and (min-width: 500px) {
-    height: unset;
+    height: ${({ theme }) => theme.dimensions.recipies.heightBig};
   }
 `;
 
