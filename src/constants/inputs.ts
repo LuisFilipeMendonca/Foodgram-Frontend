@@ -1,4 +1,5 @@
 import { IInputDefinition } from "../interfaces/Inputs";
+import Validator from "../helpers/Validator";
 
 export const loginInputs: IInputDefinition[] = [
   {
@@ -9,6 +10,7 @@ export const loginInputs: IInputDefinition[] = [
     name: "email",
     isInvalid: false,
     errorMsg: "",
+    validator: Validator.isEmail,
   },
   {
     label: "Password",
@@ -18,6 +20,8 @@ export const loginInputs: IInputDefinition[] = [
     name: "password",
     isInvalid: false,
     errorMsg: "",
+    minLength: 6,
+    validator: Validator.hasMinLength,
   },
 ];
 
@@ -30,6 +34,7 @@ export const registerInputs: IInputDefinition[] = [
     type: "text",
     isInvalid: false,
     errorMsg: "",
+    validator: Validator.hasValue,
   },
   ...loginInputs,
 ];

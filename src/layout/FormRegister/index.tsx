@@ -9,6 +9,8 @@ import useInputs from "../../hooks/useInputs";
 import Form from "../../components/Form";
 import Input from "../../components/Inputs";
 
+import FormHelper from "../../helpers/Form";
+
 const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
   const { inputs, changeHandler } = useInputs(registerInputs);
 
@@ -44,7 +46,13 @@ const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("ola");
+
+    const form = new FormHelper(inputs);
+
+    const { isFormValid, validatedInputs } = form.formValidate();
+
+    console.log(isFormValid);
+    console.log(validatedInputs);
   };
 
   const additionalBtn = (

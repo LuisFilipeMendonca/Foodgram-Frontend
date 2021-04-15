@@ -15,6 +15,10 @@ export interface IInputDefinition {
   isInvalid: boolean;
   errorMsg: string;
   info?: string;
+  minLength?: number;
+  validator?: (
+    input: IInputDefinition
+  ) => { isValid: boolean; errorMsg: string };
 }
 
 export interface IInput extends IInputDefinition, IInputActions {}
