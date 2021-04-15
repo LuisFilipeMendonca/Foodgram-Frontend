@@ -1,31 +1,44 @@
-interface Input {
-  id: string;
-  value: string;
-  label: string;
-  placeholder: string;
-}
+import { IInputDefinition } from "../interfaces/Inputs";
 
-export const loginInputs: Input[] = [
+export const loginInputs: IInputDefinition[] = [
   {
-    id: "email",
     label: "Email",
     value: "",
     placeholder: "Enter your email",
+    type: "text",
+    name: "email",
+    isInvalid: false,
+    errorMsg: "",
   },
   {
-    id: "password",
     label: "Password",
     value: "",
     placeholder: "Enter your password",
+    type: "password",
+    name: "password",
+    isInvalid: false,
+    errorMsg: "",
+  },
+  {
+    label: "Ingredients",
+    value: [],
+    placeholder: "Enter your ingredient",
+    type: "group",
+    name: "ingredients",
+    isInvalid: false,
+    errorMsg: "",
+    qtty: 5,
+    values: [],
   },
 ];
 
-export const registerInputs: Input[] = [
-  {
-    id: "name",
-    label: "Name",
-    value: "",
-    placeholder: "Enter your name",
-  },
-  ...loginInputs,
-];
+// export const registerInputs: Input[] = [
+//   {
+//     name: 'username',
+//     label: "Username",
+//     value: "",
+//     placeholder: "Enter your name",
+//     type: "text",
+//   },
+//   ...loginInputs,
+// ];

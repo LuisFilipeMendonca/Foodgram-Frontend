@@ -1,13 +1,8 @@
 import { useReducer } from "react";
 
-interface Input {
-  id: string;
-  value: string;
-  label: string;
-  placeholder: string;
-}
+import { IInputDefinition } from "../interfaces/Inputs";
 
-type State = Input[];
+type State = IInputDefinition[];
 
 type Change = {
   type: "change";
@@ -17,11 +12,28 @@ type Change = {
 type ActionType = Change;
 
 const changeHandler = (state: State, payload: HTMLInputElement) => {
-  const { id, value } = payload;
+  const { name, value, id } = payload;
   const updatedState = [...state];
-  const inputIdx = updatedState.findIndex((input) => input.id === id);
 
-  updatedState[inputIdx].value = value;
+  const inputIdx = updatedState.findIndex((input) => input.name === name);
+
+  if (Array.isArray(updatedState[inputIdx].value)) {
+    const arrValueIdx = updatedState[inputIdx].values!.findIndex(
+      (value) => value.id === id
+    );
+
+    if (arrValueIdx !== -1) {
+      updatedState[inputIdx].values![arrValueIdx].value = value;
+    } else {
+      updatedState[inputIdx].values = [
+        ...updatedState[inputIdx].values!,
+        { id, value },
+      ];
+    }
+  } else {
+    updatedState[inputIdx].value = value;
+  }
+
   return updatedState;
 };
 
@@ -32,7 +44,7 @@ const reducer = (state: State, action: ActionType) => {
   }
 };
 
-const useInputs = (initialState: Input[]) => {
+const useInputs = (initialState: IInputDefinition[]) => {
   const [inputs, dispatch] = useReducer(
     reducer,
     initialState.map((slice) => Object.assign({}, slice))
