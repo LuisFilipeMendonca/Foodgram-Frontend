@@ -10,7 +10,7 @@ import Form from "../../components/Form";
 import Input from "../../components/Inputs";
 
 const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
-  const { inputs, changeHandler } = useInputs(loginInputs);
+  const { inputs, changeHandler, focusHandler } = useInputs(loginInputs);
 
   const loginInputsElem = inputs.map(
     ({
@@ -37,6 +37,7 @@ const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
           name={name}
           qtty={qtty}
           changeHandler={changeHandler}
+          focusHandler={focusHandler}
         />
       );
     }

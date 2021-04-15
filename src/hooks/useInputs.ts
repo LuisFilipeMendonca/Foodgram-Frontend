@@ -9,7 +9,17 @@ type Change = {
   payload: HTMLInputElement;
 };
 
-type ActionType = Change;
+type Set = {
+  type: "set";
+  payload: IInputDefinition[];
+};
+
+type Focus = {
+  type: "focus";
+  payload: string;
+};
+
+type ActionType = Change | Set | Focus;
 
 const changeHandler = (state: State, payload: HTMLInputElement) => {
   const { name, value, id } = payload;
@@ -37,10 +47,27 @@ const changeHandler = (state: State, payload: HTMLInputElement) => {
   return updatedState;
 };
 
+const focusHandler = (state: State, payload: string) => {
+  const updatedState = [...state];
+  const inputIdx = updatedState.findIndex((input) => input.name === payload);
+  updatedState[inputIdx].isInvalid = false;
+  updatedState[inputIdx].errorMsg = "";
+  return updatedState;
+};
+
+const setHandler = (state: State, payload: IInputDefinition[]) => {
+  const updatedState = [...payload];
+  return updatedState;
+};
+
 const reducer = (state: State, action: ActionType) => {
   switch (action.type) {
     case "change":
       return changeHandler(state, action.payload);
+    case "set":
+      return setHandler(state, action.payload);
+    case "focus":
+      return focusHandler(state, action.payload);
   }
 };
 
@@ -53,7 +80,13 @@ const useInputs = (initialState: IInputDefinition[]) => {
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     dispatch({ type: "change", payload: e.target });
 
-  return { inputs, changeHandler };
+  const setHandler = (inputs: IInputDefinition[]) =>
+    dispatch({ type: "set", payload: inputs });
+
+  const focusHandler = (name: string) =>
+    dispatch({ type: "focus", payload: name });
+
+  return { inputs, changeHandler, setHandler, focusHandler };
 };
 
 export default useInputs;

@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+type InputBorderType = {
+  isInvalid: boolean;
+};
+
 export const RadioGroupContainer = styled.li`
   &:not(:last-of-type) {
     margin-bottom: 16px;
@@ -75,8 +79,8 @@ export const InputWrapper = styled.div`
   position: relative;
 `;
 
-export const InputBorder = styled.span`
-  border: 1px solid #ccc;
+export const InputBorder = styled.span<InputBorderType>`
+  border: 1px solid ${({ isInvalid }) => (isInvalid ? "red" : "#ccc")};
   position: absolute;
   top: 0;
   left: 0;

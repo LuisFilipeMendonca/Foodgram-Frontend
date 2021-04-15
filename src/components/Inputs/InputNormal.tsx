@@ -22,6 +22,7 @@ const InputNormal: React.FC<IInputNormal> = ({
   errorMsg,
   value,
   changeHandler,
+  focusHandler,
 }) => {
   return (
     <InputContainer key={name}>
@@ -32,11 +33,12 @@ const InputNormal: React.FC<IInputNormal> = ({
           placeholder={placeholder}
           name={name}
           value={value}
+          onFocus={() => focusHandler(name)}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             changeHandler(e)
           }
         />
-        <InputBorder />
+        <InputBorder isInvalid={isInvalid} />
       </InputWrapper>
       {info && <InputInfo>Info about the input</InputInfo>}
       {isInvalid && <InputError>{errorMsg}</InputError>}

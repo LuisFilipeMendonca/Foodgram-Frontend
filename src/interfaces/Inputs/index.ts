@@ -2,6 +2,7 @@ import React from "react";
 
 interface IInputActions {
   changeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  focusHandler: (name: string) => void;
 }
 
 export interface IInputDefinition {

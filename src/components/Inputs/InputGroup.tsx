@@ -8,6 +8,7 @@ const InputGroup: React.FC<IInputGroup> = ({
   placeholder,
   qtty,
   changeHandler,
+  focusHandler,
 }) => {
   const [inputQtty, setInputQtty] = useState(qtty);
 
@@ -18,6 +19,7 @@ const InputGroup: React.FC<IInputGroup> = ({
       <label>{label}</label>
       {Array.from({ length: inputQtty }, (_, idx) => idx + 1).map((value) => (
         <input
+          onFocus={() => focusHandler(name)}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             changeHandler(e)
           }

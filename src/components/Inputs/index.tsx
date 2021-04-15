@@ -16,6 +16,7 @@ const Input: React.FC<IInput> = ({
   qtty,
   value,
   changeHandler,
+  focusHandler,
 }) => {
   if (type === "group") {
     return (
@@ -25,6 +26,7 @@ const Input: React.FC<IInput> = ({
         qtty={qtty || 2}
         name={name}
         changeHandler={changeHandler}
+        focusHandler={focusHandler}
       />
     );
   }
@@ -40,6 +42,7 @@ const Input: React.FC<IInput> = ({
       info={info}
       value={value}
       changeHandler={changeHandler}
+      focusHandler={focusHandler}
     />
   );
 };

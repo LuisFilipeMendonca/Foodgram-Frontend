@@ -12,7 +12,9 @@ import Input from "../../components/Inputs";
 import FormHelper from "../../helpers/Form";
 
 const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
-  const { inputs, changeHandler } = useInputs(registerInputs);
+  const { inputs, changeHandler, setHandler, focusHandler } = useInputs(
+    registerInputs
+  );
 
   const loginInputsElem = inputs.map(
     ({
@@ -39,6 +41,7 @@ const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
           name={name}
           qtty={qtty}
           changeHandler={changeHandler}
+          focusHandler={focusHandler}
         />
       );
     }
@@ -51,6 +54,11 @@ const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
 
     const { isFormValid, validatedInputs } = form.formValidate();
 
+    if (!isFormValid) {
+      setHandler(validatedInputs);
+      return;
+    }
+
     console.log(isFormValid);
     console.log(validatedInputs);
   };
@@ -60,6 +68,8 @@ const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
       Change to login
     </button>
   );
+
+  console.log(inputs);
 
   return (
     <Form
