@@ -19,26 +19,17 @@ export const loginInputs: IInputDefinition[] = [
     isInvalid: false,
     errorMsg: "",
   },
-  {
-    label: "Ingredients",
-    value: [],
-    placeholder: "Enter your ingredient",
-    type: "group",
-    name: "ingredients",
-    isInvalid: false,
-    errorMsg: "",
-    qtty: 5,
-    values: [],
-  },
 ];
 
-// export const registerInputs: Input[] = [
-//   {
-//     name: 'username',
-//     label: "Username",
-//     value: "",
-//     placeholder: "Enter your name",
-//     type: "text",
-//   },
-//   ...loginInputs,
-// ];
+export const registerInputs: IInputDefinition[] = [
+  {
+    name: "username",
+    label: "Username",
+    value: "",
+    placeholder: "Enter your name",
+    type: "text",
+    isInvalid: false,
+    errorMsg: "",
+  },
+  ...loginInputs,
+];

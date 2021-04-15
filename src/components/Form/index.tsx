@@ -1,5 +1,7 @@
 import React from "react";
 
+import { IFormProps } from "../../interfaces/Forms";
+
 import {
   FormHeader,
   FormTitle,
@@ -8,14 +10,7 @@ import {
   FormContainer,
 } from "./styled";
 
-interface IForm {
-  title: string;
-  submitHandler: (e: React.FormEvent) => void;
-  submitDescription: string;
-  additionalBtn?: JSX.Element;
-}
-
-const Form: React.FC<IForm> = ({
+const Form: React.FC<IFormProps> = ({
   children,
   title,
   submitHandler,
