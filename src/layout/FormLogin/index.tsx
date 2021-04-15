@@ -9,10 +9,14 @@ import useInputs from "../../hooks/useInputs";
 import Form from "../../components/Form";
 import Input from "../../components/Inputs";
 
-const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
-  const { inputs, changeHandler, focusHandler } = useInputs(loginInputs);
+import FormHelper from "../../helpers/Form";
 
-  const loginInputsElem = inputs.map(
+const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
+  const { inputs, changeHandler, setHandler, focusHandler } = useInputs(
+    loginInputs
+  );
+
+  const inputElems = inputs.map(
     ({
       label,
       value,
@@ -45,7 +49,19 @@ const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("ola");
+
+    const form = new FormHelper(inputs);
+
+    const { isFormValid, validatedInputs } = form.formValidate();
+
+    if (!isFormValid) {
+      setHandler(validatedInputs);
+      return;
+    }
+
+    const formData = form.buildFormObj();
+
+    console.log(formData);
   };
 
   const additionalBtn = (
@@ -61,7 +77,7 @@ const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
       submitDescription="login"
       additionalBtn={additionalBtn}
     >
-      {loginInputsElem}
+      {inputElems}
     </Form>
   );
 };

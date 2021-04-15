@@ -1,5 +1,9 @@
 import { IInputDefinition } from "../interfaces/Inputs";
 
+interface IFormObj {
+  [key: string]: string;
+}
+
 class Form {
   inputs: IInputDefinition[];
 
@@ -7,7 +11,18 @@ class Form {
     this.inputs = inputs;
   }
 
-  buildFormObj = () => {};
+  buildFormObj = (): IFormObj => {
+    const obj: IFormObj = {};
+
+    this.inputs.forEach((input) => {
+      const { name, value } = input;
+      if (typeof value === "string") {
+        obj[name] = value;
+      }
+    });
+
+    return obj;
+  };
 
   formValidate = () => {
     let isFormValid = true;

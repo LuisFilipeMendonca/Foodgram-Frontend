@@ -5,6 +5,9 @@ import { IFormAuthProps } from "../../interfaces/Forms";
 import { registerInputs } from "../../constants/inputs";
 
 import useInputs from "../../hooks/useInputs";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+
+import { register } from "../../store/user/slice";
 
 import Form from "../../components/Form";
 import Input from "../../components/Inputs";
@@ -12,11 +15,12 @@ import Input from "../../components/Inputs";
 import FormHelper from "../../helpers/Form";
 
 const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
+  const dispatch = useAppDispatch();
   const { inputs, changeHandler, setHandler, focusHandler } = useInputs(
     registerInputs
   );
 
-  const loginInputsElem = inputs.map(
+  const inputElems = inputs.map(
     ({
       label,
       value,
@@ -59,8 +63,9 @@ const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
       return;
     }
 
-    console.log(isFormValid);
-    console.log(validatedInputs);
+    const formData = form.buildFormObj();
+
+    dispatch(register(formData));
   };
 
   const additionalBtn = (
@@ -69,8 +74,6 @@ const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
     </button>
   );
 
-  console.log(inputs);
-
   return (
     <Form
       submitHandler={submitHandler}
@@ -78,7 +81,7 @@ const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
       submitDescription="Register"
       additionalBtn={additionalBtn}
     >
-      {loginInputsElem}
+      {inputElems}
     </Form>
   );
 };
