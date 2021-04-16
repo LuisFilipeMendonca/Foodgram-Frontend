@@ -5,6 +5,9 @@ import { IFormAuthProps } from "../../interfaces/Forms";
 import { loginInputs } from "../../constants/inputs";
 
 import useInputs from "../../hooks/useInputs";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+
+import { login } from "../../store/user/slice";
 
 import Form from "../../components/Form";
 import Input from "../../components/Inputs";
@@ -12,6 +15,7 @@ import Input from "../../components/Inputs";
 import FormHelper from "../../helpers/Form";
 
 const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
+  const dispatch = useAppDispatch();
   const { inputs, changeHandler, setHandler, focusHandler } = useInputs(
     loginInputs
   );
@@ -61,7 +65,7 @@ const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
 
     const formData = form.buildFormObj();
 
-    console.log(formData);
+    dispatch(login(formData));
   };
 
   const additionalBtn = (
