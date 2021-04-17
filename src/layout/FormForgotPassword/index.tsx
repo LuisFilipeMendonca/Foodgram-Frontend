@@ -10,6 +10,7 @@ import useInputs from "../../hooks/useInputs";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 import FormHelper from "../../helpers/Form";
+import { forgotPassword } from "../../store/user/slice";
 
 const FormForgotPassword: React.FC = () => {
   const history = useHistory();
@@ -63,9 +64,7 @@ const FormForgotPassword: React.FC = () => {
 
     const formData = form.buildFormObj();
 
-    console.log(formData);
-
-    //   dispatch(login(formData));
+    dispatch(forgotPassword(formData));
   };
 
   const additionalBtn = (

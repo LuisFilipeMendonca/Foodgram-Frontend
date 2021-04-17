@@ -23,16 +23,30 @@ export const login = createAsyncThunk("user/login", async (data: {}) => {
   }
 });
 
+export const forgotPassword = createAsyncThunk(
+  "user/forgotPassword",
+  async (data: {}) => {
+    try {
+      console.log(data);
+
+      const response = await axios.post(
+        "http://localhost:3001/users/forgot_password",
+        data
+      );
+
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState: userInitialState,
-  reducers: {},
-  extraReducers: {
-    [register.pending.type]: (state) => {
-      console.log("Pending");
-    },
-    [register.fulfilled.type]: (state, action) => {
-      const { _id, email, username, token } = action.payload;
+  reducers: {
+    setUserData: (state, { payload }) => {
+      const { _id, email, username, token } = payload;
 
       state.isLogged = true;
       state.userId = _id;
@@ -41,6 +55,14 @@ export const userSlice = createSlice({
       state.userToken = token;
 
       axios.defaults.headers.authorization = `Bearer ${token}`;
+    },
+  },
+  extraReducers: {
+    [register.pending.type]: (state) => {
+      console.log("Pending");
+    },
+    [register.fulfilled.type]: (state, action) => {
+      userSlice.caseReducers.setUserData(state, action);
     },
     [register.rejected.type]: (state, action) => {
       console.log("Rejected");
@@ -49,18 +71,19 @@ export const userSlice = createSlice({
       console.log("Pending");
     },
     [login.fulfilled.type]: (state, action) => {
-      const { _id, email, username, token } = action.payload;
-
-      state.isLogged = true;
-      state.userId = _id;
-      state.userEmail = email;
-      state.userName = username;
-      state.userToken = token;
-
-      axios.defaults.headers.authorization = `Bearer ${token}`;
-      console.log(state);
+      userSlice.caseReducers.setUserData(state, action);
     },
     [login.rejected.type]: (state, action) => {
+      console.log("Rejected");
+    },
+    [forgotPassword.pending.type]: (state) => {
+      console.log("Pending");
+    },
+    [forgotPassword.fulfilled.type]: (state, action) => {
+      console.log(action.payload);
+      console.log(userSlice);
+    },
+    [forgotPassword.rejected.type]: (state, action) => {
       console.log("Rejected");
     },
   },
