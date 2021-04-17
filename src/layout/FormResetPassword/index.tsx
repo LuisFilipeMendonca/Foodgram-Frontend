@@ -10,7 +10,7 @@ import useInputs from "../../hooks/useInputs";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 import FormHelper from "../../helpers/Form";
-// import { forgotPassword } from "../../store/user/slice";
+import { resetPassword } from "../../store/user/slice";
 
 const FormForgotPassword: React.FC = () => {
   const history = useHistory();
@@ -51,7 +51,7 @@ const FormForgotPassword: React.FC = () => {
     }
   );
 
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const form = new FormHelper(inputs);
@@ -63,9 +63,15 @@ const FormForgotPassword: React.FC = () => {
       return;
     }
 
-    const formData = { ...form.buildFormObj(), token };
+    const formData = form.buildFormObj() as { password: string };
 
-    // dispatch(forgotPassword(formData));
+    try {
+      await dispatch(resetPassword({ password: formData.password, token }));
+    } catch (e) {
+      console.log(e);
+    }
+
+    console.log("ola");
   };
 
   const additionalBtn = (

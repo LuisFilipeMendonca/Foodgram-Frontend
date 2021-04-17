@@ -27,12 +27,30 @@ export const forgotPassword = createAsyncThunk(
   "user/forgotPassword",
   async (data: {}) => {
     try {
-      console.log(data);
-
       const response = await axios.post(
         "http://localhost:3001/users/forgot_password",
         data
       );
+
+      console.log(response.data);
+
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "user/resetPassword",
+  async (data: { password: string; token: string }) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/users/reset_password/${data.token}`,
+        { password: data.password }
+      );
+
+      console.log("sucess");
 
       return response.data;
     } catch (e) {
