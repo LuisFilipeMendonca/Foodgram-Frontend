@@ -1,7 +1,7 @@
 import { IInputDefinition } from "../interfaces/Inputs";
 import Validator from "../helpers/Validator";
 
-export const loginInputs: IInputDefinition[] = [
+export const emailInput: IInputDefinition[] = [
   {
     label: "Email",
     value: "",
@@ -12,6 +12,10 @@ export const loginInputs: IInputDefinition[] = [
     errorMsg: "",
     validator: Validator.isEmail,
   },
+];
+
+export const loginInputs: IInputDefinition[] = [
+  ...emailInput,
   {
     label: "Password",
     value: "",

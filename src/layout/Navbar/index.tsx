@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import routes from "../../constants/routes";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 import {
   Nav,
@@ -15,29 +16,25 @@ import {
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const isLoggedIn = false;
+  const { isLogged } = useAppSelector((state) => state.user);
 
   const toggleHandler = () => setIsOpen(!isOpen);
 
   const navLinks = routes
-    .map((route) => {
-      if (route.label) {
-        return (
-          <NavItem key={route.id} isOpen={isOpen}>
-            <NavLinkItem exact={route.isExact} to={route.path}>
-              {route.label}
-            </NavLinkItem>
-          </NavItem>
-        );
-      }
-      return undefined;
-    })
-    .filter((el) => el !== undefined);
+    .filter((route) => route.label)
+    .sort((a, b) => a.id - b.id)
+    .map((route) => (
+      <NavItem key={route.id} isOpen={isOpen}>
+        <NavLinkItem exact={route.isExact} to={route.path}>
+          {route.label}
+        </NavLinkItem>
+      </NavItem>
+    ));
 
   return (
     <Nav>
       <NavBrand to="/">FoodGram</NavBrand>
-      {isLoggedIn ? (
+      {isLogged ? (
         <>
           <NavToggler onClick={toggleHandler}>
             <NavTogglerItem isOpen={isOpen} />

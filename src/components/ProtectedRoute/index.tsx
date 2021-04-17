@@ -17,10 +17,6 @@ const ProtectedRoute: React.FC<IProtectedRoute> = ({
 }) => {
   const { isLogged } = useAppSelector((state) => state.user);
 
-  console.log(isExact);
-
-  console.log(isClosed);
-
   if (!isLogged && isClosed) {
     return <Redirect to="/login" />;
   }

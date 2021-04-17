@@ -1,24 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 
-import { IFormAuthProps } from "../../interfaces/Forms";
-
-import { loginInputs } from "../../constants/inputs";
-
-import useInputs from "../../hooks/useInputs";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-
-import { login } from "../../store/user/slice";
+import { emailInput } from "../../constants/inputs";
 
 import Form from "../../components/Form";
 import Input from "../../components/Inputs";
 
+import useInputs from "../../hooks/useInputs";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+
 import FormHelper from "../../helpers/Form";
 
-const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
+const FormForgotPassword: React.FC = () => {
+  const history = useHistory();
   const dispatch = useAppDispatch();
   const { inputs, changeHandler, setHandler, focusHandler } = useInputs(
-    loginInputs
+    emailInput
   );
 
   const inputElems = inputs.map(
@@ -66,26 +63,27 @@ const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
 
     const formData = form.buildFormObj();
 
-    dispatch(login(formData));
+    console.log(formData);
+
+    //   dispatch(login(formData));
   };
 
   const additionalBtn = (
-    <button type="button" onClick={changeAuthHandler}>
-      Change to register
+    <button type="button" onClick={() => history.goBack()}>
+      Cancel
     </button>
   );
 
   return (
     <Form
       submitHandler={submitHandler}
-      title="Login"
-      submitDescription="login"
+      title="Password Forgotten"
+      submitDescription="reset password"
       additionalBtn={additionalBtn}
     >
       {inputElems}
-      <Link to="forgot_password">Forgot your password? Click here.</Link>
     </Form>
   );
 };
 
-export default FormLogin;
+export default FormForgotPassword;

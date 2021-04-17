@@ -5,6 +5,7 @@ import FavoritesPage from "../pages/favorites";
 import MyRecipiesPage from "../pages/recipies";
 import RecipiePage from "../pages/recipie";
 import AuthPage from "../pages/auth";
+import ForgotPasswordPage from "../pages/forgotPassword";
 
 type RouteType = {
   id: number;
@@ -32,19 +33,22 @@ const routes: RouteType[] = [
     isExact: true,
     isClosed: true,
   },
-  // {
-  //   id: 4,
-  //   path: "/add_recipie",
-  // },
   {
-    id: 5,
+    id: 4,
     path: "/login",
     component: AuthPage,
     isExact: true,
     isClosed: false,
   },
   {
-    id: 7,
+    id: 5,
+    path: "/forgot_password",
+    component: ForgotPasswordPage,
+    isExact: true,
+    isClosed: false,
+  },
+  {
+    id: 6,
     path: "/recipie/:id",
     component: RecipiePage,
     isExact: true,

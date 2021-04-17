@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 
 import { MainContainerAuth } from "../styles";
-import { SectionForm } from "./styled";
 
 import FormLogin from "../layout/FormLogin";
 import FormRegister from "../layout/FormRegister";
@@ -21,13 +20,11 @@ const AuthPage: React.FC = () => {
 
   return (
     <MainContainerAuth>
-      <SectionForm>
-        {isLogging ? (
-          <FormLogin changeAuthHandler={changeAuthHandler} />
-        ) : (
-          <FormRegister changeAuthHandler={changeAuthHandler} />
-        )}
-      </SectionForm>
+      {isLogging ? (
+        <FormLogin changeAuthHandler={changeAuthHandler} />
+      ) : (
+        <FormRegister changeAuthHandler={changeAuthHandler} />
+      )}
     </MainContainerAuth>
   );
 };
