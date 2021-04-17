@@ -14,8 +14,7 @@ export const emailInput: IInputDefinition[] = [
   },
 ];
 
-export const loginInputs: IInputDefinition[] = [
-  ...emailInput,
+export const passwordInput: IInputDefinition[] = [
   {
     label: "Password",
     value: "",
@@ -27,6 +26,11 @@ export const loginInputs: IInputDefinition[] = [
     minLength: 6,
     validator: Validator.hasMinLength,
   },
+];
+
+export const loginInputs: IInputDefinition[] = [
+  ...emailInput,
+  ...passwordInput,
 ];
 
 export const registerInputs: IInputDefinition[] = [

@@ -6,6 +6,7 @@ import MyRecipiesPage from "../pages/recipies";
 import RecipiePage from "../pages/recipie";
 import AuthPage from "../pages/auth";
 import ForgotPasswordPage from "../pages/forgotPassword";
+import ResetPasswordPage from "../pages/resetPassword";
 
 type RouteType = {
   id: number;
@@ -49,6 +50,13 @@ const routes: RouteType[] = [
   },
   {
     id: 6,
+    path: "/reset_password/:token",
+    component: ResetPasswordPage,
+    isExact: true,
+    isClosed: false,
+  },
+  {
+    id: 7,
     path: "/recipie/:id",
     component: RecipiePage,
     isExact: true,
