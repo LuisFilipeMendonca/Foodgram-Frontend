@@ -4,6 +4,7 @@ interface IUserState {
   userToken: string | null;
   userEmail: string | null;
   userName: string | null;
+  isAppLoading: boolean;
 }
 
 export const userInitialState: IUserState = {
@@ -12,4 +13,5 @@ export const userInitialState: IUserState = {
   userEmail: null,
   userName: null,
   userToken: null,
+  isAppLoading: true,
 };

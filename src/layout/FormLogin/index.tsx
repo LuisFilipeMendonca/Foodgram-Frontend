@@ -83,7 +83,7 @@ const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
       additionalBtn={additionalBtn}
     >
       {inputElems}
-      <Link to="forgot_password">Forgot your password? Click here.</Link>
+      <Link to="forgot_password">Forgot your password?</Link>
     </Form>
   );
 };
