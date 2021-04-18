@@ -24,6 +24,7 @@ const HomePage: React.FC = () => {
     currentPage,
     itemsPerPage,
     itemsOrderValue,
+    recipieName,
   } = useAppSelector((state) => state.recipies);
   const { prevPath } = useAppSelector((state) => state.location);
 
@@ -39,8 +40,8 @@ const HomePage: React.FC = () => {
 
     window.scroll({ top: 0 });
 
-    dispatch(fetchRecipies(currentPage));
-  }, [currentPage, dispatch, itemsPerPage, itemsOrderValue]);
+    dispatch(fetchRecipies());
+  }, [currentPage, dispatch, itemsPerPage, itemsOrderValue, recipieName]);
 
   const recipiesCards = recipies.map((recipie) => (
     <RecipieCard

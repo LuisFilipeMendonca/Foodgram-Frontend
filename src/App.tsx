@@ -22,7 +22,7 @@ const App: React.FunctionComponent = () => {
     if (token) {
       dispatch(getUserData(token));
     } else {
-      dispatch(userNotLogged);
+      dispatch(userNotLogged());
     }
   }, []);
 

@@ -7,6 +7,7 @@ interface IRecipieState {
   currentPage: number;
   itemsPerPage: string;
   itemsOrderValue: string;
+  recipieName: string;
 }
 
 export const recipiesInitialState: IRecipieState = {
@@ -16,4 +17,5 @@ export const recipiesInitialState: IRecipieState = {
   currentPage: 1,
   itemsPerPage: "6",
   itemsOrderValue: "recent",
+  recipieName: "",
 };

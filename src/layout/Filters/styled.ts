@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Input, InputBorder } from "../../components/Inputs/styled";
 
 type FiltersType = {
   isOpen: boolean;
@@ -10,9 +11,23 @@ export const FiltersContainer = styled.section<FiltersType>`
   width: 100%;
   pointer-events: none;
 
-  input[type="text"] {
-    width: 100%;
-    margin-bottom: 8px;
+  & ${Input} {
+    background-color: #f5f5f5;
+    border: 1px solid ${({ theme }) => theme.colors.magenta};
+  }
+
+  & ${InputBorder} {
+    border: none;
+  }
+
+  & ${Input}:focus + ${InputBorder}::before {
+    border-left: none;
+    border-top: none;
+  }
+
+  & ${Input}:focus + ${InputBorder}::after {
+    border-right: none;
+    border-bottom: none;
   }
 
   .filters__visible {

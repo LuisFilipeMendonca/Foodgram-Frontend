@@ -5,7 +5,15 @@ import { FiltersContainer } from "./styled";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 
-import { setItemsPerPage, setItemsOrder } from "../../store/recipies/slice";
+import {
+  setItemsPerPage,
+  setItemsOrder,
+  setRecipieName,
+} from "../../store/recipies/slice";
+
+import { findRecipieInput } from "../../constants/inputs";
+
+import Input from "../../components/Inputs";
 
 import RadioGroup from "../../components/Inputs/RadioGroup";
 
@@ -24,6 +32,7 @@ const recipiesQttyInputs = [
 
 const Filters: React.FC = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [input, setInput] = useState(findRecipieInput);
   const dispatch = useAppDispatch();
   const { itemsOrderValue, itemsPerPage } = useAppSelector(
     (state) => state.recipies
@@ -39,12 +48,33 @@ const Filters: React.FC = () => {
     dispatch(setItemsOrder(e.currentTarget.value));
   };
 
+  const inputChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+
+    setInput({ ...input, value });
+  };
+
+  const getRecipiesByNameHandler = () => {
+    if (typeof input.value === "string") {
+      dispatch(setRecipieName(input.value));
+    }
+  };
+
   return (
     <FiltersContainer isOpen={isFiltersOpen}>
       <div className="filters__visible">
-        <input type="text" placeholder="Search by recipie name.." />
+        <Input
+          type={input.type}
+          name={input.name}
+          placeholder={input.placeholder}
+          value={input.value}
+          errorMsg={input.errorMsg}
+          isInvalid={input.isInvalid}
+          changeHandler={inputChangeHandler}
+          focusHandler={() => {}}
+        />
         <div className="filters__cta">
-          <button>Search</button>
+          <button onClick={getRecipiesByNameHandler}>Search</button>
           <button onClick={toggleFilters}>Filters</button>
         </div>
       </div>

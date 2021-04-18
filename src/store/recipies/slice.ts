@@ -2,19 +2,41 @@ import axios from "axios";
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { recipiesInitialState } from "./initialState";
+import { userInitialState } from "../user/initialState";
 
 export const fetchRecipies = createAsyncThunk(
   "recipies/fetchRecipies",
-  async (page: number, { getState }) => {
+  async (_, { getState }) => {
     try {
       const { recipies } = getState() as {
         recipies: typeof recipiesInitialState;
       };
-      const { itemsPerPage, itemsOrderValue } = recipies;
+      const {
+        itemsPerPage,
+        itemsOrderValue,
+        currentPage,
+        recipieName,
+      } = recipies;
 
-      const response = await axios(
-        `http://localhost:3001/recipies/${page}/${itemsPerPage}?order=${itemsOrderValue}`
-      );
+      const { user } = getState() as { user: typeof userInitialState };
+      const { userId } = user;
+      let response: any;
+
+      if (!recipieName) {
+        response = await axios(
+          `http://localhost:3001/recipies/${currentPage}/${itemsPerPage}${
+            userId ? `/${userId}` : ""
+          }?order=${itemsOrderValue}`
+        );
+      } else {
+        response = await axios(
+          `http://localhost:3001/recipies/by_name/${currentPage}/${itemsPerPage}/${recipieName}${
+            userId ? `/${userId}` : ""
+          }?order=${itemsOrderValue}`
+        );
+      }
+
+      console.log(response.data);
 
       return response.data;
     } catch (e) {
@@ -38,6 +60,10 @@ export const recipiesSlice = createSlice({
       state.itemsOrderValue = action.payload;
       state.currentPage = 1;
     },
+    setRecipieName: (state, action: PayloadAction<string>) => {
+      state.recipieName = action.payload;
+      state.currentPage = 1;
+    },
   },
   extraReducers: {
     [fetchRecipies.pending.type]: (state) => {
@@ -59,6 +85,7 @@ export const {
   setCurrentPage,
   setItemsPerPage,
   setItemsOrder,
+  setRecipieName,
 } = recipiesSlice.actions;
 
 export default recipiesSlice.reducer;

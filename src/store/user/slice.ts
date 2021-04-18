@@ -95,6 +95,7 @@ export const userSlice = createSlice({
       localStorage.setItem("foodgram", token);
     },
     userNotLogged: (state) => {
+      console.log("ola");
       state.isAppLoading = false;
     },
   },

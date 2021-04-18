@@ -46,3 +46,12 @@ export const registerInputs: IInputDefinition[] = [
   },
   ...loginInputs,
 ];
+
+export const findRecipieInput: IInputDefinition = {
+  name: "findRecipie",
+  value: "",
+  placeholder: "Find Recipie By Name..",
+  type: "text",
+  errorMsg: "",
+  isInvalid: false,
+};
