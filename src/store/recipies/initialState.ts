@@ -1,7 +1,7 @@
-import { IRecipieFullCard } from "../../type";
+import { IRecipie } from "../../interfaces/Recipies";
 
 interface IRecipieState {
-  recipies: IRecipieFullCard[];
+  recipies: IRecipie[];
   count: number;
   isLoading: boolean;
   currentPage: number;

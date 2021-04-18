@@ -5,22 +5,34 @@ import { CardContainer, CardImg, CardTitle, CardInformation } from "./styled";
 
 import RecipieRating from "../RecipieRating";
 
-interface IRecipieCard {
-  photo: string;
-  stars: number;
-  name: string;
-  id: string;
-}
+import { IRecipieCard } from "../../interfaces/Recipies";
 
-const RecipieCard: React.FC<IRecipieCard> = ({ photo, stars, name, id }) => {
-  const recipieLink = `/recipie/${id}`;
+const RecipieCard: React.FC<IRecipieCard> = ({
+  _id,
+  name,
+  photoUrl,
+  votes,
+  votesCount,
+  ratings,
+}) => {
+  const recipieLink = `/recipie/${_id}`;
+
+  // const isRated = !!(ratings.length > 0 && ratings[0]._id);
+
+  // console.log(isRated);
 
   return (
     <CardContainer>
-      <CardImg src={photo} />
+      <CardImg src={photoUrl} />
       <CardInformation>
         <CardTitle>{name}</CardTitle>
-        <RecipieRating votes={2} votesCount={8} isLoading={false} />
+        <RecipieRating
+          votes={votes}
+          votesCount={votesCount}
+          isLoading={false}
+          recipieId={_id}
+          rateId={(ratings.length && ratings[0]._id) || ""}
+        />
         <Link to={recipieLink}>View Recipie</Link>
       </CardInformation>
     </CardContainer>

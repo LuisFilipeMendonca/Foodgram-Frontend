@@ -16,7 +16,6 @@ import {
   CardInformationDescription,
   CardInformationBottom,
   CardInformationTitle,
-  CardInformationText,
   CardNavigation,
   CardNavigationItem,
   CardNavigationBorder,

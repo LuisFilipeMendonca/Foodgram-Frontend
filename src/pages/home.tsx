@@ -46,10 +46,12 @@ const HomePage: React.FC = () => {
   const recipiesCards = recipies.map((recipie) => (
     <RecipieCard
       key={Math.random()}
-      photo={recipie.photoUrl}
+      photoUrl={recipie.photoUrl}
       name={recipie.name}
-      stars={recipie.stars}
-      id={recipie._id}
+      votes={recipie.votes}
+      votesCount={recipie.votesCount}
+      _id={recipie._id}
+      ratings={recipie.ratings}
     />
   ));
 

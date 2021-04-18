@@ -58,6 +58,7 @@ export const CardInformation = styled.div`
   flex-direction: column;
   height: 100%;
   justify-content: space-around;
+  align-items: flex-start;
 
   & > *:not(:last-child) {
     margin-bottom: 8px;

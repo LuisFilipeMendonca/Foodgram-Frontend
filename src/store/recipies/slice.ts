@@ -3,6 +3,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { recipiesInitialState } from "./initialState";
 import { userInitialState } from "../user/initialState";
+import { IRecipie } from "../../interfaces/Recipies";
 
 export const fetchRecipies = createAsyncThunk(
   "recipies/fetchRecipies",
@@ -36,9 +37,20 @@ export const fetchRecipies = createAsyncThunk(
         );
       }
 
-      console.log(response.data);
-
       return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const addRating = createAsyncThunk(
+  "recipies/addRating",
+  async (data: { value: number; recipieId: string }) => {
+    try {
+      await axios.post(`http://localhost:3001/ratings`, { ...data });
+
+      return data;
     } catch (e) {
       console.log(e);
     }
@@ -71,11 +83,25 @@ export const recipiesSlice = createSlice({
     },
     [fetchRecipies.fulfilled.type]: (state, action) => {
       const { recipies, count } = action.payload;
+
       state.recipies = recipies;
       state.count = count;
       state.isLoading = false;
     },
     [fetchRecipies.rejected.type]: (state) => {
+      state.isLoading = false;
+    },
+    [addRating.pending.type]: (state) => {},
+    [addRating.fulfilled.type]: (state, action) => {
+      const { value, recipieId } = action.payload;
+      const recipieIdx = state.recipies.findIndex(
+        (recipie) => recipie._id === recipieId
+      );
+
+      state.recipies[recipieIdx].votes += value;
+      state.recipies[recipieIdx].votesCount += 1;
+    },
+    [addRating.rejected.type]: (state) => {
       state.isLoading = false;
     },
   },
