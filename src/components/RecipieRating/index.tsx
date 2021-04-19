@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { addRating } from "../../store/recipies/slice";
+import { addRating, deleteRating } from "../../store/recipies/slice";
 
 import {
   CardStar,
@@ -17,6 +17,7 @@ interface IRecipieRating {
   votesCount?: number;
   recipieId?: string;
   rateId?: string;
+  rateValue?: number | null;
 }
 
 const RecipieRating: React.FC<IRecipieRating> = ({
@@ -25,6 +26,7 @@ const RecipieRating: React.FC<IRecipieRating> = ({
   votesCount,
   recipieId,
   rateId,
+  rateValue,
 }) => {
   const dispatch = useAppDispatch();
   const { isLogged } = useAppSelector((state) => state.user);
@@ -38,12 +40,12 @@ const RecipieRating: React.FC<IRecipieRating> = ({
     const value = e.currentTarget.getAttribute("data-rating");
 
     if (!rateId && value && recipieId) {
-      console.log("not rated");
       dispatch(addRating({ value: +value, recipieId }));
     }
 
-    if (rateId) {
-      console.log("rated");
+    if (rateId && value && recipieId) {
+      console.log("removing");
+      dispatch(deleteRating({ value: +value, rateId, recipieId }));
     }
   };
 
@@ -80,6 +82,11 @@ const RecipieRating: React.FC<IRecipieRating> = ({
       </StarsContent>
       {!isLogged && (
         <Tooltip show={showTooltip}>Login to rate this recipie</Tooltip>
+      )}
+      {rateId && (
+        <Tooltip show={showTooltip}>
+          Gave {rateValue} stars to this recipie
+        </Tooltip>
       )}
     </CardStarsContainer>
   );

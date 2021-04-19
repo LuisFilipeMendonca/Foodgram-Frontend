@@ -17,10 +17,6 @@ const RecipieCard: React.FC<IRecipieCard> = ({
 }) => {
   const recipieLink = `/recipie/${_id}`;
 
-  // const isRated = !!(ratings.length > 0 && ratings[0]._id);
-
-  // console.log(isRated);
-
   return (
     <CardContainer>
       <CardImg src={photoUrl} />
@@ -32,6 +28,7 @@ const RecipieCard: React.FC<IRecipieCard> = ({
           isLoading={false}
           recipieId={_id}
           rateId={(ratings.length && ratings[0]._id) || ""}
+          rateValue={(ratings.length && ratings[0].value) || null}
         />
         <Link to={recipieLink}>View Recipie</Link>
       </CardInformation>

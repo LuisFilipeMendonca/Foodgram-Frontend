@@ -3,7 +3,6 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { recipiesInitialState } from "./initialState";
 import { userInitialState } from "../user/initialState";
-import { IRecipie } from "../../interfaces/Recipies";
 
 export const fetchRecipies = createAsyncThunk(
   "recipies/fetchRecipies",
@@ -48,9 +47,26 @@ export const addRating = createAsyncThunk(
   "recipies/addRating",
   async (data: { value: number; recipieId: string }) => {
     try {
-      await axios.post(`http://localhost:3001/ratings`, { ...data });
+      const response = await axios.post(`http://localhost:3001/ratings`, {
+        ...data,
+      });
 
-      return data;
+      return { ...data, _id: response.data._id };
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const deleteRating = createAsyncThunk(
+  "recipies/deleteRating",
+  async (data: { value: number; rateId: string; recipieId: string }) => {
+    try {
+      const { value, rateId, recipieId } = data;
+
+      await axios.delete(`http://localhost:3001/ratings/${rateId}`);
+
+      return { value, recipieId };
     } catch (e) {
       console.log(e);
     }
@@ -91,19 +107,28 @@ export const recipiesSlice = createSlice({
     [fetchRecipies.rejected.type]: (state) => {
       state.isLoading = false;
     },
-    [addRating.pending.type]: (state) => {},
     [addRating.fulfilled.type]: (state, action) => {
-      const { value, recipieId } = action.payload;
+      const { value, recipieId, _id } = action.payload;
       const recipieIdx = state.recipies.findIndex(
         (recipie) => recipie._id === recipieId
       );
 
       state.recipies[recipieIdx].votes += value;
       state.recipies[recipieIdx].votesCount += 1;
+      state.recipies[recipieIdx].ratings.push({ _id, value });
     },
-    [addRating.rejected.type]: (state) => {
-      state.isLoading = false;
+    [addRating.rejected.type]: (state) => {},
+    [deleteRating.fulfilled.type]: (state, action) => {
+      const { value, recipieId } = action.payload;
+      const recipieIdx = state.recipies.findIndex(
+        (recipie) => recipie._id === recipieId
+      );
+
+      state.recipies[recipieIdx].votes -= value;
+      state.recipies[recipieIdx].votesCount -= 1;
+      state.recipies[recipieIdx].ratings.length = 0;
     },
+    [deleteRating.rejected.type]: (state) => {},
   },
 });
 

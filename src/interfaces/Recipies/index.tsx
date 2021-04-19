@@ -4,7 +4,7 @@ export interface IRecipieCard {
   photoUrl: string;
   votes: number;
   votesCount: number;
-  ratings: { _id: string }[];
+  ratings: { _id: string; value: number }[];
 }
 
 export interface IRecipieCardFull extends IRecipieCard {
@@ -13,7 +13,7 @@ export interface IRecipieCardFull extends IRecipieCard {
   ingredients: string[];
   level: string;
   steps: string[];
-  servings: [];
+  servings: number;
 }
 
 export interface IRecipie extends IRecipieCardFull {

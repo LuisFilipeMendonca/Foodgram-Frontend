@@ -29,7 +29,7 @@ export const CardStar = styled.svg`
 
 export const Tooltip = styled.div<ShowTooltip>`
   position: absolute;
-  top: -48px;
+  top: 0;
   background: ${({ theme }) => theme.colors.magenta};
   color: ${({ theme }) => theme.colors.textLight};
   padding: 4px 8px;
@@ -38,6 +38,7 @@ export const Tooltip = styled.div<ShowTooltip>`
   box-shadow: 1px 2px 5px ${({ theme }) => theme.colors.magentaOpacity};
   display: ${({ show }) => (show ? "block" : "none")};
   pointer-events: none;
+  transform: translateY(calc(-100% - 8px));
 
   &::before {
     content: "";
@@ -49,11 +50,6 @@ export const Tooltip = styled.div<ShowTooltip>`
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-top: 10px solid ${({ theme }) => theme.colors.magenta};
-  }
-
-  @media screen and (min-width: 384px) {
-    top: calc(-100% - 8px);
-    padding: 4px 16px;
   }
 
   @media screen and (min-width: 450px) {
