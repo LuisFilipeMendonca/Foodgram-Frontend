@@ -6,10 +6,19 @@ import Input from "../../components/Inputs";
 
 import { CtaContainer } from "./styled";
 
-const MyRecipieCta: React.FC = () => {
+interface IMyRecipieCta {
+  recipieNameFilterHandler: (value: string) => void;
+}
+
+const MyRecipieCta: React.FC<IMyRecipieCta> = ({
+  recipieNameFilterHandler,
+}) => {
   const [input, setInput] = useState(findRecipieInput);
 
-  const inputChangeHandler = () => {};
+  const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput({ ...input, value: e.currentTarget.value });
+  };
+
   return (
     <CtaContainer>
       <button>Add Recipie</button>
@@ -23,7 +32,15 @@ const MyRecipieCta: React.FC = () => {
         changeHandler={inputChangeHandler}
         focusHandler={() => {}}
       />
-      <button>Search</button>
+      <button
+        onClick={() =>
+          recipieNameFilterHandler(
+            typeof input.value === "string" ? input.value : ""
+          )
+        }
+      >
+        Search
+      </button>
     </CtaContainer>
   );
 };

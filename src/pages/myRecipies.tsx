@@ -11,13 +11,24 @@ import { useAppSelector } from "../hooks/useAppSelector";
 
 const MyRecipiesPage: React.FC = () => {
   const itemsPerPage = 12;
+  const [recipieNameFilter, setRecipieNameFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const { userRecipies } = useAppSelector((state) => state.user);
+  let { userRecipies } = useAppSelector((state) => state.user);
+
+  if (recipieNameFilter) {
+    userRecipies = userRecipies.filter((recipie) =>
+      recipie.name.toLowerCase().includes(recipieNameFilter.toLocaleLowerCase())
+    );
+  }
 
   const recipies = userRecipies.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const recipieNameFilterHandler = (value: string) => {
+    setRecipieNameFilter(value);
+  };
 
   const recipiesCards = recipies.map((recipie) => (
     <RecipieCard
@@ -39,7 +50,7 @@ const MyRecipiesPage: React.FC = () => {
 
   return (
     <MainContainer>
-      <MyRecipieCta />
+      <MyRecipieCta recipieNameFilterHandler={recipieNameFilterHandler} />
       <SectionRecipies>
         <RecipiesContainer>{recipiesCards}</RecipiesContainer>
         <Pagination
