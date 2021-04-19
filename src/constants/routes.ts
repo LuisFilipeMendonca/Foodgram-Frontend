@@ -2,7 +2,7 @@ import React from "react";
 
 import HomePage from "../pages/home";
 import FavoritesPage from "../pages/favorites";
-import MyRecipiesPage from "../pages/recipies";
+import MyRecipiesPage from "../pages/myRecipies";
 import RecipiePage from "../pages/recipie";
 import AuthPage from "../pages/auth";
 import ForgotPasswordPage from "../pages/forgotPassword";

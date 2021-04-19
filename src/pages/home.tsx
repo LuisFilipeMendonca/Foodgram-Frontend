@@ -16,6 +16,7 @@ import Filters from "../layout/Filters";
 
 const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { userId } = useAppSelector((state) => state.user);
 
   const {
     recipies,
@@ -52,13 +53,14 @@ const HomePage: React.FC = () => {
       votesCount={recipie.votesCount}
       _id={recipie._id}
       ratings={recipie.ratings}
+      isRatable={recipie.user._id !== userId}
     />
   ));
 
   return (
     <MainContainer>
       <Filters />
-      <SectionRecipies>
+      <SectionRecipies hasMargin>
         <RecipiesContainer>
           {!isLoading && recipies.length && recipiesCards}
           {isLoading &&

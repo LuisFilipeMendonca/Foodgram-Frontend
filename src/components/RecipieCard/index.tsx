@@ -7,13 +7,20 @@ import RecipieRating from "../RecipieRating";
 
 import { IRecipieCard } from "../../interfaces/Recipies";
 
-const RecipieCard: React.FC<IRecipieCard> = ({
+interface IRecipie extends IRecipieCard {
+  isRatable: boolean;
+  isUserRecipie?: boolean;
+}
+
+const RecipieCard: React.FC<IRecipie> = ({
   _id,
   name,
   photoUrl,
   votes,
   votesCount,
   ratings,
+  isRatable,
+  isUserRecipie,
 }) => {
   const recipieLink = `/recipie/${_id}`;
 
@@ -29,8 +36,18 @@ const RecipieCard: React.FC<IRecipieCard> = ({
           recipieId={_id}
           rateId={(ratings.length && ratings[0]._id) || ""}
           rateValue={(ratings.length && ratings[0].value) || null}
+          isRatable={isRatable}
         />
-        <Link to={recipieLink}>View Recipie</Link>
+        <div>
+          {isUserRecipie ? (
+            <>
+              <button>Edit</button>
+              <button>Delete</button>
+            </>
+          ) : (
+            <Link to={recipieLink}>View Recipie</Link>
+          )}
+        </div>
       </CardInformation>
     </CardContainer>
   );

@@ -43,13 +43,13 @@ export const MainContainerAuth = styled(MainContainer)`
     8px 8px;
 `;
 
-export const SectionRecipies = styled.section`
+export const SectionRecipies = styled.section<{ hasMargin?: boolean }>`
   padding: ${({ theme }) => `calc(${theme.dimensions.filtersHeight} + 16px)`}
     8px 8px;
 
   @media screen and (min-width: 850px) {
     padding: 16px;
-    margin-left: 250px;
+    margin-left: ${({ hasMargin }) => hasMargin && "250px"};
   }
 `;
 

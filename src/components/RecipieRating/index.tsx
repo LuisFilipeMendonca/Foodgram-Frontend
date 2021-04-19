@@ -18,6 +18,7 @@ interface IRecipieRating {
   recipieId?: string;
   rateId?: string;
   rateValue?: number | null;
+  isRatable?: boolean;
 }
 
 const RecipieRating: React.FC<IRecipieRating> = ({
@@ -27,13 +28,14 @@ const RecipieRating: React.FC<IRecipieRating> = ({
   recipieId,
   rateId,
   rateValue,
+  isRatable,
 }) => {
   const dispatch = useAppDispatch();
   const { isLogged } = useAppSelector((state) => state.user);
   const [showTooltip, setShowTooltip] = useState(false);
 
   const addRatingHandler = (e: React.MouseEvent | React.KeyboardEvent) => {
-    if (!isLogged) {
+    if (!isLogged || !isRatable) {
       setShowTooltip(true);
       return;
     }
@@ -44,7 +46,6 @@ const RecipieRating: React.FC<IRecipieRating> = ({
     }
 
     if (rateId && value && recipieId) {
-      console.log("removing");
       dispatch(deleteRating({ value: +value, rateId, recipieId }));
     }
   };
@@ -87,6 +88,9 @@ const RecipieRating: React.FC<IRecipieRating> = ({
         <Tooltip show={showTooltip}>
           Gave {rateValue} stars to this recipie
         </Tooltip>
+      )}
+      {!isRatable && (
+        <Tooltip show={showTooltip}>Can't rate your own recipies</Tooltip>
       )}
     </CardStarsContainer>
   );

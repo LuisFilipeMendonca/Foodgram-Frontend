@@ -76,13 +76,14 @@ export const userSlice = createSlice({
   initialState: userInitialState,
   reducers: {
     setUserData: (state, { payload }) => {
-      const { _id, email, username, token } = payload;
+      const { _id, email, username, token, recipies } = payload;
 
       state.isLogged = true;
       state.userId = _id;
       state.userEmail = email;
       state.userName = username;
       state.userToken = token;
+      state.userRecipies = recipies;
 
       if (!axios.defaults.headers.authorization) {
         axios.defaults.headers.authorization = `Bearer ${token}`;
