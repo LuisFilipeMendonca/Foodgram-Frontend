@@ -41,6 +41,19 @@ export const forgotPassword = createAsyncThunk(
   }
 );
 
+export const deleteRecipie = createAsyncThunk(
+  "user/deleteRecipie",
+  async (id: string) => {
+    try {
+      await axios.delete(`http://localhost:3001/recipies/${id}`);
+
+      return { id };
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const resetPassword = createAsyncThunk(
   "user/resetPassword",
   async (data: { password: string; token: string }) => {
@@ -136,6 +149,19 @@ export const userSlice = createSlice({
       userSlice.caseReducers.setUserData(state, action);
     },
     [getUserData.rejected.type]: (state, action) => {
+      console.log("Rejected");
+    },
+    [deleteRecipie.fulfilled.type]: (state, action) => {
+      const { id } = action.payload;
+      console.log(id);
+      const recipies = state.userRecipies.filter(
+        (recipie) => recipie._id !== id
+      );
+      state.userRecipies = recipies;
+
+      console.log(state.userRecipies);
+    },
+    [deleteRecipie.rejected.type]: (state, action) => {
       console.log("Rejected");
     },
   },

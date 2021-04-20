@@ -6,6 +6,8 @@ import { CardContainer, CardImg, CardTitle, CardInformation } from "./styled";
 import RecipieRating from "../RecipieRating";
 
 import { IRecipieCard } from "../../interfaces/Recipies";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { deleteRecipie } from "../../store/user/slice";
 
 interface IRecipie extends IRecipieCard {
   isRatable: boolean;
@@ -23,6 +25,11 @@ const RecipieCard: React.FC<IRecipie> = ({
   isUserRecipie,
 }) => {
   const recipieLink = `/recipie/${_id}`;
+  const dispatch = useAppDispatch();
+
+  const deleteRecipieHandler = () => {
+    dispatch(deleteRecipie(_id));
+  };
 
   return (
     <CardContainer>
@@ -42,7 +49,7 @@ const RecipieCard: React.FC<IRecipie> = ({
           {isUserRecipie ? (
             <>
               <Link to={`/my_recipies/edit/${_id}`}>Edit</Link>
-              <button>Delete</button>
+              <button onClick={deleteRecipieHandler}>Delete</button>
             </>
           ) : (
             <Link to={recipieLink}>View Recipie</Link>
