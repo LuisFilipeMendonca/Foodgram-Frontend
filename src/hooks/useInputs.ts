@@ -6,7 +6,7 @@ type State = IInputDefinition[];
 
 type Change = {
   type: "change";
-  payload: HTMLInputElement;
+  payload: HTMLInputElement | HTMLTextAreaElement;
 };
 
 type Set = {
@@ -21,25 +21,19 @@ type Focus = {
 
 type ActionType = Change | Set | Focus;
 
-const changeHandler = (state: State, payload: HTMLInputElement) => {
+const changeHandler = (
+  state: State,
+  payload: HTMLInputElement | HTMLTextAreaElement
+) => {
   const { name, value, id } = payload;
   const updatedState = [...state];
 
   const inputIdx = updatedState.findIndex((input) => input.name === name);
 
   if (Array.isArray(updatedState[inputIdx].value)) {
-    const arrValueIdx = updatedState[inputIdx].values!.findIndex(
-      (value) => value.id === id
-    );
-
-    if (arrValueIdx !== -1) {
-      updatedState[inputIdx].values![arrValueIdx].value = value;
-    } else {
-      updatedState[inputIdx].values = [
-        ...updatedState[inputIdx].values!,
-        { id, value },
-      ];
-    }
+    const prevValues = [...updatedState[inputIdx].value];
+    prevValues[+id] = value;
+    updatedState[inputIdx].value = prevValues;
   } else {
     updatedState[inputIdx].value = value;
   }
@@ -77,8 +71,9 @@ const useInputs = (initialState: IInputDefinition[]) => {
     initialState.map((slice) => Object.assign({}, slice))
   );
 
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
-    dispatch({ type: "change", payload: e.target });
+  const changeHandler = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => dispatch({ type: "change", payload: e.target });
 
   const setHandler = (inputs: IInputDefinition[]) =>
     dispatch({ type: "set", payload: inputs });

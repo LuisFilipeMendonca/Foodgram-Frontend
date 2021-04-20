@@ -7,6 +7,7 @@ import RecipiePage from "../pages/recipie";
 import AuthPage from "../pages/auth";
 import ForgotPasswordPage from "../pages/forgotPassword";
 import ResetPasswordPage from "../pages/resetPassword";
+import AddRecipiePage from "../pages/addRecipie";
 
 type RouteType = {
   id: number;
@@ -27,11 +28,25 @@ const routes: RouteType[] = [
     isClosed: true,
   },
   {
+    id: 8,
+    path: "/my_recipies/add",
+    component: AddRecipiePage,
+    isExact: true,
+    isClosed: false,
+  },
+  {
+    id: 9,
+    path: "/my_recipies/edit/:id",
+    component: AddRecipiePage,
+    isExact: true,
+    isClosed: false,
+  },
+  {
     id: 3,
     path: "/my_recipies",
     label: "My Recipies",
     component: MyRecipiesPage,
-    isExact: true,
+    isExact: false,
     isClosed: true,
   },
   {

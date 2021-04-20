@@ -41,7 +41,7 @@ const RecipieCard: React.FC<IRecipie> = ({
         <div>
           {isUserRecipie ? (
             <>
-              <button>Edit</button>
+              <Link to={`/my_recipies/edit/${_id}`}>Edit</Link>
               <button>Delete</button>
             </>
           ) : (

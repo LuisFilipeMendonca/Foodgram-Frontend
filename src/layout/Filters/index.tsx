@@ -48,7 +48,9 @@ const Filters: React.FC = () => {
     dispatch(setItemsOrder(e.currentTarget.value));
   };
 
-  const inputChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const inputChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { value } = e.currentTarget;
 
     setInput({ ...input, value });

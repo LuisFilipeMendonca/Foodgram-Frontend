@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { findRecipieInput } from "../../constants/inputs";
 
@@ -15,13 +16,15 @@ const MyRecipieCta: React.FC<IMyRecipieCta> = ({
 }) => {
   const [input, setInput] = useState(findRecipieInput);
 
-  const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const inputChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setInput({ ...input, value: e.currentTarget.value });
   };
 
   return (
     <CtaContainer>
-      <button>Add Recipie</button>
+      <Link to="/my_recipies/add">Add Recipie</Link>
       <Input
         type={input.type}
         name={input.name}

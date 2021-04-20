@@ -7,10 +7,11 @@ import {
   InputInfo,
   InputError,
   InputBorder,
-  Input,
+  TextareaStyled,
 } from "./styled";
 
-const InputNormal: React.FC<IInputNormal> = ({
+const Textarea: React.FC<IInputNormal> = ({
+  label,
   name,
   type,
   placeholder,
@@ -24,14 +25,12 @@ const InputNormal: React.FC<IInputNormal> = ({
   return (
     <>
       <InputWrapper>
-        <Input
-          type={type}
+        <TextareaStyled
           placeholder={placeholder}
           name={name}
           value={value}
-          min={type === "number" ? 0 : undefined}
           onFocus={() => focusHandler(name)}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             changeHandler(e)
           }
         />
@@ -43,4 +42,4 @@ const InputNormal: React.FC<IInputNormal> = ({
   );
 };
 
-export default InputNormal;
+export default Textarea;

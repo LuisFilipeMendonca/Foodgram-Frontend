@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 type InputBorderType = {
   isInvalid: boolean;
@@ -110,7 +110,7 @@ export const InputBorder = styled.span<InputBorderType>`
   }
 `;
 
-export const Input = styled.input`
+const defaultInputStyle = css`
   width: 100%;
   border: none;
   background: transparent;
@@ -132,6 +132,10 @@ export const Input = styled.input`
   }
 `;
 
+export const Input = styled.input`
+  ${defaultInputStyle}
+`;
+
 export const InputInfo = styled.p`
   font-size: 0.8rem;
   color: ${({ theme }) => theme.colors.textMedium};
@@ -140,4 +144,12 @@ export const InputInfo = styled.p`
 export const InputError = styled.p`
   font-size: 0.8rem;
   color: red;
+`;
+
+export const TextareaStyled = styled.textarea`
+  ${defaultInputStyle}
+`;
+
+export const InputGroupContainer = styled.div`
+  margin-bottom: 24px;
 `;
