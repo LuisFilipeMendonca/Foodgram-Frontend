@@ -22,8 +22,6 @@ const InputFile: React.FC<IInputFile> = ({
   info,
   changeHandler,
 }) => {
-  console.log(value);
-
   return (
     <InputContainer>
       <InputFileDescription>{label}</InputFileDescription>

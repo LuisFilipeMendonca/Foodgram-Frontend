@@ -8,7 +8,7 @@ interface IInputActions {
 }
 
 export interface IInputDefinition {
-  value: string[] | string;
+  value: { id: string; value: string }[] | string | File;
   label?: string;
   placeholder: string;
   type: string;
@@ -19,7 +19,7 @@ export interface IInputDefinition {
   info?: string;
   minLength?: number;
   optionsType?: string;
-  validFileTypes?: [];
+  validFileTypes?: string[];
   validator?: (
     input: IInputDefinition
   ) => { isValid: boolean; errorMsg: string };
@@ -35,7 +35,7 @@ export interface IInputNormal extends IInputActions {
   info?: string;
   errorMsg: string;
   isInvalid: boolean;
-  value: string[] | string;
+  value: { id: string; value: string }[] | string[] | string;
 }
 
 export interface IInputGroup extends IInputActions {
@@ -44,7 +44,7 @@ export interface IInputGroup extends IInputActions {
   placeholder: string;
   qtty: number;
   isInvalid: boolean;
-  value: string[];
+  value: { id: string; value: string }[] | [];
   optionsType: string;
   errorMsg: string;
   info?: string;

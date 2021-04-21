@@ -23,8 +23,8 @@ class Validator {
 
     if (typeof value === "string") {
       isValid = value.trim().length > 0;
-    } else {
-      isValid = value.length > 0;
+    } else if (Array.isArray(value)) {
+      isValid = value.filter((value) => value.value).length > 0;
     }
 
     return {
@@ -59,7 +59,6 @@ class Validator {
 
     if (typeof value === "string") {
       const parsedNumber = parseInt(value);
-      console.log(parsedNumber);
       isValid = parsedNumber >= 0 && !isNaN(parsedNumber);
     }
 
@@ -70,16 +69,20 @@ class Validator {
   };
 
   isFileValid = (
-    input: HTMLInputElement,
-    acceptedValues: string[]
+    input: IInputDefinition
   ): { isValid: boolean; errorMsg: string } => {
-    const { files } = input;
+    const { value, validFileTypes } = input;
+    const { type } = value as File;
     let isValid = true;
 
-    if (files && files[0]) {
-      const { type } = files[0];
+    const hasValue = this.hasValue(input);
 
-      isValid = acceptedValues.some((value) => value === type);
+    if (!hasValue.isValid) {
+      return hasValue;
+    }
+
+    if (validFileTypes) {
+      isValid = validFileTypes.some((value) => value === type);
     }
 
     return {

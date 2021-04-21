@@ -66,7 +66,8 @@ export const recipiesInputs: IInputDefinition[] = [
     type: "file",
     errorMsg: "",
     isInvalid: false,
-    validator: Validator.hasValue,
+    validFileTypes: ["image/jpeg", "image/png"],
+    validator: Validator.isFileValid,
   },
   {
     name: "name",

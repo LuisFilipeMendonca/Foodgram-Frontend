@@ -11,10 +11,14 @@ import useInputs from "../hooks/useInputs";
 import Form from "../components/Form";
 import Input from "../components/Inputs";
 import { useAppSelector } from "../hooks/useAppSelector";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+
+import { addRecipie } from "../store/recipies/slice";
 
 import FormHelper from "../helpers/Form";
 
 const AddRecipie: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
   const { userRecipies } = useAppSelector((state) => state.user);
   const { inputs, changeHandler, setHandler, focusHandler } = useInputs(
@@ -32,12 +36,19 @@ const AddRecipie: React.FC = () => {
         setInputRecipie = inputs.map((field) => {
           if (field.type === "group") {
             field.qtty = recipie[field.name].length;
+            field.value = recipie[field.name].map(
+              (value: string, idx: number) => ({
+                id: idx.toString(),
+                value: value,
+              })
+            );
+          } else if (field.type === "file") {
+            field.value = recipie["photoUrl"];
+          } else {
+            field.value = recipie[field.name];
           }
 
-          return {
-            ...field,
-            value: recipie[field.name],
-          };
+          return field;
         });
       }
 
@@ -62,7 +73,11 @@ const AddRecipie: React.FC = () => {
         <Input
           key={name}
           label={label}
-          value={value}
+          value={
+            type === "file" && typeof value !== "string"
+              ? URL.createObjectURL(value)
+              : value
+          }
           errorMsg={errorMsg}
           isInvalid={isInvalid}
           placeholder={placeholder}
@@ -89,6 +104,10 @@ const AddRecipie: React.FC = () => {
       setHandler(validatedInputs);
       return;
     }
+
+    const formData = form.buildFormData();
+
+    dispatch(addRecipie(formData));
   };
 
   return (

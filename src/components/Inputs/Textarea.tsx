@@ -29,7 +29,7 @@ const Textarea: React.FC<IInputNormal> = ({
           spellCheck={false}
           placeholder={placeholder}
           name={name}
-          value={value}
+          value={typeof value === "string" ? value : ""}
           onFocus={() => focusHandler(name)}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             changeHandler(e)

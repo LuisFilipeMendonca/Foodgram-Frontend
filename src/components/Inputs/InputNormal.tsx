@@ -28,7 +28,7 @@ const InputNormal: React.FC<IInputNormal> = ({
           type={type}
           placeholder={placeholder}
           name={name}
-          value={value}
+          value={typeof value === "string" ? value : ""}
           min={type === "number" ? 0 : undefined}
           onFocus={() => focusHandler(name)}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

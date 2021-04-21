@@ -1,7 +1,6 @@
 import { useReducer } from "react";
 
 import { IInputDefinition } from "../interfaces/Inputs";
-import Validator from "../helpers/Validator";
 
 type State = IInputDefinition[];
 
@@ -31,26 +30,17 @@ const changeHandler = (
   const inputIdx = updatedState.findIndex((input) => input.name === name);
 
   if (Array.isArray(updatedState[inputIdx].value)) {
-    const prevValues = [...updatedState[inputIdx].value];
-    prevValues[+id] = value;
-    updatedState[inputIdx].value = prevValues;
+    const values = updatedState[inputIdx].value as {
+      id: string;
+      value: string;
+    }[];
+    values[+id] = { id, value };
+    updatedState[inputIdx].value = values;
   } else if (type === "file") {
-    const {
-      isValid,
-      errorMsg,
-    } = Validator.isFileValid(payload as HTMLInputElement, [
-      "image/jpeg",
-      "image/png",
-    ]);
-    if (!isValid) {
-      updatedState[inputIdx].errorMsg = errorMsg;
-      updatedState[inputIdx].isInvalid = !isValid;
-      updatedState[inputIdx].value = "";
-    } else {
-      const { files } = payload as HTMLInputElement;
-      const fileBlob = URL.createObjectURL(files![0]);
-      updatedState[inputIdx].value = fileBlob;
-    }
+    const { files } = payload as HTMLInputElement;
+    updatedState[inputIdx].value = files![0];
+    updatedState[inputIdx].errorMsg = "";
+    updatedState[inputIdx].isInvalid = false;
   } else {
     updatedState[inputIdx].value = value;
   }

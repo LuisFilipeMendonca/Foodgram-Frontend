@@ -52,7 +52,7 @@ const Input: React.FC<IInput> = ({
           isInvalid={isInvalid}
           type={type}
           info={info}
-          value={value}
+          value={typeof value === "string" ? value : ""}
           changeHandler={changeHandler}
           focusHandler={focusHandler}
         />
@@ -86,7 +86,7 @@ const Input: React.FC<IInput> = ({
         isInvalid={isInvalid}
         type={type}
         info={info}
-        value={value}
+        value={typeof value === "string" ? value : ""}
         changeHandler={changeHandler}
         focusHandler={focusHandler}
       />

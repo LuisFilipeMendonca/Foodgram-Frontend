@@ -24,6 +24,26 @@ class Form {
     return obj;
   };
 
+  buildFormData = () => {
+    const formData = new FormData();
+
+    this.inputs.forEach((input) => {
+      if (Array.isArray(input.value)) {
+        const values: string[] = [];
+
+        input.value.forEach((inputVal) => {
+          values.push(inputVal.value);
+        });
+
+        values.forEach((value) => formData.append(input.name + "[]", value));
+      } else {
+        formData.append(input.name, input.value);
+      }
+    });
+
+    return formData;
+  };
+
   formValidate = () => {
     let isFormValid = true;
     this.inputs.forEach((input) => {

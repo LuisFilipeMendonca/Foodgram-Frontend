@@ -33,7 +33,6 @@ const InputGroup: React.FC<IInputGroup> = ({
 
   const inputArr = Array.from({ length: inputQtty }, (_, idx) => ({
     id: idx,
-    value: "",
   }));
 
   let input;
@@ -49,7 +48,7 @@ const InputGroup: React.FC<IInputGroup> = ({
           id={val.id.toString()}
           type="text"
           placeholder={placeholder}
-          value={value[val.id] ? value[val.id] : val.value}
+          value={value[val.id] ? value[val.id].value : ""}
           name={name}
           onFocus={() => focusHandler(name)}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -66,7 +65,7 @@ const InputGroup: React.FC<IInputGroup> = ({
           spellCheck={false}
           id={val.id.toString()}
           placeholder={placeholder}
-          value={value[val.id] ? value[val.id] : val.value}
+          value={value[val.id] ? value[val.id].value : ""}
           name={name}
           onFocus={() => focusHandler(name)}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
