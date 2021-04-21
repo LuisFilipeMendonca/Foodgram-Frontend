@@ -73,23 +73,6 @@ export const deleteRating = createAsyncThunk(
   }
 );
 
-export const addRecipie = createAsyncThunk(
-  "recipies/addRecipie",
-  async (data: FormData) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/recipies",
-        data,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-
-      console.log(response.data);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-);
-
 export const recipiesSlice = createSlice({
   name: "recipies",
   initialState: recipiesInitialState,

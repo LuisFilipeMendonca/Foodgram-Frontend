@@ -81,7 +81,7 @@ class Validator {
       return hasValue;
     }
 
-    if (validFileTypes) {
+    if (validFileTypes && type) {
       isValid = validFileTypes.some((value) => value === type);
     }
 

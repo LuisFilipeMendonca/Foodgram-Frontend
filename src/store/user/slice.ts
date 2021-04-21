@@ -54,6 +54,46 @@ export const deleteRecipie = createAsyncThunk(
   }
 );
 
+export const addRecipie = createAsyncThunk(
+  "recipies/addRecipie",
+  async (data: FormData) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/recipies",
+        data,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const editRecipie = createAsyncThunk(
+  "recipies/editRecipie",
+  async (data: { formData: FormData; id: string }) => {
+    try {
+      const { formData, id } = data;
+
+      console.log("ola");
+
+      const response = await axios.put(
+        `http://localhost:3001/recipies/${id}`,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      console.log(response.data);
+
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const resetPassword = createAsyncThunk(
   "user/resetPassword",
   async (data: { password: string; token: string }) => {
@@ -153,17 +193,27 @@ export const userSlice = createSlice({
     },
     [deleteRecipie.fulfilled.type]: (state, action) => {
       const { id } = action.payload;
-      console.log(id);
       const recipies = state.userRecipies.filter(
         (recipie) => recipie._id !== id
       );
       state.userRecipies = recipies;
-
-      console.log(state.userRecipies);
     },
     [deleteRecipie.rejected.type]: (state, action) => {
       console.log("Rejected");
     },
+    [addRecipie.fulfilled.type]: (state, action) => {
+      state.userRecipies.unshift(action.payload);
+    },
+    [addRecipie.rejected.type]: (state) => {},
+    [editRecipie.fulfilled.type]: (state, action) => {
+      const { _id } = action.payload;
+
+      const recipieIdx = state.userRecipies.findIndex(
+        (recipie) => recipie._id === _id
+      );
+      state.userRecipies[recipieIdx] = action.payload;
+    },
+    [editRecipie.rejected.type]: (state) => {},
   },
 });
 

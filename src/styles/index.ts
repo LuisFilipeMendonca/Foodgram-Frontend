@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
         padding: 0;
         box-sizing: border-box;
         outline: none;
+        scroll-behavior: smooth;
     }
 
     body {

@@ -28,6 +28,8 @@ class Form {
     const formData = new FormData();
 
     this.inputs.forEach((input) => {
+      if (input.type === "file" && typeof input.value === "string") return;
+
       if (Array.isArray(input.value)) {
         const values: string[] = [];
 
