@@ -58,6 +58,17 @@ export const findRecipieInput: IInputDefinition = {
 
 export const recipiesInputs: IInputDefinition[] = [
   {
+    label: "Recipie Image",
+    info: "File must be of type JPEG or PNG",
+    name: "photo",
+    value: "",
+    placeholder: "Recipie Photo",
+    type: "file",
+    errorMsg: "",
+    isInvalid: false,
+    validator: Validator.hasValue,
+  },
+  {
     name: "name",
     label: "Name",
     value: "",
@@ -65,6 +76,7 @@ export const recipiesInputs: IInputDefinition[] = [
     type: "text",
     errorMsg: "",
     isInvalid: false,
+    validator: Validator.hasValue,
   },
   {
     name: "description",
@@ -74,6 +86,7 @@ export const recipiesInputs: IInputDefinition[] = [
     type: "textarea",
     errorMsg: "",
     isInvalid: false,
+    validator: Validator.hasValue,
   },
   {
     name: "duration",
@@ -83,6 +96,7 @@ export const recipiesInputs: IInputDefinition[] = [
     type: "number",
     errorMsg: "",
     isInvalid: false,
+    validator: Validator.isPositiveNumber,
   },
   {
     label: "Servings",
@@ -92,6 +106,7 @@ export const recipiesInputs: IInputDefinition[] = [
     type: "number",
     errorMsg: "",
     isInvalid: false,
+    validator: Validator.isPositiveNumber,
   },
   {
     label: "Level",
@@ -101,6 +116,7 @@ export const recipiesInputs: IInputDefinition[] = [
     type: "text",
     errorMsg: "",
     isInvalid: false,
+    validator: Validator.hasValue,
   },
   {
     label: "Ingredients",
@@ -112,6 +128,7 @@ export const recipiesInputs: IInputDefinition[] = [
     qtty: 5,
     errorMsg: "",
     isInvalid: false,
+    validator: Validator.hasValue,
   },
   {
     label: "Steps",
@@ -123,5 +140,6 @@ export const recipiesInputs: IInputDefinition[] = [
     qtty: 5,
     errorMsg: "",
     isInvalid: false,
+    validator: Validator.hasValue,
   },
 ];

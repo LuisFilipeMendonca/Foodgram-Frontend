@@ -9,6 +9,9 @@ import {
   InputBorder,
   InputContainer,
   InputLabel,
+  InputGroupContainer,
+  InputInfo,
+  InputError,
 } from "./styled";
 
 const InputGroup: React.FC<IInputGroup> = ({
@@ -19,6 +22,8 @@ const InputGroup: React.FC<IInputGroup> = ({
   isInvalid,
   value,
   optionsType,
+  errorMsg,
+  info,
   changeHandler,
   focusHandler,
 }) => {
@@ -51,7 +56,7 @@ const InputGroup: React.FC<IInputGroup> = ({
             changeHandler(e)
           }
         />
-        <InputBorder isInvalid={isInvalid} />
+        <InputBorder isInvalid={false} />
       </InputWrapper>
     ));
   } else {
@@ -68,7 +73,7 @@ const InputGroup: React.FC<IInputGroup> = ({
             changeHandler(e)
           }
         />
-        <InputBorder isInvalid={isInvalid} />
+        <InputBorder isInvalid={false} />
       </InputWrapper>
     ));
   }
@@ -76,7 +81,9 @@ const InputGroup: React.FC<IInputGroup> = ({
   return (
     <InputContainer>
       <InputLabel>{label}</InputLabel>
-      {input}
+      <InputGroupContainer isInvalid={isInvalid}>{input}</InputGroupContainer>
+      {info && <InputInfo>Info about the input</InputInfo>}
+      {isInvalid && <InputError>{errorMsg}</InputError>}
       <button type="button" onClick={addMoreIngredientsHandler}>
         Add More {label}
       </button>

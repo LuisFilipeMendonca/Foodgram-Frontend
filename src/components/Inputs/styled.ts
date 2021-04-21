@@ -150,6 +150,31 @@ export const TextareaStyled = styled.textarea`
   ${defaultInputStyle}
 `;
 
-export const InputGroupContainer = styled.div`
-  margin-bottom: 24px;
+export const InputGroupContainer = styled.div<InputBorderType>`
+  border: ${({ isInvalid }) => isInvalid && "1px solid red"};
+
+  & > *:not(:last-of-type) {
+    margin-bottom: 8px;
+  }
+`;
+
+export const InputFileDescription = styled(InputLabel)``;
+
+export const InputFileLabel = styled.label<InputBorderType>`
+  display: block;
+  width: 100%;
+  height: 300px;
+  border: 2px dashed ${({ isInvalid }) => (isInvalid ? "red" : "#ccc")};
+  cursor: pointer;
+`;
+
+export const FileInput = styled.input`
+  display: none;
+`;
+
+export const FilePreviewImg = styled.img`
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 `;

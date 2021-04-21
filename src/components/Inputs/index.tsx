@@ -7,6 +7,7 @@ import InputGroup from "./InputGroup";
 import Textarea from "./Textarea";
 
 import { IInput } from "../../interfaces/Inputs";
+import InputFile from "./InputFile";
 
 const Input: React.FC<IInput> = ({
   errorMsg,
@@ -33,7 +34,8 @@ const Input: React.FC<IInput> = ({
         value={Array.isArray(value) ? value : []}
         changeHandler={changeHandler}
         focusHandler={focusHandler}
-        optionsType={optionsType || ""}
+        optionsType={optionsType || "text"}
+        errorMsg={errorMsg}
       />
     );
   }
@@ -55,6 +57,21 @@ const Input: React.FC<IInput> = ({
           focusHandler={focusHandler}
         />
       </InputContainer>
+    );
+  }
+
+  if (type === "file") {
+    return (
+      <InputFile
+        errorMsg={errorMsg}
+        value={typeof value === "string" ? value : ""}
+        isInvalid={isInvalid}
+        name={name}
+        changeHandler={changeHandler}
+        focusHandler={focusHandler}
+        label={label || ""}
+        info={info}
+      />
     );
   }
 

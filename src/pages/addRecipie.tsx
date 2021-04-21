@@ -12,6 +12,8 @@ import Form from "../components/Form";
 import Input from "../components/Inputs";
 import { useAppSelector } from "../hooks/useAppSelector";
 
+import FormHelper from "../helpers/Form";
+
 const AddRecipie: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { userRecipies } = useAppSelector((state) => state.user);
@@ -78,6 +80,15 @@ const AddRecipie: React.FC = () => {
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const form = new FormHelper(inputs);
+
+    const { isFormValid, validatedInputs } = form.formValidate();
+
+    if (!isFormValid) {
+      setHandler(validatedInputs);
+      return;
+    }
   };
 
   return (

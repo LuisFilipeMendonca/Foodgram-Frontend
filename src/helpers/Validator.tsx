@@ -23,6 +23,8 @@ class Validator {
 
     if (typeof value === "string") {
       isValid = value.trim().length > 0;
+    } else {
+      isValid = value.length > 0;
     }
 
     return {
@@ -46,6 +48,43 @@ class Validator {
       errorMsg: isValid
         ? ""
         : `This field requires at least ${minLength} characters`,
+    };
+  };
+
+  isPositiveNumber = (
+    input: IInputDefinition
+  ): { isValid: boolean; errorMsg: string } => {
+    const { value } = input;
+    let isValid = true;
+
+    if (typeof value === "string") {
+      const parsedNumber = parseInt(value);
+      console.log(parsedNumber);
+      isValid = parsedNumber >= 0 && !isNaN(parsedNumber);
+    }
+
+    return {
+      isValid,
+      errorMsg: isValid ? "" : "Please provide a valid positive number",
+    };
+  };
+
+  isFileValid = (
+    input: HTMLInputElement,
+    acceptedValues: string[]
+  ): { isValid: boolean; errorMsg: string } => {
+    const { files } = input;
+    let isValid = true;
+
+    if (files && files[0]) {
+      const { type } = files[0];
+
+      isValid = acceptedValues.some((value) => value === type);
+    }
+
+    return {
+      isValid,
+      errorMsg: isValid ? "" : "That file type is not suported",
     };
   };
 }

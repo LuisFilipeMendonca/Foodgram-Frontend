@@ -19,6 +19,7 @@ export interface IInputDefinition {
   info?: string;
   minLength?: number;
   optionsType?: string;
+  validFileTypes?: [];
   validator?: (
     input: IInputDefinition
   ) => { isValid: boolean; errorMsg: string };
@@ -45,4 +46,15 @@ export interface IInputGroup extends IInputActions {
   isInvalid: boolean;
   value: string[];
   optionsType: string;
+  errorMsg: string;
+  info?: string;
+}
+
+export interface IInputFile extends IInputActions {
+  name: string;
+  isInvalid: boolean;
+  value: string;
+  errorMsg: string;
+  info?: string;
+  label: string;
 }
