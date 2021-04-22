@@ -25,17 +25,31 @@ const MyRecipiesPage: React.FC = () => {
   }
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        marginTop: "100px",
+        padding: "0 8px",
+      }}
+    >
       <RecipieFullCard
-        description={recipie!.description}
-        duration={recipie!.duration}
-        ingredients={recipie!.ingredients}
-        name={recipie!.name}
-        photo={recipie!.photoUrl}
-        servings={recipie!.servings}
-        steps={recipie!.steps}
+        description={recipie.description}
+        duration={recipie.duration}
+        ingredients={recipie.ingredients}
+        name={recipie.name}
+        photo={recipie.photo}
+        servings={recipie.servings}
+        steps={recipie.steps}
         key={id}
-        level={recipie!.level}
+        level={recipie.level}
+        createdAt={recipie.createdAt}
+        photoUrl={recipie.photoUrl}
+        ratings={recipie.ratings}
+        user={recipie.user}
+        votes={recipie.votes}
+        votesCount={recipie.votesCount}
+        _id={recipie._id}
       />
     </div>
   );

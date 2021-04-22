@@ -25,5 +25,5 @@ export const CardHeart = styled.svg`
 
 export const CardHeartPath = styled.path`
   stroke: ${({ theme }) => theme.colors.magenta};
-  stroke-width: 2px;
+  stroke-width: 4px;
 `;

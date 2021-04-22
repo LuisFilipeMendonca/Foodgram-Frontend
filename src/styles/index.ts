@@ -10,8 +10,13 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
         scroll-behavior: smooth;
     }
 
+    html {
+      font-size: 62.5%;
+    }
+
     body {
         background: #deddce;
+        font-size: 1.3rem;
     }
 
     button {
@@ -26,6 +31,32 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
 
     a {
         text-decoration: none;
+    }
+
+    @media screen and (min-width: 576px) {
+      html {
+        font-size: 75%;
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      html {
+        font-size: 87.5%;
+      }
+
+      body {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media screen and (min-width: 992px) {
+      html {
+        font-size: 100%;
+      }
+
+      body {
+        font-size: 1rem;
+      }
     }
 `;
 
