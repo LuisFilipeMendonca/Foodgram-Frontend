@@ -27,6 +27,10 @@ export const FormContainer = styled.form`
 
 export const FormActions = styled.div`
   padding: 0 16px 16px;
+
+  & > *:not(:last-child) {
+    margin-right: 16px;
+  }
 `;
 
 export const InputsContainer = styled.div`

@@ -2,6 +2,8 @@ import React from "react";
 
 import { IFormProps } from "../../interfaces/Forms";
 
+import BaseButton from "../BaseButton";
+
 import {
   SectionForm,
   FormHeader,
@@ -26,7 +28,14 @@ const Form: React.FC<IFormProps> = ({
         </FormHeader>
         <InputsContainer>{children}</InputsContainer>
         <FormActions>
-          <button type="submit">{submitDescription}</button>
+          <BaseButton
+            role="button"
+            className="primary"
+            clickHandler={submitHandler}
+            type="submit"
+          >
+            {submitDescription}
+          </BaseButton>
           {additionalBtn && additionalBtn}
         </FormActions>
       </FormContainer>

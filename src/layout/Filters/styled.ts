@@ -65,7 +65,7 @@ export const FiltersContainer = styled.section<FiltersType>`
     flex-direction: column;
   }
 
-  @media screen and (min-width: 850px) {
+  @media screen and (min-width: 768px) {
     position: fixed;
     width: 250px;
     height: 100%;

@@ -11,6 +11,7 @@ import { register } from "../../store/user/slice";
 
 import Form from "../../components/Form";
 import Input from "../../components/Inputs";
+import BaseButton from "../../components/BaseButton";
 
 import FormHelper from "../../helpers/Form";
 
@@ -69,9 +70,14 @@ const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
   };
 
   const additionalBtn = (
-    <button type="button" onClick={changeAuthHandler}>
+    <BaseButton
+      type="button"
+      role="button"
+      className="secondary"
+      clickHandler={changeAuthHandler}
+    >
       Change to login
-    </button>
+    </BaseButton>
   );
 
   return (

@@ -79,26 +79,28 @@ export const SectionRecipies = styled.section<{ hasMargin?: boolean }>`
   padding: ${({ theme }) => `calc(${theme.dimensions.filtersHeight} + 16px)`}
     8px 8px;
 
-  @media screen and (min-width: 850px) {
+  @media screen and (min-width: 768px) {
     padding: 16px;
     margin-left: ${({ hasMargin }) => hasMargin && "250px"};
   }
 `;
 
 export const RecipiesContainer = styled.ul`
-  display: grid;
-  gap: 8px;
-
-  @media screen and (min-width: 400px) {
-    grid-template-columns: repeat(2, 1fr);
+  & > *:not(:last-child) {
+    margin-bottom: 16px;
   }
 
-  @media screen and (min-width: 500px) {
-    grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+  @media screen and (min-width: 450px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 16px;
+
+    & > *:not(:last-child) {
+      margin-bottom: 0;
+    }
   }
 
-  @media screen and (min-width: 1200px) {
-    gap: 24px;
+  @media screen and (min-width: 850px) {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
 `;

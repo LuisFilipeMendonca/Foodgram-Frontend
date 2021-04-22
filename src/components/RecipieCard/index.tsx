@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { CardContainer, CardImg, CardTitle, CardInformation } from "./styled";
 
 import RecipieRating from "../RecipieRating";
+import BaseButton from "../BaseButton";
 
 import { IRecipieCard } from "../../interfaces/Recipies";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
@@ -52,7 +53,9 @@ const RecipieCard: React.FC<IRecipie> = ({
               <button onClick={deleteRecipieHandler}>Delete</button>
             </>
           ) : (
-            <Link to={recipieLink}>View Recipie</Link>
+            <BaseButton role="link" className="primary" path={recipieLink}>
+              View Recipie
+            </BaseButton>
           )}
         </div>
       </CardInformation>
