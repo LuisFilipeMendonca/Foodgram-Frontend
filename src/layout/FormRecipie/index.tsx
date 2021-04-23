@@ -11,7 +11,7 @@ import Input from "../../components/Inputs";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
-import { addRecipie, editRecipie } from "../../store/user/slice";
+import { addRecipie, editRecipie, logoutUser } from "../../store/user/slice";
 
 import FormHelper from "../../helpers/Form";
 
@@ -91,7 +91,7 @@ const FormRecipie: React.FC = () => {
     }
   );
 
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const form = new FormHelper(inputs);
@@ -105,13 +105,16 @@ const FormRecipie: React.FC = () => {
 
     const formData = form.buildFormData();
 
-    console.log("working");
-
-    if (!id) {
-      dispatch(addRecipie(formData));
-    } else {
-      console.log("ola");
-      dispatch(editRecipie({ formData, id }));
+    try {
+      if (!id) {
+        await dispatch(addRecipie(formData));
+      } else {
+        await dispatch(editRecipie({ formData, id }));
+      }
+    } catch (e) {
+      if (e === 401) {
+        dispatch(logoutUser());
+      }
     }
   };
 

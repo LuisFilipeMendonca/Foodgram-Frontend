@@ -1,14 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { CardContainer, CardImg, CardTitle, CardInformation } from "./styled";
+import {
+  CardContainer,
+  CardImg,
+  CardTitle,
+  CardInformation,
+  BtnsContainer,
+} from "./styled";
 
 import RecipieRating from "../RecipieRating";
 import BaseButton from "../BaseButton";
 
 import { IRecipieCard } from "../../interfaces/Recipies";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { deleteRecipie } from "../../store/user/slice";
+import { deleteRecipie, logoutUser } from "../../store/user/slice";
 
 interface IRecipie extends IRecipieCard {
   isRatable: boolean;
@@ -28,8 +34,14 @@ const RecipieCard: React.FC<IRecipie> = ({
   const recipieLink = `/recipie/${_id}`;
   const dispatch = useAppDispatch();
 
-  const deleteRecipieHandler = () => {
-    dispatch(deleteRecipie(_id));
+  const deleteRecipieHandler = async () => {
+    try {
+      await dispatch(deleteRecipie(_id));
+    } catch (e) {
+      if (e === 401) {
+        dispatch(logoutUser());
+      }
+    }
   };
 
   return (
@@ -46,18 +58,31 @@ const RecipieCard: React.FC<IRecipie> = ({
           rateValue={(ratings.length && ratings[0].value) || null}
           isRatable={isRatable}
         />
-        <div>
+        <BtnsContainer>
           {isUserRecipie ? (
             <>
-              <Link to={`/my_recipies/edit/${_id}`}>Edit</Link>
-              <button onClick={deleteRecipieHandler}>Delete</button>
+              <BaseButton
+                role="link"
+                className="primary"
+                path={`/my_recipies/edit/${_id}`}
+              >
+                Edit
+              </BaseButton>
+              <BaseButton
+                type="button"
+                role="button"
+                className="secondary"
+                clickHandler={deleteRecipieHandler}
+              >
+                Delete
+              </BaseButton>
             </>
           ) : (
             <BaseButton role="link" className="primary" path={recipieLink}>
               View Recipie
             </BaseButton>
           )}
-        </div>
+        </BtnsContainer>
       </CardInformation>
     </CardContainer>
   );

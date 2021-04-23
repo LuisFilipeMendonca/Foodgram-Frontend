@@ -3,60 +3,70 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { userInitialState } from "./initialState";
 
-export const register = createAsyncThunk("user/register", async (data: {}) => {
-  try {
-    const response = await axios.post("http://localhost:3001/users", data);
+import errorHandling from "../../utils/errorHandling";
 
-    return response.data;
-  } catch (e) {
-    console.log(e);
+export const register = createAsyncThunk(
+  "user/register",
+  async (data: {}, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("http://localhost:3001/users", data);
+
+      return response.data;
+    } catch (e) {
+      const { status, data } = e.response;
+      return rejectWithValue({ status, data });
+    }
   }
-});
+);
 
-export const login = createAsyncThunk("user/login", async (data: {}) => {
-  try {
-    const response = await axios.post("http://localhost:3001/token", data);
+export const login = createAsyncThunk(
+  "user/login",
+  async (data: {}, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("http://localhost:3001/token", data);
 
-    return response.data;
-  } catch (e) {
-    console.log(e);
+      return response.data;
+    } catch (e) {
+      const { status, data } = e.response;
+      return rejectWithValue({ status, data });
+    }
   }
-});
+);
 
 export const forgotPassword = createAsyncThunk(
   "user/forgotPassword",
-  async (data: {}) => {
+  async (data: {}, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         "http://localhost:3001/users/forgot_password",
         data
       );
 
-      console.log(response.data);
-
       return response.data;
     } catch (e) {
-      console.log(e);
+      const { status, data } = e.response;
+      return rejectWithValue({ status, data });
     }
   }
 );
 
 export const deleteRecipie = createAsyncThunk(
   "user/deleteRecipie",
-  async (id: string) => {
+  async (id: string, { rejectWithValue }) => {
     try {
       await axios.delete(`http://localhost:3001/recipies/${id}`);
 
       return { id };
     } catch (e) {
-      console.log(e);
+      const { status, data } = e.response;
+      return rejectWithValue({ status, data });
     }
   }
 );
 
 export const addRecipie = createAsyncThunk(
   "recipies/addRecipie",
-  async (data: FormData) => {
+  async (data: FormData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         "http://localhost:3001/recipies",
@@ -66,18 +76,17 @@ export const addRecipie = createAsyncThunk(
 
       return response.data;
     } catch (e) {
-      console.log(e);
+      const { status, data } = e.response;
+      return rejectWithValue({ status, data });
     }
   }
 );
 
 export const editRecipie = createAsyncThunk(
   "recipies/editRecipie",
-  async (data: { formData: FormData; id: string }) => {
+  async (data: { formData: FormData; id: string }, { rejectWithValue }) => {
     try {
       const { formData, id } = data;
-
-      console.log("ola");
 
       const response = await axios.put(
         `http://localhost:3001/recipies/${id}`,
@@ -85,18 +94,17 @@ export const editRecipie = createAsyncThunk(
         { headers: { "Content-Type": "multipart/form-data" } }
       );
 
-      console.log(response.data);
-
       return response.data;
     } catch (e) {
-      console.log(e);
+      const { status, data } = e.response;
+      return rejectWithValue({ status, data });
     }
   }
 );
 
 export const resetPassword = createAsyncThunk(
   "user/resetPassword",
-  async (data: { password: string; token: string }) => {
+  async (data: { password: string; token: string }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
         `http://localhost:3001/users/reset_password/${data.token}`,
@@ -105,21 +113,24 @@ export const resetPassword = createAsyncThunk(
 
       return response.data;
     } catch (e) {
-      console.log(e);
+      const { status, data } = e.response;
+      return rejectWithValue({ status, data });
     }
   }
 );
 
 export const getUserData = createAsyncThunk(
   "user/getUserData",
-  async (token: string) => {
+  async (token: string, { rejectWithValue, getState }) => {
+    const { user } = getState() as { user: typeof userInitialState };
     try {
       axios.defaults.headers.authorization = `Bearer ${token}`;
       const response = await axios("http://localhost:3001/users");
 
       return { ...response.data, token };
     } catch (e) {
-      console.log(e);
+      const { status, data } = e.response;
+      return rejectWithValue({ status, data, user });
     }
   }
 );
@@ -149,8 +160,18 @@ export const userSlice = createSlice({
       localStorage.setItem("foodgram", token);
     },
     userNotLogged: (state) => {
-      console.log("ola");
       state.isAppLoading = false;
+    },
+    logoutUser: (state) => {
+      state.isLogged = false;
+      state.userId = null;
+      state.userEmail = null;
+      state.userName = null;
+      state.userToken = null;
+      state.userRecipies = [];
+      state.isAppLoading = false;
+      delete axios.defaults.headers.authorization;
+      localStorage.removeItem("foodgram");
     },
   },
   extraReducers: {
@@ -161,7 +182,7 @@ export const userSlice = createSlice({
       userSlice.caseReducers.setUserData(state, action);
     },
     [register.rejected.type]: (state, action) => {
-      console.log("Rejected");
+      return errorHandling(action.payload);
     },
     [login.pending.type]: (state) => {
       console.log("Pending");
@@ -170,7 +191,7 @@ export const userSlice = createSlice({
       userSlice.caseReducers.setUserData(state, action);
     },
     [login.rejected.type]: (state, action) => {
-      console.log("Rejected");
+      return errorHandling(action.payload);
     },
     [forgotPassword.pending.type]: (state) => {
       console.log("Pending");
@@ -180,7 +201,7 @@ export const userSlice = createSlice({
       console.log(userSlice);
     },
     [forgotPassword.rejected.type]: (state, action) => {
-      console.log("Rejected");
+      return errorHandling(action.payload);
     },
     [getUserData.pending.type]: (state) => {
       console.log("Pending");
@@ -189,7 +210,7 @@ export const userSlice = createSlice({
       userSlice.caseReducers.setUserData(state, action);
     },
     [getUserData.rejected.type]: (state, action) => {
-      console.log("Rejected");
+      return errorHandling(action.payload);
     },
     [deleteRecipie.fulfilled.type]: (state, action) => {
       const { id } = action.payload;
@@ -199,12 +220,14 @@ export const userSlice = createSlice({
       state.userRecipies = recipies;
     },
     [deleteRecipie.rejected.type]: (state, action) => {
-      console.log("Rejected");
+      return errorHandling(action.payload);
     },
     [addRecipie.fulfilled.type]: (state, action) => {
       state.userRecipies.unshift(action.payload);
     },
-    [addRecipie.rejected.type]: (state) => {},
+    [addRecipie.rejected.type]: (state, action) => {
+      return errorHandling(action.payload);
+    },
     [editRecipie.fulfilled.type]: (state, action) => {
       const { _id } = action.payload;
 
@@ -213,10 +236,12 @@ export const userSlice = createSlice({
       );
       state.userRecipies[recipieIdx] = action.payload;
     },
-    [editRecipie.rejected.type]: (state) => {},
+    [editRecipie.rejected.type]: (state, action) => {
+      return errorHandling(action.payload);
+    },
   },
 });
 
-export const { userNotLogged } = userSlice.actions;
+export const { userNotLogged, logoutUser } = userSlice.actions;
 
 export default userSlice.reducer;

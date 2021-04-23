@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 import { findRecipieInput } from "../../constants/inputs";
 
 import Input from "../../components/Inputs";
+import BaseButton from "../../components/BaseButton";
 
-import { CtaContainer } from "./styled";
+import { CtaContainer, Actions } from "./styled";
 
 interface IMyRecipieCta {
   recipieNameFilterHandler: (value: string) => void;
@@ -24,7 +25,6 @@ const MyRecipieCta: React.FC<IMyRecipieCta> = ({
 
   return (
     <CtaContainer>
-      <Link to="/my_recipies/add">Add Recipie</Link>
       <Input
         type={input.type}
         name={input.name}
@@ -35,15 +35,23 @@ const MyRecipieCta: React.FC<IMyRecipieCta> = ({
         changeHandler={inputChangeHandler}
         focusHandler={() => {}}
       />
-      <button
-        onClick={() =>
-          recipieNameFilterHandler(
-            typeof input.value === "string" ? input.value : ""
-          )
-        }
-      >
-        Search
-      </button>
+      <Actions>
+        <BaseButton
+          type="button"
+          role="button"
+          className="secondary"
+          clickHandler={() =>
+            recipieNameFilterHandler(
+              typeof input.value === "string" ? input.value : ""
+            )
+          }
+        >
+          Search
+        </BaseButton>
+        <BaseButton role="link" className="primary" path="/my_recipies/add">
+          Add Recipie
+        </BaseButton>
+      </Actions>
     </CtaContainer>
   );
 };

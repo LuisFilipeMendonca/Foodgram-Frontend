@@ -2,13 +2,14 @@ import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
 const BaseButton = css`
-  padding: 0.6rem 1.3rem;
+  padding: 0.5rem 1.3rem;
   border: 1px solid;
   border-radius: 3px;
   transition: all 0.2s ease;
   backface-visibility: hidden;
   transform: translateZ(0);
   display: inline-block;
+  font-size: 1.1rem;
 
   &:hover {
     transform: translate(0, -2px);

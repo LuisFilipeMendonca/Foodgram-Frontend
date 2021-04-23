@@ -1,6 +1,6 @@
 import { IRecipie } from "../../interfaces/Recipies";
 
-interface IUserState {
+export interface IUserState {
   isLogged: boolean;
   userId: string | null;
   userToken: string | null;

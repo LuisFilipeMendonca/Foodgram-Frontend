@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
+
 import { addRating, deleteRating } from "../../store/recipies/slice";
+import { logoutUser } from "../../store/user/slice";
 
 import {
   CardStar,
@@ -34,19 +37,27 @@ const RecipieRating: React.FC<IRecipieRating> = ({
   const { isLogged } = useAppSelector((state) => state.user);
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const addRatingHandler = (e: React.MouseEvent | React.KeyboardEvent) => {
+  const addRatingHandler = async (
+    e: React.MouseEvent | React.KeyboardEvent
+  ) => {
     if (!isLogged || !isRatable) {
       setShowTooltip(true);
       return;
     }
     const value = e.currentTarget.getAttribute("data-rating");
 
-    if (!rateId && value && recipieId) {
-      dispatch(addRating({ value: +value, recipieId }));
-    }
+    try {
+      if (!rateId && value && recipieId) {
+        await dispatch(addRating({ value: +value, recipieId }));
+      }
 
-    if (rateId && value && recipieId) {
-      dispatch(deleteRating({ value: +value, rateId, recipieId }));
+      if (rateId && value && recipieId) {
+        await dispatch(deleteRating({ value: +value, rateId, recipieId }));
+      }
+    } catch (e) {
+      if (e === 401) {
+        dispatch(logoutUser());
+      }
     }
   };
 

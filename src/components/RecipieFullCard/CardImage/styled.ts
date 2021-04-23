@@ -24,6 +24,7 @@ export const CardImageContainer = styled.div<CardOpenType>`
     width: 400px;
     transform: ${({ isOpen }) => (isOpen ? "translateX(-50%)" : null)};
     transition: transform 0.2s ease;
+    box-shadow: 0 0 10px #888;
   }
 
   @media screen and (min-width: 992px) {

@@ -29,18 +29,14 @@ const RecipieFullCard: React.FC<IRecipie> = ({
   user,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedNav, setSelectedNav] = useState("ingredients");
-
-  const toggleDetailsHandler = (): void => {
-    setIsOpen(!isOpen);
-  };
+  const [selectedNav, setSelectedNav] = useState("details");
 
   const setSelectedNavHandler = (value: string): void => {
     setSelectedNav(value);
   };
 
   useEffect(() => {
-    const openRecipie = setTimeout(() => setIsOpen(true), 1000);
+    const openRecipie = setTimeout(() => setIsOpen(true), 500);
 
     return () => clearTimeout(openRecipie);
   }, []);

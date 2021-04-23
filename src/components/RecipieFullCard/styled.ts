@@ -11,10 +11,12 @@ export const CardContainer = styled.article`
   flex-direction: column;
   width: 100%;
   max-width: 450px;
+  box-shadow: 0 0 10px #888;
 
   @media screen and (min-width: 768px) {
     flex-direction: row;
     max-width: 375px;
+    box-shadow: none;
   }
 
   @media screen and (min-width: 992px) {
@@ -28,10 +30,11 @@ export const CardDetailsContainer = styled.div<CardOpenType>`
 
   @media screen and (min-width: 768px) {
     position: absolute;
-    height: 110%;
+    height: 95%;
     opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
     transform: ${({ isOpen }) => (isOpen ? "translatex(50%)" : null)};
     transition: transform 0.2s ease;
+    box-shadow: 0 0 10px #888;
   }
 `;
 

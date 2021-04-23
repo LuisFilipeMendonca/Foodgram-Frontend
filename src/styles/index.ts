@@ -1,5 +1,6 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { ThemeType } from "./theme";
+import "react-toastify/dist/ReactToastify.css";
 
 const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     * {
@@ -19,6 +20,13 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
         font-size: 1.3rem;
     }
 
+    body,
+    a,
+    textarea,
+    input {
+      font-family: 'Open Sans', sans-serif;
+    }
+
     button {
         border: none;
         background: none;
@@ -36,26 +44,6 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     @media screen and (min-width: 576px) {
       html {
         font-size: 75%;
-      }
-    }
-
-    @media screen and (min-width: 768px) {
-      html {
-        font-size: 87.5%;
-      }
-
-      body {
-        font-size: 1.2rem;
-      }
-    }
-
-    @media screen and (min-width: 992px) {
-      html {
-        font-size: 100%;
-      }
-
-      body {
-        font-size: 1rem;
       }
     }
 `;

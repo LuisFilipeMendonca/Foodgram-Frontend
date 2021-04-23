@@ -32,14 +32,14 @@ const routes: RouteType[] = [
     path: "/my_recipies/add",
     component: AddRecipiePage,
     isExact: true,
-    isClosed: false,
+    isClosed: true,
   },
   {
     id: 9,
     path: "/my_recipies/edit/:id",
     component: AddRecipiePage,
     isExact: true,
-    isClosed: false,
+    isClosed: true,
   },
   {
     id: 3,

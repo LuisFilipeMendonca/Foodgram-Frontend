@@ -5,6 +5,7 @@ import { emailInput } from "../../constants/inputs";
 
 import Form from "../../components/Form";
 import Input from "../../components/Inputs";
+import BaseButton from "../../components/BaseButton";
 
 import useInputs from "../../hooks/useInputs";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
@@ -68,16 +69,21 @@ const FormForgotPassword: React.FC = () => {
   };
 
   const additionalBtn = (
-    <button type="button" onClick={() => history.goBack()}>
+    <BaseButton
+      role="button"
+      className="secondary"
+      type="button"
+      clickHandler={() => history.goBack()}
+    >
       Cancel
-    </button>
+    </BaseButton>
   );
 
   return (
     <Form
       submitHandler={submitHandler}
       title="Password Forgotten"
-      submitDescription="reset password"
+      submitDescription="Reset password"
       additionalBtn={additionalBtn}
     >
       {inputElems}

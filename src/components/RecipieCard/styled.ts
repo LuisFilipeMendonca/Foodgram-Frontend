@@ -33,7 +33,7 @@ export const CardImg = styled.img`
 
 export const CardTitle = styled.h3`
   color: ${({ theme }) => theme.colors.textDark};
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 800;
 
   @media screen and (min-width: 450px) {
@@ -41,10 +41,6 @@ export const CardTitle = styled.h3`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-
-  @media screen and (min-width: 768px) {
-    font-size: 1.2rem;
   }
 `;
 
@@ -64,4 +60,13 @@ export const CardInformation = styled.div`
 export const CardActions = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const BtnsContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  & > *:not(:last-child) {
+    margin-right: 8px;
+  }
 `;

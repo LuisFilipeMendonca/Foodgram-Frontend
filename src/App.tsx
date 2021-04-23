@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { BrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import { theme } from "./styles/theme";
 import GlobalStyle from "./styles/index";
 
 import { useAppSelector } from "./hooks/useAppSelector";
 import { useAppDispatch } from "./hooks/useAppDispatch";
-import { getUserData, userNotLogged } from "./store/user/slice";
+import { getUserData, userNotLogged, logoutUser } from "./store/user/slice";
 
 import Navbar from "./layout/Navbar";
 import Routes from "./routes";
@@ -16,11 +17,21 @@ const App: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const { isAppLoading } = useAppSelector((state) => state.user);
 
+  const getUser = async (token: string) => {
+    try {
+      await dispatch(getUserData(token));
+    } catch (e) {
+      if (e === 401) {
+        dispatch(logoutUser());
+      }
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("foodgram");
 
     if (token) {
-      dispatch(getUserData(token));
+      getUser(token);
     } else {
       dispatch(userNotLogged());
     }
@@ -37,6 +48,7 @@ const App: React.FunctionComponent = () => {
         </BrowserRouter>
       )}
       <GlobalStyle />
+      <ToastContainer />
     </ThemeProvider>
   );
 };

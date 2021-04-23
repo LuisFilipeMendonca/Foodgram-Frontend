@@ -3,6 +3,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { recipiesInitialState } from "./initialState";
 import { userInitialState } from "../user/initialState";
+import errorHandling from "../../utils/errorHandling";
 
 export const fetchRecipies = createAsyncThunk(
   "recipies/fetchRecipies",
@@ -45,7 +46,7 @@ export const fetchRecipies = createAsyncThunk(
 
 export const addRating = createAsyncThunk(
   "recipies/addRating",
-  async (data: { value: number; recipieId: string }) => {
+  async (data: { value: number; recipieId: string }, { rejectWithValue }) => {
     try {
       const response = await axios.post(`http://localhost:3001/ratings`, {
         ...data,
@@ -53,14 +54,18 @@ export const addRating = createAsyncThunk(
 
       return { ...data, _id: response.data._id };
     } catch (e) {
-      console.log(e);
+      const { status, data } = e.response;
+      return rejectWithValue({ status, data });
     }
   }
 );
 
 export const deleteRating = createAsyncThunk(
   "recipies/deleteRating",
-  async (data: { value: number; rateId: string; recipieId: string }) => {
+  async (
+    data: { value: number; rateId: string; recipieId: string },
+    { rejectWithValue }
+  ) => {
     try {
       const { value, rateId, recipieId } = data;
 
@@ -68,7 +73,8 @@ export const deleteRating = createAsyncThunk(
 
       return { value, recipieId };
     } catch (e) {
-      console.log(e);
+      const { status, data } = e.response;
+      return rejectWithValue({ status, data });
     }
   }
 );
@@ -104,8 +110,9 @@ export const recipiesSlice = createSlice({
       state.count = count;
       state.isLoading = false;
     },
-    [fetchRecipies.rejected.type]: (state) => {
+    [fetchRecipies.rejected.type]: (state, action) => {
       state.isLoading = false;
+      return errorHandling(action.payload);
     },
     [addRating.fulfilled.type]: (state, action) => {
       const { value, recipieId, _id } = action.payload;
@@ -117,7 +124,9 @@ export const recipiesSlice = createSlice({
       state.recipies[recipieIdx].votesCount += 1;
       state.recipies[recipieIdx].ratings.push({ _id, value });
     },
-    [addRating.rejected.type]: (state) => {},
+    [addRating.rejected.type]: (state, action) => {
+      return errorHandling(action.payload);
+    },
     [deleteRating.fulfilled.type]: (state, action) => {
       const { value, recipieId } = action.payload;
       const recipieIdx = state.recipies.findIndex(
@@ -128,7 +137,9 @@ export const recipiesSlice = createSlice({
       state.recipies[recipieIdx].votesCount -= 1;
       state.recipies[recipieIdx].ratings.length = 0;
     },
-    [deleteRating.rejected.type]: (state) => {},
+    [deleteRating.rejected.type]: (state, action) => {
+      return errorHandling(action.payload);
+    },
   },
 });
 

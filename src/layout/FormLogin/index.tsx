@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { IFormAuthProps } from "../../interfaces/Forms";
 
@@ -17,6 +17,7 @@ import BaseButton from "../../components/BaseButton";
 import FormHelper from "../../helpers/Form";
 
 const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
+  const history = useHistory();
   const dispatch = useAppDispatch();
   const { inputs, changeHandler, setHandler, focusHandler } = useInputs(
     loginInputs
@@ -53,7 +54,7 @@ const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
     }
   );
 
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const form = new FormHelper(inputs);
@@ -67,7 +68,10 @@ const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
 
     const formData = form.buildFormObj();
 
-    dispatch(login(formData));
+    try {
+      await dispatch(login(formData));
+      history.replace("/");
+    } catch (e) {}
   };
 
   const additionalBtn = (
