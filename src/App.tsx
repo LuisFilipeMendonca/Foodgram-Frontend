@@ -12,6 +12,7 @@ import { getUserData, userNotLogged } from "./store/user/slice";
 
 import Navbar from "./layout/Navbar";
 import Routes from "./routes";
+import Loading from "./layout/Loading";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +31,7 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       {isAppLoading ? (
-        <div>Is Loading</div>
+        <Loading />
       ) : (
         <BrowserRouter>
           <Navbar />
