@@ -37,27 +37,19 @@ const RecipieRating: React.FC<IRecipieRating> = ({
   const { isLogged } = useAppSelector((state) => state.user);
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const addRatingHandler = async (
-    e: React.MouseEvent | React.KeyboardEvent
-  ) => {
+  const addRatingHandler = (e: React.MouseEvent | React.KeyboardEvent) => {
     if (!isLogged || !isRatable) {
       setShowTooltip(true);
       return;
     }
     const value = e.currentTarget.getAttribute("data-rating");
 
-    try {
-      if (!rateId && value && recipieId) {
-        await dispatch(addRating({ value: +value, recipieId }));
-      }
+    if (!rateId && value && recipieId) {
+      dispatch(addRating({ value: +value, recipieId }));
+    }
 
-      if (rateId && value && recipieId) {
-        await dispatch(deleteRating({ value: +value, rateId, recipieId }));
-      }
-    } catch (e) {
-      if (e === 401) {
-        dispatch(logoutUser());
-      }
+    if (rateId && value && recipieId) {
+      dispatch(deleteRating({ value: +value, rateId, recipieId }));
     }
   };
 

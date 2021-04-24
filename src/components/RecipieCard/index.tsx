@@ -34,14 +34,8 @@ const RecipieCard: React.FC<IRecipie> = ({
   const recipieLink = `/recipie/${_id}`;
   const dispatch = useAppDispatch();
 
-  const deleteRecipieHandler = async () => {
-    try {
-      await dispatch(deleteRecipie(_id));
-    } catch (e) {
-      if (e === 401) {
-        dispatch(logoutUser());
-      }
-    }
+  const deleteRecipieHandler = () => {
+    dispatch(deleteRecipie(_id));
   };
 
   return (

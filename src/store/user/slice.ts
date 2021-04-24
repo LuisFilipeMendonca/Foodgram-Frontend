@@ -182,7 +182,7 @@ export const userSlice = createSlice({
       userSlice.caseReducers.setUserData(state, action);
     },
     [register.rejected.type]: (state, action) => {
-      return errorHandling(action.payload);
+      errorHandling(action.payload);
     },
     [login.pending.type]: (state) => {
       console.log("Pending");
@@ -191,7 +191,7 @@ export const userSlice = createSlice({
       userSlice.caseReducers.setUserData(state, action);
     },
     [login.rejected.type]: (state, action) => {
-      return errorHandling(action.payload);
+      errorHandling(action.payload);
     },
     [forgotPassword.pending.type]: (state) => {
       console.log("Pending");
@@ -201,16 +201,16 @@ export const userSlice = createSlice({
       console.log(userSlice);
     },
     [forgotPassword.rejected.type]: (state, action) => {
-      return errorHandling(action.payload);
-    },
-    [getUserData.pending.type]: (state) => {
-      console.log("Pending");
+      errorHandling(action.payload);
     },
     [getUserData.fulfilled.type]: (state, action) => {
       userSlice.caseReducers.setUserData(state, action);
     },
     [getUserData.rejected.type]: (state, action) => {
-      return errorHandling(action.payload);
+      if (action.payload.status === 401) {
+        userSlice.caseReducers.logoutUser(state);
+      }
+      errorHandling(action.payload);
     },
     [deleteRecipie.fulfilled.type]: (state, action) => {
       const { id } = action.payload;
@@ -220,12 +220,18 @@ export const userSlice = createSlice({
       state.userRecipies = recipies;
     },
     [deleteRecipie.rejected.type]: (state, action) => {
-      return errorHandling(action.payload);
+      if (action.payload.status === 401) {
+        userSlice.caseReducers.logoutUser(state);
+      }
+      errorHandling(action.payload);
     },
     [addRecipie.fulfilled.type]: (state, action) => {
       state.userRecipies.unshift(action.payload);
     },
     [addRecipie.rejected.type]: (state, action) => {
+      if (action.payload.status === 401) {
+        userSlice.caseReducers.logoutUser(state);
+      }
       return errorHandling(action.payload);
     },
     [editRecipie.fulfilled.type]: (state, action) => {
@@ -237,6 +243,9 @@ export const userSlice = createSlice({
       state.userRecipies[recipieIdx] = action.payload;
     },
     [editRecipie.rejected.type]: (state, action) => {
+      if (action.payload.status === 401) {
+        userSlice.caseReducers.logoutUser(state);
+      }
       return errorHandling(action.payload);
     },
   },

@@ -43,13 +43,12 @@ const FormRecipie: React.FC = () => {
           } else if (field.type === "file") {
             field.value = recipie["photoUrl"];
           } else {
-            field.value = recipie[field.name];
+            field.value = recipie[field.name].toString();
           }
 
           return field;
         });
       }
-
       setHandler(setInputRecipie);
     }
   }, []);
@@ -111,17 +110,13 @@ const FormRecipie: React.FC = () => {
       } else {
         await dispatch(editRecipie({ formData, id }));
       }
-    } catch (e) {
-      if (e === 401) {
-        dispatch(logoutUser());
-      }
-    }
+    } catch (e) {}
   };
 
   return (
     <Form
-      submitDescription="Add recipie"
-      title="Add Recipie"
+      submitDescription={id ? "Edit Recipie" : "Add Recipie"}
+      title={id ? "Edit Recipie" : "Add Recipie"}
       submitHandler={submitHandler}
     >
       {inputElems}

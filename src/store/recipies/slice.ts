@@ -4,10 +4,11 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { recipiesInitialState } from "./initialState";
 import { userInitialState } from "../user/initialState";
 import errorHandling from "../../utils/errorHandling";
+import { logoutUser } from "../user/slice";
 
 export const fetchRecipies = createAsyncThunk(
   "recipies/fetchRecipies",
-  async (_, { getState }) => {
+  async (_, { getState, dispatch }) => {
     try {
       const { recipies } = getState() as {
         recipies: typeof recipiesInitialState;
@@ -46,7 +47,10 @@ export const fetchRecipies = createAsyncThunk(
 
 export const addRating = createAsyncThunk(
   "recipies/addRating",
-  async (data: { value: number; recipieId: string }, { rejectWithValue }) => {
+  async (
+    data: { value: number; recipieId: string },
+    { rejectWithValue, dispatch }
+  ) => {
     try {
       const response = await axios.post(`http://localhost:3001/ratings`, {
         ...data,
@@ -55,6 +59,11 @@ export const addRating = createAsyncThunk(
       return { ...data, _id: response.data._id };
     } catch (e) {
       const { status, data } = e.response;
+
+      if (status === 401) {
+        dispatch(logoutUser());
+      }
+
       return rejectWithValue({ status, data });
     }
   }
@@ -64,7 +73,7 @@ export const deleteRating = createAsyncThunk(
   "recipies/deleteRating",
   async (
     data: { value: number; rateId: string; recipieId: string },
-    { rejectWithValue }
+    { rejectWithValue, dispatch }
   ) => {
     try {
       const { value, rateId, recipieId } = data;
@@ -74,6 +83,9 @@ export const deleteRating = createAsyncThunk(
       return { value, recipieId };
     } catch (e) {
       const { status, data } = e.response;
+      if (status === 401) {
+        dispatch(logoutUser());
+      }
       return rejectWithValue({ status, data });
     }
   }
@@ -112,7 +124,7 @@ export const recipiesSlice = createSlice({
     },
     [fetchRecipies.rejected.type]: (state, action) => {
       state.isLoading = false;
-      return errorHandling(action.payload);
+      errorHandling(action.payload);
     },
     [addRating.fulfilled.type]: (state, action) => {
       const { value, recipieId, _id } = action.payload;
@@ -125,7 +137,7 @@ export const recipiesSlice = createSlice({
       state.recipies[recipieIdx].ratings.push({ _id, value });
     },
     [addRating.rejected.type]: (state, action) => {
-      return errorHandling(action.payload);
+      errorHandling(action.payload);
     },
     [deleteRating.fulfilled.type]: (state, action) => {
       const { value, recipieId } = action.payload;
@@ -138,7 +150,7 @@ export const recipiesSlice = createSlice({
       state.recipies[recipieIdx].ratings.length = 0;
     },
     [deleteRating.rejected.type]: (state, action) => {
-      return errorHandling(action.payload);
+      errorHandling(action.payload);
     },
   },
 });

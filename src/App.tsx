@@ -8,30 +8,20 @@ import GlobalStyle from "./styles/index";
 
 import { useAppSelector } from "./hooks/useAppSelector";
 import { useAppDispatch } from "./hooks/useAppDispatch";
-import { getUserData, userNotLogged, logoutUser } from "./store/user/slice";
+import { getUserData, userNotLogged } from "./store/user/slice";
 
 import Navbar from "./layout/Navbar";
 import Routes from "./routes";
 
-const App: React.FunctionComponent = () => {
+const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isAppLoading } = useAppSelector((state) => state.user);
-
-  const getUser = async (token: string) => {
-    try {
-      await dispatch(getUserData(token));
-    } catch (e) {
-      if (e === 401) {
-        dispatch(logoutUser());
-      }
-    }
-  };
 
   useEffect(() => {
     const token = localStorage.getItem("foodgram");
 
     if (token) {
-      getUser(token);
+      dispatch(getUserData(token));
     } else {
       dispatch(userNotLogged());
     }
