@@ -1,22 +1,32 @@
 import React from "react";
-import { Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import ProtectedRoute from "../components/ProtectedRoute";
 
 import routes from "../constants/routes";
 
+import NotFound from "../pages/404";
+
 const Routes: React.FC = () => {
   return (
     <Switch>
-      {routes.map((route) => (
-        <ProtectedRoute
-          key={route.id}
-          isExact={route.isExact}
-          path={route.path}
-          component={route.component}
-          isClosed={route.isClosed}
-        />
-      ))}
+      {routes.map((route) =>
+        route.isClosed ? (
+          <ProtectedRoute
+            path={route.path}
+            isClosed={route.isClosed}
+            isExact={route.isExact}
+            component={route.component}
+          />
+        ) : (
+          <Route
+            path={route.path}
+            exact={route.isExact}
+            component={route.component}
+          />
+        )
+      )}
+      <Route component={NotFound} />
     </Switch>
   );
 };

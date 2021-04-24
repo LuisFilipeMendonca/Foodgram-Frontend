@@ -10,6 +10,11 @@ const BaseButton = css`
   transform: translateZ(0);
   display: inline-block;
   font-size: 1.1rem;
+  font-weight: bold;
+
+  &:focus {
+    outline: 1px dashed blue;
+  }
 
   &:hover {
     transform: translate(0, -2px);
