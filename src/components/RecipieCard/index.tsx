@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import {
   CardContainer,
@@ -14,7 +13,7 @@ import BaseButton from "../BaseButton";
 
 import { IRecipieCard } from "../../interfaces/Recipies";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { deleteRecipie, logoutUser } from "../../store/user/slice";
+import { deleteRecipie } from "../../store/user/slice";
 
 interface IRecipie extends IRecipieCard {
   isRatable: boolean;
@@ -40,7 +39,7 @@ const RecipieCard: React.FC<IRecipie> = ({
 
   return (
     <CardContainer>
-      <CardImg src={photoUrl} />
+      <CardImg src={photoUrl} alt="recipie" />
       <CardInformation>
         <CardTitle>{name}</CardTitle>
         <RecipieRating

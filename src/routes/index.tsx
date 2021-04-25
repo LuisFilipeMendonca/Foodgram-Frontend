@@ -13,6 +13,7 @@ const Routes: React.FC = () => {
       {routes.map((route) =>
         route.isClosed ? (
           <ProtectedRoute
+            key={route.id}
             path={route.path}
             isClosed={route.isClosed}
             isExact={route.isExact}
@@ -20,6 +21,7 @@ const Routes: React.FC = () => {
           />
         ) : (
           <Route
+            key={route.id}
             path={route.path}
             exact={route.isExact}
             component={route.component}

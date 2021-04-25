@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { MainContainerAuth } from "../styles";
 
@@ -11,12 +11,19 @@ import { useAppSelector } from "../hooks/useAppSelector";
 const AuthPage: React.FC = () => {
   const [isLogging, setIsLogging] = useState(true);
   const { isLogged } = useAppSelector((state) => state.user);
+  const location = useLocation();
+  const history = useHistory();
+
+  console.log(location);
 
   const changeAuthHandler = () => setIsLogging(!isLogging);
 
-  if (isLogged) {
-    return <Redirect to="/" />;
-  }
+  useEffect(() => {
+    if (isLogged) {
+      const redirectPath = location.search.split("=")[1];
+      history.replace(redirectPath || "");
+    }
+  }, [isLogged]);
 
   return (
     <MainContainerAuth>

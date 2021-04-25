@@ -4,7 +4,6 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 
 import { addRating, deleteRating } from "../../store/recipies/slice";
-import { logoutUser } from "../../store/user/slice";
 
 import {
   CardStar,

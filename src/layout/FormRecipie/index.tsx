@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 import { recipiesInputs } from "../../constants/inputs";
 import { IInputDefinition } from "../../interfaces/Inputs";
@@ -11,11 +11,12 @@ import Input from "../../components/Inputs";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
-import { addRecipie, editRecipie, logoutUser } from "../../store/user/slice";
+import { addRecipie, editRecipie } from "../../store/user/slice";
 
 import FormHelper from "../../helpers/Form";
 
 const FormRecipie: React.FC = () => {
+  const history = useHistory();
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
   const { userRecipies } = useAppSelector((state) => state.user);
@@ -110,6 +111,7 @@ const FormRecipie: React.FC = () => {
       } else {
         await dispatch(editRecipie({ formData, id }));
       }
+      history.replace("/my_recipies");
     } catch (e) {}
   };
 

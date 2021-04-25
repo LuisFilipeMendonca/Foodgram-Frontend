@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { MainContainer } from "../styles";
 import { SectionRecipies, RecipiesContainer } from "../styles";
@@ -10,6 +11,8 @@ import RecipieCard from "../components/RecipieCard";
 import { useAppSelector } from "../hooks/useAppSelector";
 
 const MyRecipiesPage: React.FC = () => {
+  const location = useLocation();
+
   const itemsPerPage = 12;
   const [recipieNameFilter, setRecipieNameFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

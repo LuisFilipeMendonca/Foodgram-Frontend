@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+
 import { useAppSelector } from "../../hooks/useAppSelector";
 
 interface IProtectedRoute {
@@ -18,7 +19,7 @@ const ProtectedRoute: React.FC<IProtectedRoute> = ({
   const { isLogged } = useAppSelector((state) => state.user);
 
   if (!isLogged && isClosed) {
-    return <Redirect to="/login" />;
+    return <Redirect to={`/login?redirect=${path}`} />;
   }
 
   return <Route path={path} exact={isExact} component={component} />;
