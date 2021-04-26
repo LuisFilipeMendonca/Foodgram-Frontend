@@ -11,7 +11,8 @@ export const theme = {
     textLight: "#eee",
   },
   dimensions: {
-    navbarHeightSmall: "60px",
+    navbarHeightSmall: "5rem",
+    navbarHeightBig: "6rem",
     filtersHeight: "70px",
     recipies: {
       heightSmall: "125px",

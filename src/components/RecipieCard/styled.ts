@@ -6,29 +6,12 @@ export const CardContainer = styled.li`
   border-radius: 3px;
   overflow: hidden;
   box-shadow: 0 0 5px #aaa;
-  display: flex;
-  height: 130px;
-
-  @media screen and (min-width: 450px) {
-    flex-direction: column;
-    height: unset;
-  }
 `;
 
 export const CardImg = styled.img`
-  width: ${({ theme }) => theme.dimensions.recipies.imgWidthSmall};
-  height: 100%;
+  width: 100%;
   object-fit: cover;
   display: block;
-
-  @media screen and (min-width: 450px) {
-    width: 100%;
-    height: ${({ theme }) => theme.dimensions.recipies.imgHeightSmall};
-  }
-
-  @media screen and (min-width: 768px) {
-    height: ${({ theme }) => theme.dimensions.recipies.imgHeightBig};
-  }
 `;
 
 export const CardTitle = styled.h3`
@@ -50,10 +33,8 @@ export const CardInformation = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-  @media screen and (min-width: 450px) {
-    & > *:not(:last-child) {
-      margin-bottom: 8px;
-    }
+  & > *:not(:last-child) {
+    margin-bottom: 8px;
   }
 `;
 

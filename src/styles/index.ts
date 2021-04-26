@@ -2,6 +2,11 @@ import styled, { createGlobalStyle } from "styled-components";
 import { ThemeType } from "./theme";
 import "react-toastify/dist/ReactToastify.css";
 
+type SectionType = {
+  hasMarginLeft?: boolean;
+  hasPaddingTop?: boolean;
+};
+
 const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     * {
         margin: 0;
@@ -52,6 +57,10 @@ export default GlobalStyle;
 
 export const MainContainer = styled.main`
   padding-top: ${({ theme }) => theme.dimensions.navbarHeightSmall};
+
+  @media screen and (min-width: 768px) {
+    padding-top: ${({ theme }) => theme.dimensions.navbarHeightBig};
+  }
 `;
 
 export const MainContainerAuth = styled(MainContainer)`
@@ -63,32 +72,13 @@ export const MainContainerAuth = styled(MainContainer)`
     8px 8px;
 `;
 
-export const SectionRecipies = styled.section<{ hasMargin?: boolean }>`
-  padding: ${({ theme }) => `calc(${theme.dimensions.filtersHeight} + 16px)`}
+export const Section = styled.section<SectionType>`
+  padding: ${({ theme, hasPaddingTop }) =>
+      hasPaddingTop ? `calc(${theme.dimensions.filtersHeight} + 16px)` : "16px"}
     8px 8px;
 
   @media screen and (min-width: 768px) {
     padding: 16px;
-    margin-left: ${({ hasMargin }) => hasMargin && "250px"};
-  }
-`;
-
-export const RecipiesContainer = styled.ul`
-  & > *:not(:last-child) {
-    margin-bottom: 16px;
-  }
-
-  @media screen and (min-width: 450px) {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
-
-    & > *:not(:last-child) {
-      margin-bottom: 0;
-    }
-  }
-
-  @media screen and (min-width: 850px) {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    margin-left: ${({ hasMarginLeft }) => hasMarginLeft && "250px"};
   }
 `;

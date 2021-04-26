@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import { MainContainer } from "../styles";
-import { SectionRecipies, RecipiesContainer } from "../styles";
+import { MainContainer, Section } from "../styles";
 
 import MyRecipieCta from "../layout/MyRecipieCta";
 import Pagination from "../components/Pagination";
-import RecipieCard from "../components/RecipieCard";
+import RecipiesGrid from "../layout/RecipiesGrid";
 
 import { useAppSelector } from "../hooks/useAppSelector";
 
@@ -33,20 +32,6 @@ const MyRecipiesPage: React.FC = () => {
     setRecipieNameFilter(value);
   };
 
-  const recipiesCards = recipies.map((recipie) => (
-    <RecipieCard
-      key={Math.random()}
-      photoUrl={recipie.photoUrl}
-      name={recipie.name}
-      votes={recipie.votes}
-      votesCount={recipie.votesCount}
-      _id={recipie._id}
-      ratings={recipie.ratings}
-      isRatable={false}
-      isUserRecipie={true}
-    />
-  ));
-
   const setPageHandler = (pageValue: number): void => {
     setCurrentPage(pageValue);
   };
@@ -54,8 +39,8 @@ const MyRecipiesPage: React.FC = () => {
   return (
     <MainContainer>
       <MyRecipieCta recipieNameFilterHandler={recipieNameFilterHandler} />
-      <SectionRecipies>
-        <RecipiesContainer>{recipiesCards}</RecipiesContainer>
+      <Section>
+        <RecipiesGrid recipiesData={recipies} isUserRecipie={true} />
         <Pagination
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
@@ -63,7 +48,7 @@ const MyRecipiesPage: React.FC = () => {
           visiblePages={4}
           setPageHandler={setPageHandler}
         />
-      </SectionRecipies>
+      </Section>
     </MainContainer>
   );
 };

@@ -17,10 +17,15 @@ export const Nav = styled.nav`
   width: 100%;
   background-color: #deddce;
   height: ${({ theme }) => theme.dimensions.navbarHeightSmall};
+
+  @media screen and (min-width: 768px) {
+    height: ${({ theme }) => theme.dimensions.navbarHeightBig};
+    padding: 2rem;
+  }
 `;
 
 export const NavBrand = styled(Link)`
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.magenta};
   font-family: "Dancing Script", cursive;
@@ -97,7 +102,7 @@ export const NavLinkItem = styled(NavLink)`
   background-color: #deddce;
   color: ${({ theme }) => theme.colors.magentaOpacity};
   font-family: "Dancing Script", cursive;
-  font-size: 1.4rem;
+  font-size: 1.9rem;
 
   &:hover,
   &.active {
@@ -108,6 +113,7 @@ export const NavLinkItem = styled(NavLink)`
   @media screen and (min-width: 768px) {
     padding: 6px 24px;
     border-radius: 3px;
+    font-size: 1.6rem;
 
     &:hover,
     &.active {

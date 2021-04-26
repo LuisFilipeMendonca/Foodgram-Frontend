@@ -13,10 +13,11 @@ import BaseButton from "../BaseButton";
 
 import { IRecipieCard } from "../../interfaces/Recipies";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { deleteRecipie } from "../../store/recipies/slice";
+import { removeFavorites, deleteRecipie } from "../../store/recipies/slice";
 
 interface IRecipie extends IRecipieCard {
-  isRatable: boolean;
+  isFavorites?: boolean;
+  isRatable?: boolean;
   isUserRecipie?: boolean;
 }
 
@@ -29,6 +30,7 @@ const RecipieCard: React.FC<IRecipie> = ({
   ratings,
   isRatable,
   isUserRecipie,
+  isFavorites,
 }) => {
   const recipieLink = `/recipie/${_id}`;
   const dispatch = useAppDispatch();
@@ -36,6 +38,8 @@ const RecipieCard: React.FC<IRecipie> = ({
   const deleteRecipieHandler = () => {
     dispatch(deleteRecipie(_id));
   };
+
+  const deleteFavoriteHandler = () => dispatch(removeFavorites(_id));
 
   return (
     <CardContainer>
@@ -72,7 +76,16 @@ const RecipieCard: React.FC<IRecipie> = ({
             </>
           ) : (
             <BaseButton role="link" className="primary" path={recipieLink}>
-              View Recipie
+              View
+            </BaseButton>
+          )}
+          {isFavorites && (
+            <BaseButton
+              role="button"
+              className="secondary"
+              clickHandler={deleteFavoriteHandler}
+            >
+              Remove
             </BaseButton>
           )}
         </BtnsContainer>
