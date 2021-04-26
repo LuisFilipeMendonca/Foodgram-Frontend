@@ -20,13 +20,18 @@ const Navbar: React.FC = () => {
   const { isLogged } = useAppSelector((state) => state.user);
 
   const toggleHandler = () => setIsOpen(!isOpen);
+  const closeNavbarHandler = () => setIsOpen(false);
 
   const navLinks = routes
     .filter((route) => route.label)
     .sort((a, b) => a.id - b.id)
     .map((route) => (
       <NavItem key={route.id} isOpen={isOpen}>
-        <NavLinkItem exact={route.isExact} to={route.path}>
+        <NavLinkItem
+          exact={route.isExact}
+          to={route.path}
+          onClick={closeNavbarHandler}
+        >
           {route.label}
         </NavLinkItem>
       </NavItem>

@@ -17,7 +17,7 @@ import CardSteps from "./CardSteps";
 import CardInformation from "./CardInformation";
 
 const RecipieFullCard: React.FC<IRecipie> = ({
-  photo,
+  _id,
   photoUrl,
   duration,
   servings,
@@ -44,6 +44,7 @@ const RecipieFullCard: React.FC<IRecipie> = ({
   return (
     <CardContainer>
       <CardImage
+        id={_id}
         duration={duration}
         isOpen={isOpen}
         name={name}

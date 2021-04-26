@@ -3,12 +3,13 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { recipiesInitialState } from "./initialState";
 import { userInitialState } from "../user/initialState";
+import { IRecipie } from "../../interfaces/Recipies";
 import errorHandling from "../../utils/errorHandling";
 import { logoutUser } from "../user/slice";
 
 export const fetchRecipies = createAsyncThunk(
   "recipies/fetchRecipies",
-  async (_, { getState, dispatch }) => {
+  async (_, { getState }) => {
     try {
       const { recipies } = getState() as {
         recipies: typeof recipiesInitialState;
@@ -91,6 +92,114 @@ export const deleteRating = createAsyncThunk(
   }
 );
 
+export const addRecipie = createAsyncThunk(
+  "recipies/addRecipie",
+  async (data: FormData, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/recipies",
+        data,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      return response.data;
+    } catch (e) {
+      const { status, data } = e.response;
+
+      if (status === 401) {
+        dispatch(logoutUser());
+      }
+
+      return rejectWithValue({ status, data });
+    }
+  }
+);
+
+export const editRecipie = createAsyncThunk(
+  "recipies/editRecipie",
+  async (
+    data: { formData: FormData; id: string },
+    { rejectWithValue, dispatch }
+  ) => {
+    try {
+      const { formData, id } = data;
+
+      const response = await axios.put(
+        `http://localhost:3001/recipies/${id}`,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      return response.data;
+    } catch (e) {
+      const { status, data } = e.response;
+
+      if (status === 401) {
+        dispatch(logoutUser());
+      }
+
+      return rejectWithValue({ status, data });
+    }
+  }
+);
+
+export const deleteRecipie = createAsyncThunk(
+  "recipies/deleteRecipie",
+  async (id: string, { rejectWithValue, dispatch }) => {
+    try {
+      await axios.delete(`http://localhost:3001/recipies/${id}`);
+
+      return { id };
+    } catch (e) {
+      const { status, data } = e.response;
+
+      if (status === 401) {
+        dispatch(logoutUser());
+      }
+
+      return rejectWithValue({ status, data });
+    }
+  }
+);
+
+export const addFavorites = createAsyncThunk(
+  "recipies/addFavorite",
+  async (id: string, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3001/recipies/add_favorites/${id}`
+      );
+
+      return { ...response.data, id };
+    } catch (e) {
+      const { status, data } = e.response;
+      if (status === 401) {
+        dispatch(logoutUser());
+      }
+      return rejectWithValue({ status, data });
+    }
+  }
+);
+
+export const removeFavorites = createAsyncThunk(
+  "recipies/removeFavorites",
+  async (id: string, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/recipies/delete_favorites/${id}`
+      );
+
+      return { ...response.data, id };
+    } catch (e) {
+      const { status, data } = e.response;
+      if (status === 401) {
+        dispatch(logoutUser());
+      }
+      return rejectWithValue({ status, data });
+    }
+  }
+);
+
 export const recipiesSlice = createSlice({
   name: "recipies",
   initialState: recipiesInitialState,
@@ -109,6 +218,14 @@ export const recipiesSlice = createSlice({
     setRecipieName: (state, action: PayloadAction<string>) => {
       state.recipieName = action.payload;
       state.currentPage = 1;
+    },
+    setUserRecipies: (
+      state,
+      action: PayloadAction<{ recipies: IRecipie[]; favorites: IRecipie[] }>
+    ) => {
+      const { recipies, favorites } = action.payload;
+      state.userRecipies = recipies;
+      state.userFavorites = favorites;
     },
   },
   extraReducers: {
@@ -152,6 +269,52 @@ export const recipiesSlice = createSlice({
     [deleteRating.rejected.type]: (state, action) => {
       errorHandling(action.payload);
     },
+    [deleteRecipie.fulfilled.type]: (state, action) => {
+      const { id } = action.payload;
+      const recipies = state.userRecipies.filter(
+        (recipie) => recipie._id !== id
+      );
+      state.userRecipies = recipies;
+    },
+    [deleteRecipie.rejected.type]: (state, action) => {
+      errorHandling(action.payload);
+    },
+    [addRecipie.fulfilled.type]: (state, action) => {
+      state.userRecipies.unshift(action.payload);
+    },
+    [addRecipie.rejected.type]: (state, action) => {
+      return errorHandling(action.payload);
+    },
+    [editRecipie.fulfilled.type]: (state, action) => {
+      const { _id } = action.payload;
+
+      const recipieIdx = state.userRecipies.findIndex(
+        (recipie) => recipie._id === _id
+      );
+      state.userRecipies[recipieIdx] = action.payload;
+    },
+    [editRecipie.rejected.type]: (state, action) => {
+      return errorHandling(action.payload);
+    },
+    [addFavorites.fulfilled.type]: (state, action) => {
+      const { id } = action.payload;
+
+      const recipie = state.recipies.find((recipie) => recipie._id === id);
+      state.userFavorites.unshift(recipie!);
+    },
+    [addFavorites.rejected.type]: (state, action) => {
+      return errorHandling(action.payload);
+    },
+    [removeFavorites.fulfilled.type]: (state, action) => {
+      const { id } = action.payload;
+
+      state.userFavorites = state.userFavorites.filter(
+        (recipie) => recipie._id !== id
+      );
+    },
+    [removeFavorites.rejected.type]: (state, action) => {
+      return errorHandling(action.payload);
+    },
   },
 });
 
@@ -160,6 +323,7 @@ export const {
   setItemsPerPage,
   setItemsOrder,
   setRecipieName,
+  setUserRecipies,
 } = recipiesSlice.actions;
 
 export default recipiesSlice.reducer;

@@ -1,5 +1,9 @@
 import React from "react";
 
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { useAppSelector } from "../../../hooks/useAppSelector";
+import { addFavorites, removeFavorites } from "../../../store/recipies/slice";
+
 import HeartSvg from "../../HeartSvg";
 
 import {
@@ -20,6 +24,7 @@ interface ICardImage {
   duration: number;
   servings: number;
   name: string;
+  id: string;
 }
 
 const CardImage: React.FC<ICardImage> = ({
@@ -28,13 +33,32 @@ const CardImage: React.FC<ICardImage> = ({
   duration,
   servings,
   name,
+  id,
 }) => {
+  const dispatch = useAppDispatch();
+  const { userFavorites } = useAppSelector((state) => state.recipies);
+
+  console.log(userFavorites);
+
+  const isFavorite = userFavorites.some((recipie) => recipie._id === id);
+
+  const addRemoveFavoritesHandler = () => {
+    if (!isFavorite) {
+      dispatch(addFavorites(id));
+    } else {
+      dispatch(removeFavorites(id));
+    }
+  };
+
   return (
     <CardImageContainer isOpen={isOpen}>
       <CardImg src={photoUrl} />
       <CardImageInfo>
         <CardImageFav>
-          <HeartSvg />
+          <HeartSvg
+            clickHandler={addRemoveFavoritesHandler}
+            isFavorite={isFavorite}
+          />
         </CardImageFav>
         <CardImageInfoTop>
           <CardImageBullet>

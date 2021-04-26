@@ -13,7 +13,7 @@ import BaseButton from "../BaseButton";
 
 import { IRecipieCard } from "../../interfaces/Recipies";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { deleteRecipie } from "../../store/user/slice";
+import { deleteRecipie } from "../../store/recipies/slice";
 
 interface IRecipie extends IRecipieCard {
   isRatable: boolean;

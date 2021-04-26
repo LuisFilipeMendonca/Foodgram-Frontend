@@ -2,6 +2,7 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { userInitialState } from "./initialState";
+import { setUserRecipies } from "../recipies/slice";
 
 import errorHandling from "../../utils/errorHandling";
 
@@ -50,58 +51,6 @@ export const forgotPassword = createAsyncThunk(
   }
 );
 
-export const deleteRecipie = createAsyncThunk(
-  "user/deleteRecipie",
-  async (id: string, { rejectWithValue }) => {
-    try {
-      await axios.delete(`http://localhost:3001/recipies/${id}`);
-
-      return { id };
-    } catch (e) {
-      const { status, data } = e.response;
-      return rejectWithValue({ status, data });
-    }
-  }
-);
-
-export const addRecipie = createAsyncThunk(
-  "recipies/addRecipie",
-  async (data: FormData, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/recipies",
-        data,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-
-      return response.data;
-    } catch (e) {
-      const { status, data } = e.response;
-      return rejectWithValue({ status, data });
-    }
-  }
-);
-
-export const editRecipie = createAsyncThunk(
-  "recipies/editRecipie",
-  async (data: { formData: FormData; id: string }, { rejectWithValue }) => {
-    try {
-      const { formData, id } = data;
-
-      const response = await axios.put(
-        `http://localhost:3001/recipies/${id}`,
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-
-      return response.data;
-    } catch (e) {
-      const { status, data } = e.response;
-      return rejectWithValue({ status, data });
-    }
-  }
-);
-
 export const resetPassword = createAsyncThunk(
   "user/resetPassword",
   async (data: { password: string; token: string }, { rejectWithValue }) => {
@@ -121,11 +70,15 @@ export const resetPassword = createAsyncThunk(
 
 export const getUserData = createAsyncThunk(
   "user/getUserData",
-  async (token: string, { rejectWithValue, getState }) => {
+  async (token: string, { rejectWithValue, getState, dispatch }) => {
     const { user } = getState() as { user: typeof userInitialState };
     try {
       axios.defaults.headers.authorization = `Bearer ${token}`;
       const response = await axios("http://localhost:3001/users");
+
+      const { recipies, favorites } = response.data;
+
+      dispatch(setUserRecipies({ recipies, favorites }));
 
       return { ...response.data, token };
     } catch (e) {
@@ -140,14 +93,13 @@ export const userSlice = createSlice({
   initialState: userInitialState,
   reducers: {
     setUserData: (state, { payload }) => {
-      const { _id, email, username, token, recipies } = payload;
+      const { _id, email, username, token, recipies, favorites } = payload;
 
       state.isLogged = true;
       state.userId = _id;
       state.userEmail = email;
       state.userName = username;
       state.userToken = token;
-      state.userRecipies = recipies;
 
       if (!axios.defaults.headers.authorization) {
         axios.defaults.headers.authorization = `Bearer ${token}`;
@@ -168,7 +120,6 @@ export const userSlice = createSlice({
       state.userEmail = null;
       state.userName = null;
       state.userToken = null;
-      state.userRecipies = [];
       state.isAppLoading = false;
       delete axios.defaults.headers.authorization;
       localStorage.removeItem("foodgram");
@@ -211,42 +162,6 @@ export const userSlice = createSlice({
         userSlice.caseReducers.logoutUser(state);
       }
       errorHandling(action.payload);
-    },
-    [deleteRecipie.fulfilled.type]: (state, action) => {
-      const { id } = action.payload;
-      const recipies = state.userRecipies.filter(
-        (recipie) => recipie._id !== id
-      );
-      state.userRecipies = recipies;
-    },
-    [deleteRecipie.rejected.type]: (state, action) => {
-      if (action.payload.status === 401) {
-        userSlice.caseReducers.logoutUser(state);
-      }
-      errorHandling(action.payload);
-    },
-    [addRecipie.fulfilled.type]: (state, action) => {
-      state.userRecipies.unshift(action.payload);
-    },
-    [addRecipie.rejected.type]: (state, action) => {
-      if (action.payload.status === 401) {
-        userSlice.caseReducers.logoutUser(state);
-      }
-      return errorHandling(action.payload);
-    },
-    [editRecipie.fulfilled.type]: (state, action) => {
-      const { _id } = action.payload;
-
-      const recipieIdx = state.userRecipies.findIndex(
-        (recipie) => recipie._id === _id
-      );
-      state.userRecipies[recipieIdx] = action.payload;
-    },
-    [editRecipie.rejected.type]: (state, action) => {
-      if (action.payload.status === 401) {
-        userSlice.caseReducers.logoutUser(state);
-      }
-      return errorHandling(action.payload);
     },
   },
 });

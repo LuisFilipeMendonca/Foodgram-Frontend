@@ -7,7 +7,6 @@ export interface IUserState {
   userEmail: string | null;
   userName: string | null;
   isAppLoading: boolean;
-  userRecipies: IRecipie[];
 }
 
 export const userInitialState: IUserState = {
@@ -17,5 +16,4 @@ export const userInitialState: IUserState = {
   userName: null,
   userToken: null,
   isAppLoading: true,
-  userRecipies: [],
 };

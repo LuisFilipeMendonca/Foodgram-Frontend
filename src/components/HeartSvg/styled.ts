@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const CardHeart = styled.svg`
+type HeartFilledType = {
+  isFilled: boolean;
+};
+
+export const CardHeart = styled.svg<HeartFilledType>`
   @keyframes pulse {
     0% {
       transform: scale(1);
@@ -15,7 +19,7 @@ export const CardHeart = styled.svg`
 
   height: 15px;
   width: 15px;
-  fill: transparent;
+  fill: ${({ isFilled }) => (isFilled ? "red" : "transparent")};
   position: absolute;
   right: 16px;
   overflow: visible;

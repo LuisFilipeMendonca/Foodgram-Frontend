@@ -16,7 +16,7 @@ const MyRecipiesPage: React.FC = () => {
   const itemsPerPage = 12;
   const [recipieNameFilter, setRecipieNameFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  let { userRecipies } = useAppSelector((state) => state.user);
+  let { userRecipies } = useAppSelector((state) => state.recipies);
 
   if (recipieNameFilter) {
     userRecipies = userRecipies.filter((recipie) =>

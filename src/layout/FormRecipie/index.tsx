@@ -11,7 +11,7 @@ import Input from "../../components/Inputs";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
-import { addRecipie, editRecipie } from "../../store/user/slice";
+import { addRecipie, editRecipie } from "../../store/recipies/slice";
 
 import FormHelper from "../../helpers/Form";
 
@@ -19,7 +19,7 @@ const FormRecipie: React.FC = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
-  const { userRecipies } = useAppSelector((state) => state.user);
+  const { userRecipies } = useAppSelector((state) => state.recipies);
   const { inputs, changeHandler, setHandler, focusHandler } = useInputs(
     recipiesInputs
   );

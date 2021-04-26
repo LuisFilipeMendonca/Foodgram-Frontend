@@ -8,6 +8,8 @@ interface IRecipieState {
   itemsPerPage: string;
   itemsOrderValue: string;
   recipieName: string;
+  userRecipies: IRecipie[];
+  userFavorites: IRecipie[];
 }
 
 export const recipiesInitialState: IRecipieState = {
@@ -18,4 +20,6 @@ export const recipiesInitialState: IRecipieState = {
   itemsPerPage: "6",
   itemsOrderValue: "recent",
   recipieName: "",
+  userRecipies: [],
+  userFavorites: [],
 };
