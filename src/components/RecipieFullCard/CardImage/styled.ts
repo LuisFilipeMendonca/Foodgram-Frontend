@@ -1,9 +1,5 @@
 import styled from "styled-components";
-
-type CardImageType = {
-  url: string;
-  isOpen: boolean;
-};
+import { TooltipContainer } from "../../Tooltip/styled";
 
 type CardOpenType = {
   isOpen: boolean;
@@ -90,4 +86,15 @@ export const CardImageFav = styled.span`
   position: absolute;
   right: 0;
   top: 16px;
+
+  &:hover ${TooltipContainer} {
+    display: block;
+    right: 0;
+    transform: translateY(calc(-100% - 16px));
+  }
+
+  &:hover ${TooltipContainer}::before {
+    left: unset;
+    right: 14px;
+  }
 `;

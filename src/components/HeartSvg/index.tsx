@@ -10,8 +10,10 @@ interface IHeart {
 const HeartSvg: React.FC<IHeart> = ({ clickHandler, isFavorite }) => {
   return (
     <CardHeart
+      tabIndex={0}
       viewBox="0 0 32 29.6"
       onClick={clickHandler}
+      onKeyPress={clickHandler}
       isFilled={isFavorite}
     >
       <CardHeartPath

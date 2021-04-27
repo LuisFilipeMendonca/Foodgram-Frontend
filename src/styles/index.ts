@@ -63,15 +63,6 @@ export const MainContainer = styled.main`
   }
 `;
 
-export const MainContainerAuth = styled(MainContainer)`
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: ${({ theme }) => `calc(${theme.dimensions.navbarHeightSmall} + 8px)`}
-    8px 8px;
-`;
-
 export const Section = styled.section<SectionType>`
   padding: ${({ theme, hasPaddingTop }) =>
       hasPaddingTop ? `calc(${theme.dimensions.filtersHeight} + 16px)` : "16px"}

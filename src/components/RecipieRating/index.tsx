@@ -5,12 +5,13 @@ import { useAppSelector } from "../../hooks/useAppSelector";
 
 import { addRating, deleteRating } from "../../store/recipies/slice";
 
+import Tooltip from "../Tooltip";
+
 import {
   CardStar,
   CardStarPolygon,
   CardStarsContainer,
   StarsContent,
-  Tooltip,
 } from "./styled";
 
 interface IRecipieRating {
@@ -84,15 +85,16 @@ const RecipieRating: React.FC<IRecipieRating> = ({
         ))}
       </StarsContent>
       {!isLogged && (
-        <Tooltip show={showTooltip}>Login to rate this recipie</Tooltip>
+        <Tooltip show={showTooltip} text="Login to rate this recipie" />
       )}
       {rateId && (
-        <Tooltip show={showTooltip}>
-          Gave {rateValue} stars to this recipie
-        </Tooltip>
+        <Tooltip
+          show={showTooltip}
+          text={`Gave ${rateValue} stars to this recipie`}
+        />
       )}
       {!isRatable && (
-        <Tooltip show={showTooltip}>Can't rate your own recipies</Tooltip>
+        <Tooltip show={showTooltip} text="Can't rate your own recipies" />
       )}
     </CardStarsContainer>
   );

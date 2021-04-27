@@ -25,6 +25,10 @@ export const CardHeart = styled.svg<HeartFilledType>`
   overflow: visible;
   animation: pulse 1s infinite;
   cursor: pointer;
+
+  &:focus {
+    outline: 1px dashed blue;
+  }
 `;
 
 export const CardHeartPath = styled.path`

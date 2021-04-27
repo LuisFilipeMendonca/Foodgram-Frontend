@@ -224,6 +224,7 @@ export const recipiesSlice = createSlice({
       action: PayloadAction<{ recipies: IRecipie[]; favorites: IRecipie[] }>
     ) => {
       const { recipies, favorites } = action.payload;
+      console.log(recipies);
       state.userRecipies = recipies;
       state.userFavorites = favorites;
     },

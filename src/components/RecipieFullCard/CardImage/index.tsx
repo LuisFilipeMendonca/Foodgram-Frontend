@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { addFavorites, removeFavorites } from "../../../store/recipies/slice";
 
 import HeartSvg from "../../HeartSvg";
+import Tooltip from "../../Tooltip";
 
 import {
   CardImageContainer,
@@ -37,8 +38,8 @@ const CardImage: React.FC<ICardImage> = ({
 }) => {
   const dispatch = useAppDispatch();
   const { userFavorites } = useAppSelector((state) => state.recipies);
-
-  console.log(userFavorites);
+  const { isLogged } = useAppSelector((state) => state.user);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const isFavorite = userFavorites.some((recipie) => recipie._id === id);
 
@@ -50,6 +51,17 @@ const CardImage: React.FC<ICardImage> = ({
     }
   };
 
+  useEffect(() => {
+    let timer: number;
+    if (showTooltip) {
+      timer = window.setTimeout(() => {
+        setShowTooltip(false);
+      }, 1000);
+    }
+
+    return () => clearInterval(timer);
+  }, [showTooltip]);
+
   return (
     <CardImageContainer isOpen={isOpen}>
       <CardImg src={photoUrl} />
@@ -59,6 +71,15 @@ const CardImage: React.FC<ICardImage> = ({
             clickHandler={addRemoveFavoritesHandler}
             isFavorite={isFavorite}
           />
+          {!isLogged && (
+            <Tooltip show={showTooltip} text="Login to add to favorites" />
+          )}
+          {!isFavorite && isLogged && (
+            <Tooltip show={showTooltip} text="Add to favorites" />
+          )}
+          {isFavorite && isLogged && (
+            <Tooltip show={showTooltip} text="Remove from favorites" />
+          )}
         </CardImageFav>
         <CardImageInfoTop>
           <CardImageBullet>

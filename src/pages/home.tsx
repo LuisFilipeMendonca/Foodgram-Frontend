@@ -45,7 +45,11 @@ const HomePage: React.FC = () => {
     <MainContainer>
       <Filters />
       <Section hasMarginLeft hasPaddingTop>
-        <RecipieGrid recipiesData={recipies} isLoading={isLoading} />
+        <RecipieGrid
+          recipiesData={recipies}
+          isLoading={isLoading}
+          itemsPerPage={+itemsPerPage}
+        />
         <Pagination
           currentPage={currentPage}
           itemsPerPage={+itemsPerPage}

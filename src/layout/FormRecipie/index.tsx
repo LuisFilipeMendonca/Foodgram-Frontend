@@ -20,6 +20,7 @@ const FormRecipie: React.FC = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
   const { userRecipies } = useAppSelector((state) => state.recipies);
+  const { userId } = useAppSelector((state) => state.user);
   const { inputs, changeHandler, setHandler, focusHandler } = useInputs(
     recipiesInputs
   );
@@ -49,8 +50,10 @@ const FormRecipie: React.FC = () => {
 
           return field;
         });
+        setHandler(setInputRecipie);
+      } else {
+        history.replace("/my_recipies");
       }
-      setHandler(setInputRecipie);
     }
   }, []);
 

@@ -115,6 +115,7 @@ const defaultInputStyle = css`
   border: none;
   background: transparent;
   padding: 8px;
+  font-size: 1.2rem;
 
   &:focus + ${InputBorder}::before, &:focus + ${InputBorder}::after {
     width: 100%;

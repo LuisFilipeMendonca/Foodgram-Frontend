@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const SectionForm = styled.section`
   width: 100%;
   max-width: 500px;
+  margin: 0 auto;
+  padding: 16px 8px;
 `;
 
 export const FormHeader = styled.header`

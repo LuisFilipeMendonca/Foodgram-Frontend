@@ -22,9 +22,12 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "user/login",
-  async (data: {}, { rejectWithValue }) => {
+  async (data: {}, { rejectWithValue, dispatch }) => {
     try {
       const response = await axios.post("http://localhost:3001/token", data);
+
+      const { recipies, favorites } = response.data;
+      dispatch(setUserRecipies({ recipies, favorites }));
 
       return response.data;
     } catch (e) {

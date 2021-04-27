@@ -1,14 +1,14 @@
 import React from "react";
 
-import { MainContainerAuth } from "../styles";
+import { MainContainer } from "../styles";
 
 import FormForgotPassword from "../layout/FormForgotPassword";
 
 const ForgotPasswordPage: React.FC = () => {
   return (
-    <MainContainerAuth>
+    <MainContainer>
       <FormForgotPassword />
-    </MainContainerAuth>
+    </MainContainer>
   );
 };
 

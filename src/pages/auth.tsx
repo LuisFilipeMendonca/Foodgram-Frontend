@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
-import { MainContainerAuth } from "../styles";
+import { MainContainer } from "../styles";
 
 import FormLogin from "../layout/FormLogin";
 import FormRegister from "../layout/FormRegister";
@@ -14,8 +14,6 @@ const AuthPage: React.FC = () => {
   const location = useLocation();
   const history = useHistory();
 
-  console.log(location);
-
   const changeAuthHandler = () => setIsLogging(!isLogging);
 
   useEffect(() => {
@@ -26,13 +24,13 @@ const AuthPage: React.FC = () => {
   }, [isLogged]);
 
   return (
-    <MainContainerAuth>
+    <MainContainer>
       {isLogging ? (
         <FormLogin changeAuthHandler={changeAuthHandler} />
       ) : (
         <FormRegister changeAuthHandler={changeAuthHandler} />
       )}
-    </MainContainerAuth>
+    </MainContainer>
   );
 };
 

@@ -12,7 +12,7 @@ interface IMyRecipieCta {
   recipieNameFilterHandler: (value: string) => void;
 }
 
-const MyRecipieCta: React.FC<IMyRecipieCta> = ({
+const RecipieSearch: React.FC<IMyRecipieCta> = ({
   recipieNameFilterHandler,
 }) => {
   const [input, setInput] = useState(findRecipieInput);
@@ -56,4 +56,4 @@ const MyRecipieCta: React.FC<IMyRecipieCta> = ({
   );
 };
 
-export default MyRecipieCta;
+export default RecipieSearch;
