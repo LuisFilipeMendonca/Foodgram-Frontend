@@ -65,11 +65,22 @@ export const MainContainer = styled.main`
 
 export const Section = styled.section<SectionType>`
   padding: ${({ theme, hasPaddingTop }) =>
-      hasPaddingTop ? `calc(${theme.dimensions.filtersHeight} + 16px)` : "16px"}
+      hasPaddingTop
+        ? `calc(${theme.dimensions.filtersHeightBig} + 16px)`
+        : "16px"}
     8px 8px;
+
+  @media screen and (min-width: 576px) {
+    padding: ${({ theme, hasPaddingTop }) =>
+        hasPaddingTop
+          ? `calc(${theme.dimensions.filtersHeightSmall} + 16px)`
+          : "16px"}
+      8px 8px;
+  }
 
   @media screen and (min-width: 768px) {
     padding: 16px;
-    margin-left: ${({ hasMarginLeft }) => hasMarginLeft && "250px"};
+    margin-left: ${({ hasMarginLeft, theme }) =>
+      hasMarginLeft && theme.dimensions.filtersWidth};
   }
 `;

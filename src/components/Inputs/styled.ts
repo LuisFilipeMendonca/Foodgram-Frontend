@@ -30,21 +30,22 @@ export const InputRadioBullet = styled.span`
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 12px;
-  height: 12px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   border: 1px solid ${({ theme }) => theme.colors.magentaOpacity};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  &:before {
+  &::before {
     content: "";
     position: absolute;
+    display: block;
     width: 7px;
     height: 7px;
     background-color: ${({ theme }) => theme.colors.magentaOpacity};
     border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     opacity: 0;
   }
 `;
@@ -62,7 +63,7 @@ export const InputRadio = styled.input`
 `;
 
 export const InputRadioLabel = styled.label`
-  margin-left: 4px;
+  margin-left: 8px;
 `;
 
 export const InputContainer = styled.div`

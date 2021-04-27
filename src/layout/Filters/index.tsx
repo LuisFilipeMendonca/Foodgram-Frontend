@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 
-import { FiltersContainer } from "./styled";
+import {
+  FiltersContainer,
+  FiltersVisible,
+  FiltersCta,
+  FiltersMenu,
+} from "./styled";
 
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
@@ -16,6 +21,7 @@ import { findRecipieInput } from "../../constants/inputs";
 import Input from "../../components/Inputs";
 
 import RadioGroup from "../../components/Inputs/RadioGroup";
+import BaseButton from "../../components/BaseButton";
 
 const sortInputs = [
   { type: "radio", id: "recent", label: "Recents Recipies" },
@@ -64,7 +70,7 @@ const Filters: React.FC = () => {
 
   return (
     <FiltersContainer isOpen={isFiltersOpen}>
-      <div className="filters__visible">
+      <FiltersVisible>
         <Input
           type={input.type}
           name={input.name}
@@ -75,12 +81,26 @@ const Filters: React.FC = () => {
           changeHandler={inputChangeHandler}
           focusHandler={() => {}}
         />
-        <div className="filters__cta">
-          <button onClick={getRecipiesByNameHandler}>Search</button>
-          <button onClick={toggleFilters}>Filters</button>
-        </div>
-      </div>
-      <ul className="filters__menu">
+        <FiltersCta>
+          <BaseButton
+            className="primary"
+            role="button"
+            type="button"
+            clickHandler={getRecipiesByNameHandler}
+          >
+            Search
+          </BaseButton>
+          <BaseButton
+            className="secondary"
+            role="button"
+            type="button"
+            clickHandler={toggleFilters}
+          >
+            Filters
+          </BaseButton>
+        </FiltersCta>
+      </FiltersVisible>
+      <FiltersMenu isOpen={isFiltersOpen}>
         <RadioGroup
           inputs={sortInputs}
           changeHandler={itemsOrderHandler}
@@ -95,7 +115,7 @@ const Filters: React.FC = () => {
           selectedValue={itemsPerPage}
           name="itemsPerPage"
         />
-      </ul>
+      </FiltersMenu>
     </FiltersContainer>
   );
 };

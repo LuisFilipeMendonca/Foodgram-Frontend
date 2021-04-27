@@ -26,6 +26,7 @@ const Textarea: React.FC<IInputNormal> = ({
     <>
       <InputWrapper>
         <TextareaStyled
+          rows={4}
           spellCheck={false}
           placeholder={placeholder}
           name={name}

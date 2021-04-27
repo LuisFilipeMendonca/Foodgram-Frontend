@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { IInputGroup } from "../../interfaces/Inputs";
+import BaseButton from "../BaseButton";
 
 import {
   InputWrapper,
@@ -62,6 +63,7 @@ const InputGroup: React.FC<IInputGroup> = ({
     input = inputArr.map((val) => (
       <InputWrapper key={val.id}>
         <TextareaStyled
+          rows={4}
           spellCheck={false}
           id={val.id.toString()}
           placeholder={placeholder}
@@ -83,9 +85,14 @@ const InputGroup: React.FC<IInputGroup> = ({
       <InputGroupContainer isInvalid={isInvalid}>{input}</InputGroupContainer>
       {info && <InputInfo>Info about the input</InputInfo>}
       {isInvalid && <InputError>{errorMsg}</InputError>}
-      <button type="button" onClick={addMoreIngredientsHandler}>
+      <BaseButton
+        role="button"
+        className="primary"
+        type="button"
+        clickHandler={addMoreIngredientsHandler}
+      >
         Add More {label}
-      </button>
+      </BaseButton>
     </InputContainer>
   );
 };

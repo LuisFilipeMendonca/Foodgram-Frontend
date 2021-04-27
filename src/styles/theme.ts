@@ -13,7 +13,9 @@ export const theme = {
   dimensions: {
     navbarHeightSmall: "5rem",
     navbarHeightBig: "6rem",
-    filtersHeight: "70px",
+    filtersHeightSmall: "60px",
+    filtersHeightBig: "85px",
+    filtersWidth: "250px",
     recipies: {
       heightSmall: "125px",
       heightBig: "245px",
