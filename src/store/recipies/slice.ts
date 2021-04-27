@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../utils/axios";
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { recipiesInitialState } from "./initialState";
@@ -27,13 +27,13 @@ export const fetchRecipies = createAsyncThunk(
 
       if (!recipieName) {
         response = await axios(
-          `http://localhost:3001/recipies/${currentPage}/${itemsPerPage}${
+          `recipies/${currentPage}/${itemsPerPage}${
             userId ? `/${userId}` : ""
           }?order=${itemsOrderValue}`
         );
       } else {
         response = await axios(
-          `http://localhost:3001/recipies/by_name/${currentPage}/${itemsPerPage}/${recipieName}${
+          `recipies/by_name/${currentPage}/${itemsPerPage}/${recipieName}${
             userId ? `/${userId}` : ""
           }?order=${itemsOrderValue}`
         );
@@ -53,7 +53,7 @@ export const addRating = createAsyncThunk(
     { rejectWithValue, dispatch }
   ) => {
     try {
-      const response = await axios.post(`http://localhost:3001/ratings`, {
+      const response = await axios.post(`ratings`, {
         ...data,
       });
 
@@ -79,7 +79,7 @@ export const deleteRating = createAsyncThunk(
     try {
       const { value, rateId, recipieId } = data;
 
-      await axios.delete(`http://localhost:3001/ratings/${rateId}`);
+      await axios.delete(`ratings/${rateId}`);
 
       return { value, recipieId };
     } catch (e) {
@@ -96,11 +96,9 @@ export const addRecipie = createAsyncThunk(
   "recipies/addRecipie",
   async (data: FormData, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3001/recipies",
-        data,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
+      const response = await axios.post("recipies", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       return response.data;
     } catch (e) {
@@ -124,11 +122,9 @@ export const editRecipie = createAsyncThunk(
     try {
       const { formData, id } = data;
 
-      const response = await axios.put(
-        `http://localhost:3001/recipies/${id}`,
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
+      const response = await axios.put(`recipies/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       return response.data;
     } catch (e) {
@@ -147,7 +143,7 @@ export const deleteRecipie = createAsyncThunk(
   "recipies/deleteRecipie",
   async (id: string, { rejectWithValue, dispatch }) => {
     try {
-      await axios.delete(`http://localhost:3001/recipies/${id}`);
+      await axios.delete(`recipies/${id}`);
 
       return { id };
     } catch (e) {
@@ -166,9 +162,7 @@ export const addFavorites = createAsyncThunk(
   "recipies/addFavorite",
   async (id: string, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axios.post(
-        `http://localhost:3001/recipies/add_favorites/${id}`
-      );
+      const response = await axios.post(`recipies/add_favorites/${id}`);
 
       return { ...response.data, id };
     } catch (e) {
@@ -185,9 +179,7 @@ export const removeFavorites = createAsyncThunk(
   "recipies/removeFavorites",
   async (id: string, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:3001/recipies/delete_favorites/${id}`
-      );
+      const response = await axios.delete(`recipies/delete_favorites/${id}`);
 
       return { ...response.data, id };
     } catch (e) {

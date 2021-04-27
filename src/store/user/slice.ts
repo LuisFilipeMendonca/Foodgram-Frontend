@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../utils/axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { userInitialState } from "./initialState";
@@ -10,7 +10,7 @@ export const register = createAsyncThunk(
   "user/register",
   async (data: {}, { rejectWithValue }) => {
     try {
-      const response = await axios.post("http://localhost:3001/users", data);
+      const response = await axios.post("users", data);
 
       return response.data;
     } catch (e) {
@@ -24,7 +24,7 @@ export const login = createAsyncThunk(
   "user/login",
   async (data: {}, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axios.post("http://localhost:3001/token", data);
+      const response = await axios.post("token", data);
 
       const { recipies, favorites } = response.data;
       dispatch(setUserRecipies({ recipies, favorites }));
@@ -41,10 +41,7 @@ export const forgotPassword = createAsyncThunk(
   "user/forgotPassword",
   async (data: {}, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3001/users/forgot_password",
-        data
-      );
+      const response = await axios.post("users/forgot_password", data);
 
       return response.data;
     } catch (e) {
@@ -58,10 +55,9 @@ export const resetPassword = createAsyncThunk(
   "user/resetPassword",
   async (data: { password: string; token: string }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `http://localhost:3001/users/reset_password/${data.token}`,
-        { password: data.password }
-      );
+      const response = await axios.put(`users/reset_password/${data.token}`, {
+        password: data.password,
+      });
 
       return response.data;
     } catch (e) {
@@ -77,7 +73,7 @@ export const getUserData = createAsyncThunk(
     const { user } = getState() as { user: typeof userInitialState };
     try {
       axios.defaults.headers.authorization = `Bearer ${token}`;
-      const response = await axios("http://localhost:3001/users");
+      const response = await axios("users");
 
       const { recipies, favorites } = response.data;
 
@@ -96,7 +92,7 @@ export const userSlice = createSlice({
   initialState: userInitialState,
   reducers: {
     setUserData: (state, { payload }) => {
-      const { _id, email, username, token, recipies, favorites } = payload;
+      const { _id, email, username, token } = payload;
 
       state.isLogged = true;
       state.userId = _id;

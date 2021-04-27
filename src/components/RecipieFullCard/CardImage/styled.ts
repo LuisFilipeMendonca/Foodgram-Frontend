@@ -57,8 +57,8 @@ export const CardImageInfoBottom = styled.div``;
 
 export const CardImageBullet = styled.span`
   display: block;
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 5rem;
+  height: 5rem;
   background-color: yellow;
   border-radius: 50%;
   display: flex;
@@ -91,6 +91,7 @@ export const CardImageFav = styled.span`
     display: block;
     right: 0;
     transform: translateY(calc(-100% - 16px));
+    width: 14rem;
   }
 
   &:hover ${TooltipContainer}::before {

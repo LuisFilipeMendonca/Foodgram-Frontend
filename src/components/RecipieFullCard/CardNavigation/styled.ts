@@ -18,4 +18,8 @@ export const CardNavigationItem = styled.button<CardNavigationType>`
     isSelected ? `${theme.colors.textDark}` : `${theme.colors.textMedium}`};
   border-color: ${({ isSelected, theme }) =>
     isSelected ? `${theme.colors.magenta}` : "transparent"};
+
+  &:focus {
+    outline: 1px dashed blue;
+  }
 `;

@@ -12,6 +12,8 @@ export const CardContainer = styled.article`
   width: 100%;
   max-width: 450px;
   box-shadow: 0 0 10px #888;
+  margin: 0 auto;
+  margin-top: 50px;
 
   @media screen and (min-width: 768px) {
     flex-direction: row;

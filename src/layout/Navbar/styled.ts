@@ -29,6 +29,10 @@ export const NavBrand = styled(Link)`
   font-weight: bold;
   color: ${({ theme }) => theme.colors.magenta};
   font-family: "Dancing Script", cursive;
+
+  &:focus {
+    outline: 1px dashed blue;
+  }
 `;
 
 export const AuthLink = styled(Link)`
@@ -42,6 +46,10 @@ export const AuthLink = styled(Link)`
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.magenta};
+  }
+
+  &:focus {
+    outline: 1px dashed blue;
   }
 `;
 
@@ -105,6 +113,7 @@ export const NavLinkItem = styled(NavLink)`
   font-size: 1.9rem;
 
   &:hover,
+  &:focus,
   &.active {
     background-color: ${({ theme }) => theme.colors.magenta};
     color: ${({ theme }) => theme.colors.textLight};
@@ -116,6 +125,7 @@ export const NavLinkItem = styled(NavLink)`
     font-size: 1.6rem;
 
     &:hover,
+    &:focus,
     &.active {
       background-color: ${({ theme }) => theme.colors.magentaOpacity};
     }
@@ -130,6 +140,10 @@ export const NavToggler = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: 3px;
+
+  &:focus {
+    outline: 1px dashed blue;
+  }
 
   @media screen and (min-width: 768px) {
     display: none;
