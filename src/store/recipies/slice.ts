@@ -1,5 +1,6 @@
 import axios from "../../utils/axios";
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 import { recipiesInitialState } from "./initialState";
 import { userInitialState } from "../user/initialState";
@@ -143,9 +144,9 @@ export const deleteRecipie = createAsyncThunk(
   "recipies/deleteRecipie",
   async (id: string, { rejectWithValue, dispatch }) => {
     try {
-      await axios.delete(`recipies/${id}`);
+      const response = await axios.delete(`recipies/${id}`);
 
-      return { id };
+      return response.data;
     } catch (e) {
       const { status, data } = e.response;
 
@@ -216,7 +217,6 @@ export const recipiesSlice = createSlice({
       action: PayloadAction<{ recipies: IRecipie[]; favorites: IRecipie[] }>
     ) => {
       const { recipies, favorites } = action.payload;
-      console.log(recipies);
       state.userRecipies = recipies;
       state.userFavorites = favorites;
     },
@@ -263,7 +263,10 @@ export const recipiesSlice = createSlice({
       errorHandling(action.payload);
     },
     [deleteRecipie.fulfilled.type]: (state, action) => {
-      const { id } = action.payload;
+      const { id, message } = action.payload;
+      console.log(action.payload);
+      toast.success(message);
+
       const recipies = state.userRecipies.filter(
         (recipie) => recipie._id !== id
       );
@@ -273,24 +276,30 @@ export const recipiesSlice = createSlice({
       errorHandling(action.payload);
     },
     [addRecipie.fulfilled.type]: (state, action) => {
-      state.userRecipies.unshift(action.payload);
+      const { recipie, message } = action.payload;
+      toast.success(message);
+      state.userRecipies.unshift(recipie);
     },
     [addRecipie.rejected.type]: (state, action) => {
       return errorHandling(action.payload);
     },
     [editRecipie.fulfilled.type]: (state, action) => {
-      const { _id } = action.payload;
+      const { recipie, message } = action.payload;
+      const { _id } = recipie;
+
+      toast.success(message);
 
       const recipieIdx = state.userRecipies.findIndex(
         (recipie) => recipie._id === _id
       );
-      state.userRecipies[recipieIdx] = action.payload;
+      state.userRecipies[recipieIdx] = recipie;
     },
     [editRecipie.rejected.type]: (state, action) => {
       return errorHandling(action.payload);
     },
     [addFavorites.fulfilled.type]: (state, action) => {
-      const { id } = action.payload;
+      const { id, message } = action.payload;
+      toast.success(message);
 
       const recipie = state.recipies.find((recipie) => recipie._id === id);
       state.userFavorites.unshift(recipie!);
@@ -299,7 +308,9 @@ export const recipiesSlice = createSlice({
       return errorHandling(action.payload);
     },
     [removeFavorites.fulfilled.type]: (state, action) => {
-      const { id } = action.payload;
+      const { id, message } = action.payload;
+
+      toast.success(message);
 
       state.userFavorites = state.userFavorites.filter(
         (recipie) => recipie._id !== id

@@ -27,8 +27,6 @@ const RecipieGrid: React.FC<IRecipieGrid> = ({
 }) => {
   const { userId } = useAppSelector((state) => state.user);
 
-  console.log(recipiesData);
-
   const recipies = recipiesData.map((recipie) => (
     <RecipieCard
       key={Math.random()}

@@ -6,12 +6,23 @@ export const CardContainer = styled.li`
   border-radius: 3px;
   overflow: hidden;
   box-shadow: 0 0 5px #aaa;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const CardImg = styled.img`
   width: 100%;
   object-fit: cover;
   display: block;
+
+  @media screen and (min-width: 400px) {
+    height: 125px;
+  }
+
+  @media screen and (min-width: 768px) {
+    height: 150px;
+  }
 `;
 
 export const CardTitle = styled.h3`
