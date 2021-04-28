@@ -46,6 +46,31 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
         text-decoration: none;
     }
 
+    .Toastify__toast-container {
+      font-weight: bold;
+      color: ${({ theme }) => theme.colors.white};
+    }
+
+    .Toastify__toast--success {
+      background-color: ${({ theme }) => theme.colors.toastSuccessLight};
+      border: 2px solid ${({ theme }) => theme.colors.toastSuccessDark};
+    }
+
+    .Toastify__toast--success .Toastify__close-button,
+    .Toastify__toast--error .Toastify__close-button {
+      color: ${({ theme }) => theme.colors.white};
+    }
+
+    .Toastify__toast--error {
+      background-color: ${({ theme }) => theme.colors.toastErrorLight};
+      border: 2px solid ${({ theme }) => theme.colors.toastErrorDark};
+      color: ${({ theme }) => theme.colors.white};
+    }
+
+    .Toastify__progress-bar {
+      background-color: #f5f5f5;
+    }
+
     @media screen and (min-width: 576px) {
       html {
         font-size: 75%;

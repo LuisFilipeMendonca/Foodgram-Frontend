@@ -41,7 +41,11 @@ const FavoritesPage: React.FC = () => {
     <MainContainer>
       <RecipieSearch recipieNameFilterHandler={recipieNameFilterHandler} />
       <Section>
-        <RecipiesGrid recipiesData={limitedSearchRecipies} isFavorites={true} />
+        <RecipiesGrid
+          recipiesData={limitedSearchRecipies}
+          isFavorites={true}
+          emptyText="You haven't added any recipie to your favorites. Start to add them."
+        />
         <Pagination
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}

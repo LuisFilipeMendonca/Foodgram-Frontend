@@ -38,6 +38,7 @@ const MyRecipiesPage: React.FC = () => {
         <RecipiesGrid
           recipiesData={limitedSearchRecipies}
           isUserRecipie={true}
+          emptyText="You haven't added any recipies yet. What are you waiting for?"
         />
         <Pagination
           currentPage={currentPage}

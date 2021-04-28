@@ -2,6 +2,7 @@
 
 export const theme = {
   colors: {
+    white: "#f5f5f5",
     yellow: "#f7f8b8",
     yellowOpacity: "rgba(253, 255, 143, 0.8)",
     magenta: "#fc0076",
@@ -9,6 +10,10 @@ export const theme = {
     textDark: "#333",
     textMedium: "#999",
     textLight: "#eee",
+    toastSuccessLight: "#a7ccad",
+    toastSuccessDark: "#5c9c65",
+    toastErrorLight: "#ed9393",
+    toastErrorDark: "#e01212",
   },
   dimensions: {
     navbarHeightSmall: "5rem",

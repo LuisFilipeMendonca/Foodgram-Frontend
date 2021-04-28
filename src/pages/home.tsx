@@ -11,6 +11,7 @@ import { setPath } from "../store/location/slice";
 import Pagination from "../components/Pagination";
 import Filters from "../layout/Filters";
 import RecipieGrid from "../layout/RecipiesGrid";
+import { toast } from "react-toastify";
 
 const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -49,6 +50,7 @@ const HomePage: React.FC = () => {
           recipiesData={recipies}
           isLoading={isLoading}
           itemsPerPage={+itemsPerPage}
+          emptyText="No recipies added unitl now. Can you be the first?"
         />
         <Pagination
           currentPage={currentPage}

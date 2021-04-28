@@ -18,3 +18,11 @@ export const RecipiesContainer = styled.ul`
     grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
   }
 `;
+
+export const EmptyText = styled.p`
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  line-height: 24px;
+  color: ${({ theme }) => theme.colors.magenta};
+`;

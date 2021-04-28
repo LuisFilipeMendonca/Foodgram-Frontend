@@ -1,6 +1,6 @@
 import React from "react";
 
-import { RecipiesContainer } from "./styled";
+import { RecipiesContainer, EmptyText } from "./styled";
 
 import { IRecipie } from "../../interfaces/Recipies";
 
@@ -16,6 +16,7 @@ interface IRecipieGrid {
   isUserRecipie?: boolean;
   isFavorites?: boolean;
   recipiesData: IRecipie[];
+  emptyText: string;
 }
 
 const RecipieGrid: React.FC<IRecipieGrid> = ({
@@ -24,6 +25,7 @@ const RecipieGrid: React.FC<IRecipieGrid> = ({
   isUserRecipie,
   isLoading,
   itemsPerPage,
+  emptyText,
 }) => {
   const { userId } = useAppSelector((state) => state.user);
 
@@ -41,6 +43,10 @@ const RecipieGrid: React.FC<IRecipieGrid> = ({
       isFavorites={isFavorites}
     />
   ));
+
+  if (!isLoading && !recipies.length) {
+    return <EmptyText>{emptyText}</EmptyText>;
+  }
 
   return (
     <RecipiesContainer>
