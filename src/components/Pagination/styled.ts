@@ -5,19 +5,21 @@ type PaginationItemType = {
   hasFixedWidth?: boolean;
   hasBorderRadius?: boolean;
   isSelected?: boolean;
+  isMobileHidden?: boolean;
 };
 
 export const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 8px;
+  margin-top: 3rem;
 `;
 
 export const PaginationItem = styled.button<PaginationItemType>`
+  font-size: 1rem;
+  height: 100%;
+  display: ${({ isMobileHidden }) => (isMobileHidden ? "none" : "flex")};
   padding: ${({ hasFixedWidth }) => (hasFixedWidth ? "8px 0" : "8px 24px")};
   width: ${({ hasFixedWidth }) => hasFixedWidth && "40px"};
-  height: 100%;
-  display: flex;
   align-items: center;
   justify-content: center;
   border: ${({ hasFullBorder, theme }) =>
@@ -34,6 +36,10 @@ export const PaginationItem = styled.button<PaginationItemType>`
 
   &:disabled {
     background-color: #e0e0e0;
+  }
+
+  @media screen and (min-width: 576px) {
+    display: flex;
   }
 `;
 

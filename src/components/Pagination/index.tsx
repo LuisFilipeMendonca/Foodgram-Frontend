@@ -31,6 +31,16 @@ const Pagination: React.FC<IPaginationProps> = ({
     },
   ];
 
+  if (pagesAmount <= 1) {
+    return null;
+  }
+
+  if (visiblePages > pagesAmount) {
+    for (let i = 1; i <= pagesAmount; i++) {
+      pagesArr.push({ value: i, id: i.toString() });
+    }
+  }
+
   if (visiblePages + currentPage < pagesAmount) {
     for (let i = currentPage; i < currentPage + visiblePages / 2; i++) {
       pagesArr.push({ value: i, id: i.toString() });
@@ -82,6 +92,7 @@ const Pagination: React.FC<IPaginationProps> = ({
   return (
     <PaginationContainer>
       <PaginationItem
+        isMobileHidden
         hasFullBorder
         hasBorderRadius
         onClick={() => setPageHandler(1)}
@@ -106,6 +117,7 @@ const Pagination: React.FC<IPaginationProps> = ({
         ))}
       </PaginationMenu>
       <PaginationItem
+        isMobileHidden
         hasFullBorder
         hasBorderRadius
         onClick={() => setPageHandler(pagesAmount)}
