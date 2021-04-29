@@ -9,11 +9,13 @@ import BaseButton from "../../components/BaseButton";
 
 import useInputs from "../../hooks/useInputs";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 import FormHelper from "../../helpers/Form";
 import { forgotPassword } from "../../store/user/slice";
 
 const FormForgotPassword: React.FC = () => {
+  const { isLoading } = useAppSelector((state) => state.user);
   const history = useHistory();
   const dispatch = useAppDispatch();
   const { inputs, changeHandler, setHandler, focusHandler } = useInputs(
@@ -85,6 +87,7 @@ const FormForgotPassword: React.FC = () => {
       title="Password Forgotten"
       submitDescription="Reset password"
       additionalBtn={additionalBtn}
+      isLoading={isLoading}
     >
       {inputElems}
     </Form>

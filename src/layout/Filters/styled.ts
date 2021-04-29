@@ -37,14 +37,14 @@ export const FiltersContainer = styled.section<FiltersType>`
 
   @media screen and (min-width: 768px) {
     position: fixed;
-    width: ${({ theme }) => theme.dimensions.filtersWidth};
+    width: ${({ theme }) => theme.dimensions.filtersWidthBig};
     height: 100%;
     border-right: 1px solid ${({ theme }) => theme.colors.magentaOpacity};
   }
 `;
 
 export const FiltersVisible = styled.div`
-  padding: 0 16px;
+  padding: 0 1rem;
   width: 100%;
   background-color: #deddce;
   height: ${({ theme }) => theme.dimensions.filtersHeightBig};
@@ -55,7 +55,6 @@ export const FiltersVisible = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.magenta};
 
   @media screen and (min-width: 576px) {
-    padding: 0 8px;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -67,7 +66,7 @@ export const FiltersVisible = styled.div`
   }
 
   @media screen and (min-width: 768px) {
-    padding: 8px;
+    padding: 2rem;
     flex-direction: column;
     align-items: flex-start;
     height: unset;
@@ -81,16 +80,16 @@ export const FiltersVisible = styled.div`
 export const FiltersCta = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 8px;
+  margin-top: 1rem;
 
   @media screen and (min-width: 576px) {
     margin-top: 0;
     flex: 1;
-    margin-left: 8px;
+    margin-left: 1rem;
   }
 
   @media screen and (min-width: 768px) {
-    margin-top: 8px;
+    margin-top: 1rem;
     margin-left: 0;
 
     & :nth-child(2) {
@@ -100,8 +99,8 @@ export const FiltersCta = styled.div`
 `;
 
 export const FiltersMenu = styled.ul<FiltersType>`
-  width: ${({ theme }) => theme.dimensions.filtersWidth};
-  padding: 8px;
+  width: ${({ theme }) => theme.dimensions.filtersWidthSmall};
+  padding: 1rem;
   position: absolute;
   left: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
   transition: left 0.2s ease;
@@ -113,6 +112,7 @@ export const FiltersMenu = styled.ul<FiltersType>`
   border-right: 1px solid ${({ theme }) => theme.colors.magentaOpacity};
 
   @media screen and (min-width: 768px) {
+    padding: 1rem 2rem;
     position: static;
     width: 100%;
     border-right: none;

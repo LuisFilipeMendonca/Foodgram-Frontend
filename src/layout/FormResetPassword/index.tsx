@@ -8,11 +8,14 @@ import Input from "../../components/Inputs";
 
 import useInputs from "../../hooks/useInputs";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 import FormHelper from "../../helpers/Form";
 import { resetPassword } from "../../store/user/slice";
+import BaseButton from "../../components/BaseButton";
 
 const FormForgotPassword: React.FC = () => {
+  const { isLoading } = useAppSelector((state) => state.user);
   const history = useHistory();
   const { token } = useParams<{ token: string }>();
   const dispatch = useAppDispatch();
@@ -75,9 +78,14 @@ const FormForgotPassword: React.FC = () => {
   };
 
   const additionalBtn = (
-    <button type="button" onClick={() => history.goBack()}>
+    <BaseButton
+      type="button"
+      role="button"
+      className="secondary"
+      clickHandler={() => history.goBack()}
+    >
       Cancel
-    </button>
+    </BaseButton>
   );
 
   return (
@@ -86,6 +94,7 @@ const FormForgotPassword: React.FC = () => {
       title="Reset Password"
       submitDescription="Reset Password"
       additionalBtn={additionalBtn}
+      isLoading={isLoading}
     >
       {inputElems}
     </Form>

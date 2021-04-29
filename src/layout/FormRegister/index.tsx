@@ -6,6 +6,7 @@ import { registerInputs } from "../../constants/inputs";
 
 import useInputs from "../../hooks/useInputs";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 import { register } from "../../store/user/slice";
 
@@ -16,6 +17,7 @@ import BaseButton from "../../components/BaseButton";
 import FormHelper from "../../helpers/Form";
 
 const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
+  const { isLoading } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const { inputs, changeHandler, setHandler, focusHandler } = useInputs(
     registerInputs
@@ -52,7 +54,7 @@ const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
     }
   );
 
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const form = new FormHelper(inputs);
@@ -66,7 +68,7 @@ const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
 
     const formData = form.buildFormObj();
 
-    dispatch(register(formData));
+    await dispatch(register(formData));
   };
 
   const additionalBtn = (
@@ -86,6 +88,7 @@ const FormRegister: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
       title="Register"
       submitDescription="Register"
       additionalBtn={additionalBtn}
+      isLoading={isLoading}
     >
       {inputElems}
     </Form>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import { IFormAuthProps } from "../../interfaces/Forms";
@@ -7,6 +7,7 @@ import { loginInputs } from "../../constants/inputs";
 
 import useInputs from "../../hooks/useInputs";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 import { login } from "../../store/user/slice";
 
@@ -17,7 +18,7 @@ import BaseButton from "../../components/BaseButton";
 import FormHelper from "../../helpers/Form";
 
 const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
-  const history = useHistory();
+  const { isLoading } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const { inputs, changeHandler, setHandler, focusHandler } = useInputs(
     loginInputs
@@ -54,7 +55,7 @@ const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
     }
   );
 
-  const submitHandler = async (e: React.FormEvent) => {
+  const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
 
     const form = new FormHelper(inputs);
@@ -68,10 +69,7 @@ const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
 
     const formData = form.buildFormObj();
 
-    try {
-      await dispatch(login(formData));
-      history.replace("/");
-    } catch (e) {}
+    dispatch(login(formData));
   };
 
   const additionalBtn = (
@@ -91,6 +89,7 @@ const FormLogin: React.FC<IFormAuthProps> = ({ changeAuthHandler }) => {
       title="Login"
       submitDescription="login"
       additionalBtn={additionalBtn}
+      isLoading={isLoading}
     >
       {inputElems}
       <Link to="forgot_password">Forgot your password?</Link>

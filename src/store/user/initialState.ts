@@ -1,5 +1,3 @@
-import { IRecipie } from "../../interfaces/Recipies";
-
 export interface IUserState {
   isLogged: boolean;
   userId: string | null;
@@ -7,6 +5,7 @@ export interface IUserState {
   userEmail: string | null;
   userName: string | null;
   isAppLoading: boolean;
+  isLoading: boolean;
 }
 
 export const userInitialState: IUserState = {
@@ -16,4 +15,5 @@ export const userInitialState: IUserState = {
   userName: null,
   userToken: null,
   isAppLoading: true,
+  isLoading: false,
 };

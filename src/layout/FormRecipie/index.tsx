@@ -8,6 +8,8 @@ import useInputs from "../../hooks/useInputs";
 
 import Form from "../../components/Form";
 import Input from "../../components/Inputs";
+import BaseButton from "../../components/BaseButton";
+
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
@@ -19,8 +21,8 @@ const FormRecipie: React.FC = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
+  const { isLoading } = useAppSelector((state) => state.recipies);
   const { userRecipies } = useAppSelector((state) => state.recipies);
-  const { userId } = useAppSelector((state) => state.user);
   const { inputs, changeHandler, setHandler, focusHandler } = useInputs(
     recipiesInputs
   );
@@ -118,11 +120,24 @@ const FormRecipie: React.FC = () => {
     } catch (e) {}
   };
 
+  const additionalBtn = (
+    <BaseButton
+      type="button"
+      role="button"
+      className="secondary"
+      clickHandler={() => history.goBack()}
+    >
+      Cancel
+    </BaseButton>
+  );
+
   return (
     <Form
       submitDescription={id ? "Edit Recipie" : "Add Recipie"}
       title={id ? "Edit Recipie" : "Add Recipie"}
       submitHandler={submitHandler}
+      isLoading={isLoading}
+      additionalBtn={additionalBtn}
     >
       {inputElems}
     </Form>

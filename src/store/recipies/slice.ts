@@ -275,13 +275,21 @@ export const recipiesSlice = createSlice({
     [deleteRecipie.rejected.type]: (state, action) => {
       errorHandling(action.payload);
     },
+    [addRecipie.pending.type]: (state, action) => {
+      state.isLoading = true;
+    },
     [addRecipie.fulfilled.type]: (state, action) => {
       const { recipie, message } = action.payload;
       toast.success(message);
       state.userRecipies.unshift(recipie);
+      state.isLoading = false;
     },
     [addRecipie.rejected.type]: (state, action) => {
+      state.isLoading = false;
       return errorHandling(action.payload);
+    },
+    [editRecipie.pending.type]: (state, action) => {
+      state.isLoading = true;
     },
     [editRecipie.fulfilled.type]: (state, action) => {
       const { recipie, message } = action.payload;
@@ -293,8 +301,10 @@ export const recipiesSlice = createSlice({
         (recipie) => recipie._id === _id
       );
       state.userRecipies[recipieIdx] = recipie;
+      state.isLoading = false;
     },
     [editRecipie.rejected.type]: (state, action) => {
+      state.isLoading = false;
       return errorHandling(action.payload);
     },
     [addFavorites.fulfilled.type]: (state, action) => {

@@ -93,19 +93,19 @@ export const Section = styled.section<SectionType>`
       hasPaddingTop
         ? `calc(${theme.dimensions.filtersHeightBig} + 16px)`
         : "16px"}
-    8px 8px;
+    1rem 8px;
 
   @media screen and (min-width: 576px) {
     padding: ${({ theme, hasPaddingTop }) =>
         hasPaddingTop
           ? `calc(${theme.dimensions.filtersHeightSmall} + 16px)`
           : "16px"}
-      8px 8px;
+      1rem 8px;
   }
 
   @media screen and (min-width: 768px) {
     padding: 16px;
     margin-left: ${({ hasMarginLeft, theme }) =>
-      hasMarginLeft && theme.dimensions.filtersWidth};
+      hasMarginLeft && theme.dimensions.filtersWidthBig};
   }
 `;

@@ -20,7 +20,8 @@ export const theme = {
     navbarHeightBig: "6rem",
     filtersHeightSmall: "60px",
     filtersHeightBig: "85px",
-    filtersWidth: "250px",
+    filtersWidthSmall: "250px",
+    filtersWidthBig: "300px",
     recipies: {
       heightSmall: "125px",
       heightBig: "245px",

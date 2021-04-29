@@ -47,10 +47,12 @@ const Filters: React.FC = () => {
   const toggleFilters = () => setIsFiltersOpen(!isFiltersOpen);
 
   const itemsPerPageHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    toggleFilters();
     dispatch(setItemsPerPage(e.currentTarget.value));
   };
 
   const itemsOrderHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    toggleFilters();
     dispatch(setItemsOrder(e.currentTarget.value));
   };
 

@@ -126,32 +126,37 @@ export const userSlice = createSlice({
   },
   extraReducers: {
     [register.pending.type]: (state) => {
-      console.log("Pending");
+      state.isLoading = true;
     },
     [register.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
       userSlice.caseReducers.setUserData(state, action);
     },
     [register.rejected.type]: (state, action) => {
+      state.isLoading = false;
       errorHandling(action.payload);
     },
     [login.pending.type]: (state) => {
-      console.log("Pending");
+      state.isLoading = true;
     },
     [login.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
       userSlice.caseReducers.setUserData(state, action);
     },
     [login.rejected.type]: (state, action) => {
+      state.isLoading = false;
       errorHandling(action.payload);
     },
-    [forgotPassword.pending.type]: (state) => {
-      console.log("Pending");
+    [forgotPassword.pending.type]: (state, action) => {
+      state.isLoading = true;
     },
     [forgotPassword.fulfilled.type]: (state, action) => {
-      console.log(action.payload);
-      console.log(userSlice);
+      console.log("ola");
+      state.isLoading = false;
     },
     [forgotPassword.rejected.type]: (state, action) => {
-      errorHandling(action.payload);
+      state.isLoading = false;
+      return errorHandling(action.payload);
     },
     [getUserData.fulfilled.type]: (state, action) => {
       userSlice.caseReducers.setUserData(state, action);
