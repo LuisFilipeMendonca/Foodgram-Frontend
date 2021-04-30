@@ -49,7 +49,7 @@ const RecipieRating: React.FC<IRecipieRating> = ({
     }
 
     if (rateId && value && recipieId) {
-      dispatch(deleteRating({ value: +value, rateId, recipieId }));
+      dispatch(deleteRating({ rateId, recipieId }));
     }
   };
 
@@ -65,6 +65,10 @@ const RecipieRating: React.FC<IRecipieRating> = ({
 
     return () => clearInterval(timer);
   }, [showTooltip]);
+
+  if (recipieId === "606f07f74bd7062d10ab42db") {
+    console.log(votes, votesCount);
+  }
 
   return (
     <CardStarsContainer>

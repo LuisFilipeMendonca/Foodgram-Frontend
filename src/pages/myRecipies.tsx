@@ -33,7 +33,10 @@ const MyRecipiesPage: React.FC = () => {
 
   return (
     <MainContainer>
-      <RecipieSearch recipieNameFilterHandler={setSearchHandler} />
+      <RecipieSearch
+        recipieNameFilterHandler={setSearchHandler}
+        isFavorites={false}
+      />
       <Section>
         <RecipiesGrid
           recipiesData={limitedSearchRecipies}

@@ -39,7 +39,10 @@ const FavoritesPage: React.FC = () => {
 
   return (
     <MainContainer>
-      <RecipieSearch recipieNameFilterHandler={recipieNameFilterHandler} />
+      <RecipieSearch
+        recipieNameFilterHandler={recipieNameFilterHandler}
+        isFavorites
+      />
       <Section>
         <RecipiesGrid
           recipiesData={limitedSearchRecipies}

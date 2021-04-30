@@ -52,8 +52,8 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     }
 
     .Toastify__toast--success {
-      background-color: ${({ theme }) => theme.colors.toastSuccessLight};
-      border: 2px solid ${({ theme }) => theme.colors.toastSuccessDark};
+      background-color: ${({ theme }) => theme.colors.successLight};
+      border: 2px solid ${({ theme }) => theme.colors.successDark};
     }
 
     .Toastify__toast--success .Toastify__close-button,
@@ -62,8 +62,8 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     }
 
     .Toastify__toast--error {
-      background-color: ${({ theme }) => theme.colors.toastErrorLight};
-      border: 2px solid ${({ theme }) => theme.colors.toastErrorDark};
+      background-color: ${({ theme }) => theme.colors.errorLight};
+      border: 2px solid ${({ theme }) => theme.colors.errorDark};
       color: ${({ theme }) => theme.colors.white};
     }
 

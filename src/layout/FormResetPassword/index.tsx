@@ -70,11 +70,8 @@ const FormForgotPassword: React.FC = () => {
 
     try {
       await dispatch(resetPassword({ password: formData.password, token }));
-    } catch (e) {
-      console.log(e);
-    }
-
-    console.log("ola");
+      history.replace("/login");
+    } catch (e) {}
   };
 
   const additionalBtn = (

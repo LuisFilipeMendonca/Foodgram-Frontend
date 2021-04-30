@@ -74,15 +74,15 @@ export const addRating = createAsyncThunk(
 export const deleteRating = createAsyncThunk(
   "recipies/deleteRating",
   async (
-    data: { value: number; rateId: string; recipieId: string },
+    data: { rateId: string; recipieId: string },
     { rejectWithValue, dispatch }
   ) => {
     try {
-      const { value, rateId, recipieId } = data;
+      const { rateId, recipieId } = data;
 
-      await axios.delete(`ratings/${rateId}`);
+      const response = await axios.delete(`ratings/${rateId}`);
 
-      return { value, recipieId };
+      return { recipieId, ...response.data };
     } catch (e) {
       const { status, data } = e.response;
       if (status === 401) {
@@ -250,13 +250,13 @@ export const recipiesSlice = createSlice({
       errorHandling(action.payload);
     },
     [deleteRating.fulfilled.type]: (state, action) => {
-      const { value, recipieId } = action.payload;
+      const { recipieId, votes, votesCount } = action.payload;
       const recipieIdx = state.recipies.findIndex(
         (recipie) => recipie._id === recipieId
       );
 
-      state.recipies[recipieIdx].votes -= value;
-      state.recipies[recipieIdx].votesCount -= 1;
+      state.recipies[recipieIdx].votes = votes;
+      state.recipies[recipieIdx].votesCount = votesCount;
       state.recipies[recipieIdx].ratings.length = 0;
     },
     [deleteRating.rejected.type]: (state, action) => {
@@ -264,7 +264,6 @@ export const recipiesSlice = createSlice({
     },
     [deleteRecipie.fulfilled.type]: (state, action) => {
       const { id, message } = action.payload;
-      console.log(action.payload);
       toast.success(message);
 
       const recipies = state.userRecipies.filter(

@@ -53,7 +53,7 @@ const FormForgotPassword: React.FC = () => {
     }
   );
 
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const form = new FormHelper(inputs);
@@ -67,7 +67,10 @@ const FormForgotPassword: React.FC = () => {
 
     const formData = form.buildFormObj();
 
-    dispatch(forgotPassword(formData));
+    try {
+      await dispatch(forgotPassword(formData));
+      history.replace("/login");
+    } catch (e) {}
   };
 
   const additionalBtn = (

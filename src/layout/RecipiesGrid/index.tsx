@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { RecipiesContainer, EmptyText } from "./styled";
 
@@ -43,6 +43,8 @@ const RecipieGrid: React.FC<IRecipieGrid> = ({
       isFavorites={isFavorites}
     />
   ));
+
+  useEffect(() => window.scrollTo({ top: 0 }), [recipiesData]);
 
   if (!isLoading && !recipies.length) {
     return <EmptyText>{emptyText}</EmptyText>;

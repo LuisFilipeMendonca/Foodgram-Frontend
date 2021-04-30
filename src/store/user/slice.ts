@@ -5,6 +5,7 @@ import { userInitialState } from "./initialState";
 import { setUserRecipies } from "../recipies/slice";
 
 import errorHandling from "../../utils/errorHandling";
+import { toast } from "react-toastify";
 
 export const register = createAsyncThunk(
   "user/register",
@@ -151,10 +152,23 @@ export const userSlice = createSlice({
       state.isLoading = true;
     },
     [forgotPassword.fulfilled.type]: (state, action) => {
-      console.log("ola");
+      const { message } = action.payload;
+      toast.success(message);
       state.isLoading = false;
     },
     [forgotPassword.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      return errorHandling(action.payload);
+    },
+    [resetPassword.pending.type]: (state, action) => {
+      state.isLoading = true;
+    },
+    [resetPassword.fulfilled.type]: (state, action) => {
+      const { message } = action.payload;
+      toast.success(message);
+      state.isLoading = false;
+    },
+    [resetPassword.rejected.type]: (state, action) => {
       state.isLoading = false;
       return errorHandling(action.payload);
     },

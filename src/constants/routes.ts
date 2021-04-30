@@ -65,7 +65,7 @@ const routes: RouteType[] = [
   },
   {
     id: 6,
-    path: "/reset_password/:token",
+    path: "/password_reset/:token",
     component: ResetPasswordPage,
     isExact: true,
     isClosed: false,

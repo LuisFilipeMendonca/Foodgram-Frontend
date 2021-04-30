@@ -8,6 +8,7 @@ interface IPaginationProps {
   count: number;
   itemsPerPage: number;
   visiblePages: number;
+  isLoading?: boolean;
   setPageHandler: (page: number) => void;
 }
 
@@ -21,6 +22,7 @@ const Pagination: React.FC<IPaginationProps> = ({
   count,
   itemsPerPage,
   visiblePages,
+  isLoading,
   setPageHandler,
 }) => {
   const pagesAmount = Math.ceil(count / itemsPerPage);
@@ -31,43 +33,38 @@ const Pagination: React.FC<IPaginationProps> = ({
     },
   ];
 
-  if (pagesAmount <= 1) {
+  const addPagesArr = (start: number, qtty: number) => {
+    for (let i = start; i <= qtty; i++) {
+      pagesArr.push({ value: i, id: i.toString() });
+    }
+  };
+
+  if (pagesAmount <= 1 || isLoading) {
     return null;
   }
 
   if (visiblePages > pagesAmount) {
-    for (let i = 1; i <= pagesAmount; i++) {
-      pagesArr.push({ value: i, id: i.toString() });
-    }
+    addPagesArr(1, pagesAmount);
   }
 
   if (visiblePages + currentPage < pagesAmount) {
-    for (let i = currentPage; i < currentPage + visiblePages / 2; i++) {
-      pagesArr.push({ value: i, id: i.toString() });
-    }
+    addPagesArr(currentPage, currentPage + visiblePages / 2);
     pagesArr.push({ value: <span>&#8230;</span>, id: "ellipsis" });
-
-    for (let i = pagesAmount - visiblePages / 2 + 1; i <= pagesAmount; i++) {
-      pagesArr.push({ value: i, id: i.toString() });
-    }
+    addPagesArr(pagesAmount - visiblePages / 2 + 1, pagesAmount);
   }
 
   if (
     visiblePages + currentPage >= pagesAmount &&
     pagesAmount - visiblePages > 0
   ) {
-    for (let i = pagesAmount - visiblePages; i <= pagesAmount; i++) {
-      pagesArr.push({ value: i, id: i.toString() });
-    }
+    addPagesArr(pagesAmount - visiblePages, pagesAmount);
   }
 
   if (
     visiblePages + currentPage >= pagesAmount &&
     pagesAmount - visiblePages === 0
   ) {
-    for (let i = 1; i <= pagesAmount; i++) {
-      pagesArr.push({ value: i, id: i.toString() });
-    }
+    addPagesArr(1, pagesAmount);
   }
 
   pagesArr.push({

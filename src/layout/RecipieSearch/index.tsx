@@ -9,11 +9,13 @@ import BaseButton from "../../components/BaseButton";
 import { CtaContainer, Actions } from "./styled";
 
 interface IMyRecipieCta {
+  isFavorites: boolean;
   recipieNameFilterHandler: (value: string) => void;
 }
 
 const RecipieSearch: React.FC<IMyRecipieCta> = ({
   recipieNameFilterHandler,
+  isFavorites,
 }) => {
   const [input, setInput] = useState(findRecipieInput);
 
@@ -48,9 +50,11 @@ const RecipieSearch: React.FC<IMyRecipieCta> = ({
         >
           Search
         </BaseButton>
-        <BaseButton role="link" className="primary" path="/my_recipies/add">
-          Add Recipie
-        </BaseButton>
+        {!isFavorites && (
+          <BaseButton role="link" className="primary" path="/my_recipies/add">
+            Add Recipie
+          </BaseButton>
+        )}
       </Actions>
     </CtaContainer>
   );

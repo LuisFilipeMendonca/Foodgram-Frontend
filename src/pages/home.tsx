@@ -36,8 +36,6 @@ const HomePage: React.FC = () => {
       return;
     }
 
-    window.scroll({ top: 0 });
-
     dispatch(fetchRecipies());
   }, [currentPage, dispatch, itemsPerPage, itemsOrderValue, recipieName]);
 
@@ -52,6 +50,7 @@ const HomePage: React.FC = () => {
           emptyText="No recipies added unitl now. Can you be the first?"
         />
         <Pagination
+          isLoading={isLoading}
           currentPage={currentPage}
           itemsPerPage={+itemsPerPage}
           count={count}
