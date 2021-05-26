@@ -1,4 +1,4 @@
-# Daily Manager
+# Foodgram
 ## An application to store and see recipies
 
 ## Motivation
